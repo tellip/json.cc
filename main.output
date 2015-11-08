@@ -1,0 +1,32 @@
+j1 is null
+j2 is boolean.
+j3 is number.
+j4 is string.
+j5 is array.
+j6 is object.
+
+/* block comments filterd! */[
+    null,
+    true,
+    -1234,
+    "hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",
+    [
+        5,
+        8,
+        2,
+        0
+    ],
+    {
+        "enjoy": "cjson",
+        "hello": "cjson",
+        "more": [
+            5,
+            8,
+            2,
+            0
+        ]
+    }
+]//line comments filtered!
+
+[null,true,-1234,"hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",[5,8,2,0],{"enjoy":"cjson","h
+ello":"cjson","more":[5,8,2,0]}]
