@@ -69,7 +69,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNull() const {
-        return _pCore->refCategory() == JC_NULL;
+        return _pCore->category == JC_NULL;
     }
 
     template<
@@ -79,7 +79,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isBoolean() const {
-        return _pCore->refCategory() == JC_BOOLEAN;
+        return _pCore->category == JC_BOOLEAN;
     }
 
     template<
@@ -89,7 +89,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNumber() const {
-        return _pCore->refCategory() == JC_NUMBER;
+        return _pCore->category == JC_NUMBER;
     }
 
     template<
@@ -99,7 +99,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isString() const {
-        return _pCore->refCategory() == JC_STRING;
+        return _pCore->category == JC_STRING;
     }
 
     template<
@@ -109,7 +109,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isArray() const {
-        return _pCore->refCategory() == JC_ARRAY;
+        return _pCore->category == JC_ARRAY;
     }
 
     template<
@@ -119,7 +119,7 @@ namespace klib {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isObject() const {
-        return _pCore->refCategory() == JC_OBJECT;
+        return _pCore->category == JC_OBJECT;
     }
 
     template<

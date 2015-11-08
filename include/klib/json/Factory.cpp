@@ -247,6 +247,8 @@ namespace klib {
                 if (iNow == iEnd) throw NULL;
                 Object o;
                 while (true) {
+                    JCoreFactory::passThrough(iNow, iEnd);
+                    if (iNow == iEnd) throw NULL;
                     String key;
                     if (JCoreFactory::isString(iNow, iEnd, key)) {
                         if (iNow == iEnd) throw NULL;
