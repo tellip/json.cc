@@ -4,7 +4,7 @@
 
 #include "public.h"
 
-namespace klib {
+namespace aa {
     template<
             typename NT,
             typename ST,

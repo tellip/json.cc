@@ -20,7 +20,7 @@
 #include "../class.h"
 #include "../common.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         class Private;
     }

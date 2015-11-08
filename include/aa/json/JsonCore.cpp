@@ -4,7 +4,7 @@
 
 #include "JsonCore.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         template<typename JT>
         Private::JsonCore<JT>::JsonCore(JsonCategory &&jc, JsonValue &&jv) :

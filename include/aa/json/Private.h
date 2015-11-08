@@ -6,7 +6,7 @@
 
 #include "public.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         class Private {
         ABSTRACT(Private)

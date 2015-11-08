@@ -4,7 +4,7 @@
 
 #include "Trivial.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         template<typename JT>
         const unsigned short Private::Trivial<JT>::numPrec = 17;
@@ -81,7 +81,7 @@ namespace klib {
                         ws += CS::lineBreak;
                         for (short si = 0; si < depth + 1; si++) ws.append(indent, CS::blankSpace);
                     }
-                    ws += klib::stringify(*i, indent, depth + 1);
+                    ws += aa::stringify(*i, indent, depth + 1);
                 }
             }
             if (indent >= 0 && a.size()) {
@@ -114,7 +114,7 @@ namespace klib {
                     }
                     ws += CS::strBound + unesca((String &) i->first) + CS::strBound + CS::referSym;
                     if (indent >= 0) ws += CS::blankSpace;
-                    ws += klib::stringify(i->second, indent, depth + 1);
+                    ws += aa::stringify(i->second, indent, depth + 1);
                 }
             }
             if (indent >= 0 && o.size()) {

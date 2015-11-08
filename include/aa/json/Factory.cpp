@@ -4,7 +4,7 @@
 
 #include "Factory.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         template<typename JT>
         void Private::JCoreFactory<JT>::passThrough(StrIter &iNow, const StrIter &iEnd) const {

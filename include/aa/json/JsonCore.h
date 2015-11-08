@@ -6,7 +6,7 @@
 
 #include "Private.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         template<typename JT>
         class Private::JsonCore : public Private {

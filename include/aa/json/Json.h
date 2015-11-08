@@ -6,7 +6,7 @@
 
 #include "public.h"
 
-namespace klib {
+namespace aa {
     template<
             typename NT,
             typename CT,
@@ -29,7 +29,7 @@ namespace klib {
         typedef OC<const Key, Json> Object;
         typedef std::pair<const Key, Json> KeyValue;
 
-        friend String klib::stringify<NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const short &, const short &);
+        friend String aa::stringify<NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const short &, const short &);
 
     private:
         typedef JsonCore <Json> JsonCore;

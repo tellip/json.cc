@@ -4,7 +4,7 @@
 
 #include "Special.h"
 
-namespace klib {
+namespace aa {
     namespace json {
         const char
                 Private::Special<char>::_::objLeft = '{',
