@@ -52,13 +52,12 @@ int main() {
     }
     if (j6.isObject()) {
         std::cout << "j6 is object." << std::endl;
-        std::map<const std::string, Json> &o = j6.object();
+        std::map<Json::String, Json> &o = j6.object();
         Json::Object &o1 = o;
-        std::pair<const std::string, Json> pair = {"hello", "c++"};
-        Json::KeyValue &pair1 = pair;
-        o1.insert(pair1);
-        o1["enjoy"] = "cjson";
-        o1.insert(Json::KeyValue("more", j5));
+        o1.insert(std::pair<Json::String, Json>("hello", "c++"));
+        //also can be below:
+        o1["enjoy"] = "json";
+        o1["more"] = j5;
     }
 
     Json::Array all = {j1, j2, j3, j4, j5, j6}; //create a deque
