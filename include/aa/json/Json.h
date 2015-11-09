@@ -16,18 +16,12 @@ namespace aa {
     class Json : public json::Private {
         friend class Private;
 
-    private:
-        typedef typename Special<CT>::_ CharSpecial;
     public:
         typedef NT Number;
         typedef CT Char;
-        typedef typename CharSpecial::String String;
-    private:
-        typedef String Key;
-    public:
+        typedef typename Special<CT>::_::String String;
         typedef AC<Json> Array;
-        typedef OC<const Key, Json> Object;
-        typedef std::pair<const Key, Json> KeyValue;
+        typedef OC<String, Json> Object;
 
         friend String aa::stringify<NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const short &, const short &);
 

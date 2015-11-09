@@ -97,7 +97,7 @@ namespace aa {
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCNullFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             if (CS::StrNCmp(
                     &*iNow,
@@ -110,13 +110,13 @@ namespace aa {
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCNullFactory<JT>::byEntity() const {
             return JsonCore::construct(JC_NULL, JsonValue{.pNull=NULL});
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCBooleanFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             if (!CS::StrNCmp(
                     &*iNow,
@@ -139,13 +139,13 @@ namespace aa {
 
         template<typename JT>
         template<typename T>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCBooleanFactory<JT>::byEntity(T &&t) const {
             return JsonCore::construct(JC_BOOLEAN, JsonValue{.pBoolean=new bool(std::forward<T>(t))});
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCNumberFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             long double ldBig;
 //            if (random(2)) {
@@ -166,13 +166,13 @@ namespace aa {
 
         template<typename JT>
         template<typename T>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCNumberFactory<JT>::byEntity(T &&t) const {
             return JsonCore::construct(JC_NUMBER, JsonValue{.pNumber=new Number(std::forward<T>(t))});
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCStringFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             const StrIter iBegin = iNow;
             String s;
@@ -185,13 +185,13 @@ namespace aa {
 
         template<typename JT>
         template<typename T>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCStringFactory<JT>::byEntity(T &&t) const {
             return JsonCore::construct(JC_STRING, JsonValue{.pString=new String(std::forward<T>(t))});
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCArrayFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             const StrIter iBegin = iNow;
             try {
@@ -232,13 +232,13 @@ namespace aa {
 
         template<typename JT>
         template<typename T>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCArrayFactory<JT>::byEntity(T &&t) const {
             return JsonCore::construct(JC_ARRAY, JsonValue{.pArray=new Array(std::forward<T>(t))});
         }
 
         template<typename JT>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCObjectFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             const StrIter iBegin = iNow;
             try {
@@ -259,7 +259,7 @@ namespace aa {
                         if (iNow == iEnd) throw NULL;
                         JsonCore *pjc = JCoreFactory::byParsing(iNow, iEnd);
                         if (!pjc) throw NULL;
-                        o.insert(KeyValue(std::move(key), JT(pjc)));
+                        o.insert(std::pair<String,JT>(std::move(key), JT(pjc)));
                         if (iNow == iEnd) throw NULL;
                         if (*iNow == CS::sepSym) {
                             iNow++;
@@ -282,7 +282,7 @@ namespace aa {
 
         template<typename JT>
         template<typename T>
-        typename Private::JCoreFactory<JT>::JsonCore *
+        typename Private::JsonCore<JT> *
         Private::JCObjectFactory<JT>::byEntity(T &&t) const {
             return JsonCore::construct(JC_OBJECT, JsonValue{.pObject=new Object(std::forward<T>(t))});
         }

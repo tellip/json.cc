@@ -16,14 +16,13 @@ namespace aa {
         template<typename JT>
         class Private::JCoreFactory : public Factory {
         SINGLETON(JCoreFactory)
-        protected:
+        private:
             typedef typename JT::String::const_iterator StrIter;
             typedef typename Special<typename JT::Char>::_ CS;
             typedef typename JT::String String;
             typedef JsonCore <JT> JsonCore;
             typedef JsonValue <JT> JsonValue;
-            typedef Private::Trivial<JT> Trivial;
-        private:
+            typedef Trivial<JT> Trivial;
             typedef JCNullFactory <JT> JCNullFactory;
             typedef JCBooleanFactory <JT> JCBooleanFactory;
             typedef JCNumberFactory <JT> JCNumberFactory;
@@ -53,11 +52,10 @@ namespace aa {
         class Private::JCNullFactory : public JCoreFactory<JT> {
         SINGLETON(JCNullFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
+            typedef typename Special<typename JT::Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -72,11 +70,10 @@ namespace aa {
         class Private::JCBooleanFactory : public JCoreFactory<JT> {
         SINGLETON(JCBooleanFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
+            typedef typename Special<typename JT::Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -92,13 +89,12 @@ namespace aa {
         class Private::JCNumberFactory : public JCoreFactory<JT> {
         SINGLETON(JCNumberFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
-            typedef typename JT::Number Number;
             typedef typename JT::Char Char;
+            typedef typename Special<Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
+            typedef typename JT::Number Number;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -115,10 +111,10 @@ namespace aa {
         SINGLETON(JCStringFactory)
         private:
             typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
+            typedef typename Special<typename JT::Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
             typedef typename JT::String String;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
@@ -136,10 +132,10 @@ namespace aa {
         SINGLETON(JCArrayFactory)
         private:
             typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
+            typedef typename Special<typename JT::Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
             typedef typename JT::Array Array;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
@@ -157,13 +153,12 @@ namespace aa {
         SINGLETON(JCObjectFactory)
         private:
             typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename JCoreFactory::CS CS;
-            typedef typename JCoreFactory::StrIter StrIter;
-            typedef typename JCoreFactory::JsonCore JsonCore;
-            typedef typename JCoreFactory::JsonValue JsonValue;
+            typedef typename Special<typename JT::Char>::_ CS;
+            typedef typename JT::String::const_iterator StrIter;
+            typedef Private::JsonCore<JT> JsonCore;
+            typedef Private::JsonValue<JT> JsonValue;
             typedef typename JT::Object Object;
             typedef typename JT::String String;
-            typedef typename JT::KeyValue KeyValue;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
