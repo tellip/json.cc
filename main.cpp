@@ -62,7 +62,7 @@ int main() {
 
     Json::Array all = {j1, j2, j3, j4, j5, j6}; //create a deque
     Json::String jstr = stringify(Json(std::move(all)), 4); //4 is for 4 space indent
-    jstr = Json::String() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
+    jstr = std::string() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
     std::cout << jstr << std::endl;
 
     Json j7 = Json::parse(jstr);
