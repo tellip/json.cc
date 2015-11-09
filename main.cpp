@@ -23,45 +23,35 @@ int main() {
             j3 = 1234,                                    //number, here saved as double
             j4 = "hello",                                 //string, here saved as std::string, will be std::wstring when Char is wchar_t
             j5 = Json::parse("[5,1,0]"),                  //array, here is std::deque<Json>
-            j6 = Json::parse("{\"hello\":\"cjson\"}");    //object, here is std::map<const std::string,Json>
+            j6 = Json::parse("{\"hello\":\"json\"}");    //object, here is std::map<const std::string,Json>
 
     if (j1.isNull()) std::cout << "j1 is null" << std::endl;
     if (j2.isBoolean()) {
         std::cout << "j2 is boolean." << std::endl;
-        bool &b = j2.boolean();
-        b = !b;
+        j2.boolean() = !j2.boolean();
     }
     if (j3.isNumber()) {
         std::cout << "j3 is number." << std::endl;
-        double &d = j3.number();
-        Json::Number &d1 = d;
-        d1 = -d1;
+        j3.number()--; //double
     }
     if (j4.isString()) {
         std::cout << "j4 is string." << std::endl;
-        std::string &s = j4.string();
-        Json::String &s1 = s;
-        s1 += " Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.";
+        j4.string() += " Use Json<X,wchar_t,X,X> then array will be saved as std::wstring."; //std::string
     }
     if (j5.isArray()) {
         std::cout << "j5 is array." << std::endl;
-        std::deque<Json> &a = j5.array();
-        Json::Array &a1 = a;
-        a[1] = 2;   //same as: a[1]=Json(8);
-        a.insert(a.begin() + 1, 8);    //std::deque operations
+        j5.array()[1] = 2;
+        j5.array().insert(j5.array().begin() + 1, 8); //here 8 is Json(8)
+        j5.array().push_back(j6);
     }
     if (j6.isObject()) {
         std::cout << "j6 is object." << std::endl;
-        std::map<Json::String, Json> &o = j6.object();
-        Json::Object &o1 = o;
-        o1.insert(std::pair<Json::String, Json>("hello", "c++"));
-        //also can be below:
-        o1["enjoy"] = "json";
-        o1["more"] = j5;
+        j6.object()["enjoy"] = "json";
+        j6.object()["array"] = j5;
+        j6.object()["object"]=Json::parse("{\"number\":1234}");
     }
 
-    Json::Array all = {j1, j2, j3, j4, j5, j6}; //create a deque
-    Json::String jstr = stringify(Json(std::move(all)), 4); //4 is for 4 space indent
+    Json::String jstr = stringify(Json(Json::Array({j1, j2, j3, j4, j5, j6})), 4); //4 is for 4 space indent
     jstr = std::string() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
     std::cout << jstr << std::endl;
 

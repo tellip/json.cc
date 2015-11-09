@@ -7,24 +7,33 @@ j6 is object.
 /* block comments filterd! */[
     null,
     true,
-    -1234,
+    1233,
     "hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",
     [
         5,
         8,
         2,
-        0
+        0,
+        {
+            "hello": "json"
+        }
     ],
     {
-        "enjoy": "json",
-        "hello": "cjson",
-        "more": [
+        "array": [
             5,
             8,
             2,
-            0
-        ]
+            0,
+            {
+                "hello": "json"
+            }
+        ],
+        "enjoy": "json",
+        "hello": "json",
+        "object": {
+            "number": 1234
+        }
     }
 ]//line comments filtered!
-[null,true,-1234,"hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",[5,8,2,0],{"enjoy":"json","he
-llo":"cjson","more":[5,8,2,0]}]
+[null,true,1233,"hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",[5,8,2,0,{"hello":"json"}],{"a
+rray":[5,8,2,0,{"hello":"json"}],"enjoy":"json","hello":"json","object":{"number":1234}}]
