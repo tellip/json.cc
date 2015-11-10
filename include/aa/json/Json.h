@@ -61,15 +61,15 @@ namespace aa {
 
         bool is_object() const;
 
-        bool &boolean() const;
+        bool &b() const;
 
-        number_type &number() const;
+        number_type &n() const;
 
-        string_type &string() const;
+        string_type &s() const;
 
-        array_type &array() const;
+        array_type &a() const;
 
-        object_type &object() const;
+        object_type &o() const;
 
     public:
         json();

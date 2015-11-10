@@ -68,7 +68,7 @@ namespace aa {
         Private::Trivial<JT>::arr2str(const Array &a, const short &indent, const short &depth) {
             String ws;
             ws += CS::arrLeft;
-            if (a.size()) {
+            if (a.begin() != a.end()) {
                 typename Array::const_iterator i = a.begin();
                 if (indent >= 0) {
                     ws += CS::lineBreak;
@@ -84,7 +84,7 @@ namespace aa {
                     ws += aa::stringify(*i, indent, depth + 1);
                 }
             }
-            if (indent >= 0 && a.size()) {
+            if (indent >= 0 && a.begin() != a.end()) {
                 ws += CS::lineBreak;
                 for (short si = 0; si < depth; si++) ws.append(indent, CS::blankSpace);
             }

@@ -128,7 +128,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool &json<NT, CT, AC, OC>::boolean() const {
+    bool &json<NT, CT, AC, OC>::b() const {
         if (_pCore->category == JC_BOOLEAN) return *_pCore->value.pBoolean;
         _pDefaultBoolean.reset(new bool);
         return *_pDefaultBoolean;
@@ -140,7 +140,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename json<NT, CT, AC, OC>::number_type &json<NT, CT, AC, OC>::number() const {
+    typename json<NT, CT, AC, OC>::number_type &
+    json<NT, CT, AC, OC>::n() const {
         if (_pCore->category == JC_NUMBER) return *_pCore->value.pNumber;
         _pDefaultNumber.reset(new number_type);
         return *_pDefaultNumber;
@@ -152,7 +153,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename json<NT, CT, AC, OC>::string_type &json<NT, CT, AC, OC>::string() const {
+    typename json<NT, CT, AC, OC>::string_type &
+    json<NT, CT, AC, OC>::s() const {
         if (_pCore->category == JC_STRING) return *_pCore->value.pString;
         _pDefaultString.reset(new string_type);
         return *_pDefaultString;
@@ -164,7 +166,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename json<NT, CT, AC, OC>::array_type &json<NT, CT, AC, OC>::array() const {
+    typename json<NT, CT, AC, OC>::array_type &
+    json<NT, CT, AC, OC>::a() const {
         if (_pCore->category == JC_ARRAY) return *_pCore->value.pArray;
         _pDefaultArray.reset(new array_type);
         return *_pDefaultArray;
@@ -176,7 +179,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename json<NT, CT, AC, OC>::object_type &json<NT, CT, AC, OC>::object() const {
+    typename json<NT, CT, AC, OC>::object_type &
+    json<NT, CT, AC, OC>::o() const {
         if (_pCore->category == JC_OBJECT) return *_pCore->value.pObject;
         _pDefaultObject.reset(new object_type);
         return *_pDefaultObject;
