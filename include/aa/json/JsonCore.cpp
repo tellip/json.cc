@@ -5,7 +5,7 @@
 #include "JsonCore.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         Private::JsonCore<JT>::JsonCore(JsonCategory &&jc, JsonValue &&jv) :
                 category(std::move(jc)),

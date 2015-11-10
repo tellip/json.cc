@@ -5,7 +5,7 @@
 #include "Trivial.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         const unsigned short Private::Trivial<JT>::numPrec = 17;
 

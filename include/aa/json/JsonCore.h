@@ -7,7 +7,7 @@
 #include "Private.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         class Private::JsonCore : public Private {
         private:

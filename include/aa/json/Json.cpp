@@ -2,7 +2,7 @@
 // Created by kalo on 2015/11/1.
 //
 
-#include "Json.h"
+#include "json.h"
 
 namespace aa {
     template<
@@ -11,7 +11,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    std::shared_ptr<bool> Json<NT, CT, AC, OC>::_pDefaultBoolean;
+    std::shared_ptr<bool> json<NT, CT, AC, OC>::_pDefaultBoolean;
 
     template<
             typename NT,
@@ -19,7 +19,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    std::shared_ptr<typename Json<NT, CT, AC, OC>::Number> Json<NT, CT, AC, OC>::_pDefaultNumber;
+    std::shared_ptr<typename json<NT, CT, AC, OC>::number_type> json<NT, CT, AC, OC>::_pDefaultNumber;
 
     template<
             typename NT,
@@ -27,7 +27,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    std::shared_ptr<typename Json<NT, CT, AC, OC>::String> Json<NT, CT, AC, OC>::_pDefaultString;
+    std::shared_ptr<typename json<NT, CT, AC, OC>::string_type> json<NT, CT, AC, OC>::_pDefaultString;
 
     template<
             typename NT,
@@ -35,7 +35,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    std::shared_ptr<typename Json<NT, CT, AC, OC>::Array> Json<NT, CT, AC, OC>::_pDefaultArray;
+    std::shared_ptr<typename json<NT, CT, AC, OC>::array_type> json<NT, CT, AC, OC>::_pDefaultArray;
 
     template<
             typename NT,
@@ -43,7 +43,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    std::shared_ptr<typename Json<NT, CT, AC, OC>::Object> Json<NT, CT, AC, OC>::_pDefaultObject;
+    std::shared_ptr<typename json<NT, CT, AC, OC>::object_type> json<NT, CT, AC, OC>::_pDefaultObject;
 
     template<
             typename NT,
@@ -51,15 +51,15 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> Json<NT, CT, AC, OC>::parse(const String &s) {
-        typename String::const_iterator iNow = s.begin();
+    json<NT, CT, AC, OC> json<NT, CT, AC, OC>::parse(const string_type &s) {
+        typename string_type::const_iterator iNow = s.begin();
         JsonCore *pjc = JCoreFactory::pi()->byParsing(iNow, s.end());
-        if (!pjc) return Json();
+        if (!pjc) return json();
         if (iNow != s.end()) {
             JsonCore::destruct(pjc);
-            return Json();
+            return json();
         }
-        return Json(pjc);
+        return json(pjc);
     }
 
     template<
@@ -68,7 +68,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isNull() const {
+    bool json<NT, CT, AC, OC>::is_null() const {
         return _pCore->category == JC_NULL;
     }
 
@@ -78,7 +78,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isBoolean() const {
+    bool json<NT, CT, AC, OC>::is_boolean() const {
         return _pCore->category == JC_BOOLEAN;
     }
 
@@ -88,7 +88,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isNumber() const {
+    bool json<NT, CT, AC, OC>::is_number() const {
         return _pCore->category == JC_NUMBER;
     }
 
@@ -98,7 +98,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isString() const {
+    bool json<NT, CT, AC, OC>::is_string() const {
         return _pCore->category == JC_STRING;
     }
 
@@ -108,7 +108,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isArray() const {
+    bool json<NT, CT, AC, OC>::is_array() const {
         return _pCore->category == JC_ARRAY;
     }
 
@@ -118,7 +118,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isObject() const {
+    bool json<NT, CT, AC, OC>::is_object() const {
         return _pCore->category == JC_OBJECT;
     }
 
@@ -128,7 +128,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool &Json<NT, CT, AC, OC>::boolean() const {
+    bool &json<NT, CT, AC, OC>::boolean() const {
         if (_pCore->category == JC_BOOLEAN) return *_pCore->value.pBoolean;
         _pDefaultBoolean.reset(new bool);
         return *_pDefaultBoolean;
@@ -140,9 +140,9 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Number &Json<NT, CT, AC, OC>::number() const {
+    typename json<NT, CT, AC, OC>::number_type &json<NT, CT, AC, OC>::number() const {
         if (_pCore->category == JC_NUMBER) return *_pCore->value.pNumber;
-        _pDefaultNumber.reset(new Number);
+        _pDefaultNumber.reset(new number_type);
         return *_pDefaultNumber;
     }
 
@@ -152,9 +152,9 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String &Json<NT, CT, AC, OC>::string() const {
+    typename json<NT, CT, AC, OC>::string_type &json<NT, CT, AC, OC>::string() const {
         if (_pCore->category == JC_STRING) return *_pCore->value.pString;
-        _pDefaultString.reset(new String);
+        _pDefaultString.reset(new string_type);
         return *_pDefaultString;
     }
 
@@ -164,9 +164,9 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Array &Json<NT, CT, AC, OC>::array() const {
+    typename json<NT, CT, AC, OC>::array_type &json<NT, CT, AC, OC>::array() const {
         if (_pCore->category == JC_ARRAY) return *_pCore->value.pArray;
-        _pDefaultArray.reset(new Array);
+        _pDefaultArray.reset(new array_type);
         return *_pDefaultArray;
     }
 
@@ -176,9 +176,9 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Object &Json<NT, CT, AC, OC>::object() const {
+    typename json<NT, CT, AC, OC>::object_type &json<NT, CT, AC, OC>::object() const {
         if (_pCore->category == JC_OBJECT) return *_pCore->value.pObject;
-        _pDefaultObject.reset(new Object);
+        _pDefaultObject.reset(new object_type);
         return *_pDefaultObject;
     }
 
@@ -188,7 +188,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json() : _pCore(
+    json<NT, CT, AC, OC>::json() : _pCore(
             JCNullFactory::pi()->byEntity(),
             JsonCore::destruct
     ) {
@@ -200,7 +200,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(Json &&j) {
+    json<NT, CT, AC, OC>::json(json &&j) {
         _move(std::move(j));
     }
 
@@ -210,7 +210,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(const Json &j) {
+    json<NT, CT, AC, OC>::json(const json &j) {
         _copy(j);
     }
 
@@ -220,7 +220,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(Json &&j) {
+    json<NT, CT, AC, OC> &json<NT, CT, AC, OC>::operator=(json &&j) {
         _move(std::move(j));
         return *this;
     }
@@ -231,7 +231,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const Json &j) {
+    json<NT, CT, AC, OC> &json<NT, CT, AC, OC>::operator=(const json &j) {
         _copy(j);
         return *this;
     }
@@ -243,7 +243,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    Json<NT, CT, AC, OC>::Json(T &&t) {
+    json<NT, CT, AC, OC>::json(T &&t) {
         _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) NULL);
     }
 
@@ -254,7 +254,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(T &&t) {
+    json<NT, CT, AC, OC> &json<NT, CT, AC, OC>::operator=(T &&t) {
         _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) NULL);
         return *this;
     }
@@ -265,7 +265,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void Json<NT, CT, AC, OC>::swap(Json &j) {
+    void json<NT, CT, AC, OC>::swap(json &j) {
         _pCore.swap(j._pCore);
     };
 
@@ -275,7 +275,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::~Json() {
+    json<NT, CT, AC, OC>::~json() {
         _pCore.reset();
     }
 
@@ -285,8 +285,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(int &&i) {
-        _auto(std::move(i), (Number *const &) NULL);
+    json<NT, CT, AC, OC>::json(int &&i) {
+        _auto(std::move(i), (number_type *const &) NULL);
     }
 
     template<
@@ -295,8 +295,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(const int &i) {
-        _auto(i, (Number *const &) NULL);
+    json<NT, CT, AC, OC>::json(const int &i) {
+        _auto(i, (number_type *const &) NULL);
     }
 
     template<
@@ -305,8 +305,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(int &&i) {
-        _auto(i, (Number *const &) NULL);
+    json<NT, CT, AC, OC> &json<NT, CT, AC, OC>::operator=(int &&i) {
+        _auto(i, (number_type *const &) NULL);
         return *this;
     }
 
@@ -316,8 +316,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const int &i) {
-        _auto(i, (Number *const &) NULL);
+    json<NT, CT, AC, OC> &json<NT, CT, AC, OC>::operator=(const int &i) {
+        _auto(i, (number_type *const &) NULL);
         return *this;
     }
 
@@ -328,7 +328,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void Json<NT, CT, AC, OC>::_move(Json &&j) {
+    void json<NT, CT, AC, OC>::_move(json &&j) {
         if (_pCore != j._pCore) {
             _pCore.reset(
                     JCNullFactory::pi()->byEntity(),
@@ -347,7 +347,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void Json<NT, CT, AC, OC>::_copy(const Json &j) {
+    void json<NT, CT, AC, OC>::_copy(const json &j) {
         if (_pCore != j._pCore) {
             JsonCore *pjc;
             switch (j._pCore->category) {
@@ -383,7 +383,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, bool *const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, bool *const &) {
         _pCore.reset(
                 JCBooleanFactory::pi()->byEntity(std::forward<T>(t)),
                 JsonCore::destruct
@@ -397,7 +397,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, Number *const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, number_type *const &) {
         _pCore.reset(
                 JCNumberFactory::pi()->byEntity(std::forward<T>(t)),
                 JsonCore::destruct
@@ -411,7 +411,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, String *const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, string_type *const &) {
         _pCore.reset(
                 JCStringFactory::pi()->byEntity(std::forward<T>(t)),
                 JsonCore::destruct
@@ -425,9 +425,9 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, const Char **const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, const char_type **const &) {
         _pCore.reset(
-                JCStringFactory::pi()->byEntity(String(std::forward<T>(t))),
+                JCStringFactory::pi()->byEntity(string_type(std::forward<T>(t))),
                 JsonCore::destruct
         );
     }
@@ -439,7 +439,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, Array *const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, array_type *const &) {
         _pCore.reset(
                 JCArrayFactory::pi()->byEntity(std::forward<T>(t)),
                 JsonCore::destruct
@@ -453,7 +453,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     template<typename T>
-    void Json<NT, CT, AC, OC>::_auto(T &&t, Object *const &) {
+    void json<NT, CT, AC, OC>::_auto(T &&t, object_type *const &) {
         _pCore.reset(
                 JCObjectFactory::pi()->byEntity(std::forward<T>(t)),
                 JsonCore::destruct
@@ -466,7 +466,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void Json<NT, CT, AC, OC>::_auto(Json &&j, Json *const &) {
+    void json<NT, CT, AC, OC>::_auto(json &&j, json *const &) {
         _move(std::move(j));
     }
 
@@ -476,7 +476,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void Json<NT, CT, AC, OC>::_auto(const Json &j, Json *const &) {
+    void json<NT, CT, AC, OC>::_auto(const json &j, json *const &) {
         _copy(j);
     }
 
@@ -486,5 +486,5 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(JsonCore *pjc) : _pCore(pjc, JsonCore::destruct) { }
+    json<NT, CT, AC, OC>::json(JsonCore *pjc) : _pCore(pjc, JsonCore::destruct) { }
 }

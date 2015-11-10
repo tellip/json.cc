@@ -5,7 +5,7 @@
 #include "Factory.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         void Private::JCoreFactory<JT>::passThrough(StrIter &iNow, const StrIter &iEnd) const {
             StrIter iBegin;
@@ -51,7 +51,7 @@ namespace aa {
         }
 
         template<typename JT>
-        bool Private::JCoreFactory<JT>::isString(StrIter &iNow, const StrIter &iEnd, String &s) const {
+        bool Private::JCoreFactory<JT>::is_string(StrIter &iNow, const StrIter &iEnd, String &s) const {
             s = String();
             if (*iNow != CS::strBound) return false;
             for (iNow++; iNow != iEnd; iNow++) {
@@ -176,7 +176,7 @@ namespace aa {
         Private::JCStringFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
             const StrIter iBegin = iNow;
             String s;
-            if (!JCoreFactory::isString(iNow, iEnd, s)) {
+            if (!JCoreFactory::is_string(iNow, iEnd, s)) {
                 iNow = iBegin;
                 return NULL;
             }
@@ -250,7 +250,7 @@ namespace aa {
                     JCoreFactory::passThrough(iNow, iEnd);
                     if (iNow == iEnd) throw NULL;
                     String key;
-                    if (JCoreFactory::isString(iNow, iEnd, key)) {
+                    if (JCoreFactory::is_string(iNow, iEnd, key)) {
                         if (iNow == iEnd) throw NULL;
                         JCoreFactory::passThrough(iNow, iEnd);
                         if (iNow == iEnd) throw NULL;

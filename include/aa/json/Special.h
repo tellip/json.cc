@@ -7,7 +7,7 @@
 #include "Private.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename...>
         struct Private::Special {
         STATIC(Special)
@@ -24,7 +24,7 @@ namespace aa {
             typedef std::string String;
             typedef std::ostringstream Oss;
 
-            //Json config
+            //json config
             static const char objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
             static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;//, ldScnfFmt, dbScnfFmt;
             static const std::map<const char, const char> escapeMap, unescaMap;
@@ -44,7 +44,7 @@ namespace aa {
             typedef std::wstring String;
             typedef std::wostringstream Oss;
 
-            //Json config
+            //json config
             static const wchar_t objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
             static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;//, ldScnfFmt, dbScnfFmt;
             static const std::map<const wchar_t, const wchar_t> escapeMap, unescaMap;

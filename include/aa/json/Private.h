@@ -7,7 +7,7 @@
 #include "public.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         class Private {
         ABSTRACT(Private)
 

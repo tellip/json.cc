@@ -21,7 +21,7 @@
 #include "../common.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         class Private;
     }
 
@@ -31,7 +31,7 @@ namespace aa {
             template<typename...> class=std::deque,
             template<typename, typename...> class=std::map
     >
-    class Json;
+    class json;
 
     template<
             typename NT,
@@ -39,7 +39,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void swap(Json<NT, CT, AC, OC> &, Json<NT, CT, AC, OC> &);
+    void swap(json<NT, CT, AC, OC> &, json<NT, CT, AC, OC> &);
 
     template<
             typename NT,
@@ -47,7 +47,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
+    typename json<NT, CT, AC, OC>::string_type stringify(const json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
 }
 
 #include "Private.h"
@@ -56,11 +56,11 @@ namespace aa {
 #include "JsonValue.h"
 #include "JsonCore.h"
 #include "Factory.h"
-#include "Json.h"
+#include "json.h"
 
 #include "Special.cpp"
 #include "Trivial.cpp"
 #include "JsonCore.cpp"
 #include "Factory.cpp"
-#include "Json.cpp"
+#include "json.cpp"
 #include "public.cpp"

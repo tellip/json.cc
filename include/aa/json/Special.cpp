@@ -5,7 +5,7 @@
 #include "Special.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         const char
                 Private::Special<char>::_::objLeft = '{',
                 Private::Special<char>::_::objRight = '}',

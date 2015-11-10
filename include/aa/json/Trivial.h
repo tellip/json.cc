@@ -7,17 +7,17 @@
 #include "Private.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         class Private::Trivial : public Private {
         STATIC(Trivial)
 
         private:
-            typedef typename JT::Number Number;
-            typedef typename JT::Char Char;
-            typedef typename JT::String String;
-            typedef typename JT::Array Array;
-            typedef typename JT::Object Object;
+            typedef typename JT::number_type Number;
+            typedef typename JT::char_type Char;
+            typedef typename JT::string_type String;
+            typedef typename JT::array_type Array;
+            typedef typename JT::object_type Object;
             typedef JsonCore <JT> JsonCore;
             typedef typename Special<Char>::_ CS;
             static const unsigned short numPrec;

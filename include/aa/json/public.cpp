@@ -11,7 +11,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void swap(Json<NT, ST, AC, OC> &j1, Json<NT, ST, AC, OC> &j2) {
+    void swap(json<NT, ST, AC, OC> &j1, json<NT, ST, AC, OC> &j2) {
         j1.swap(j2);
     };
 
@@ -21,7 +21,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String stringify(const Json<NT, CT, AC, OC> &j, const short &indent, const short &depth) {
-        return json::Private::Trivial<Json<NT, CT, AC, OC>>::pjc2str(j._pCore.get(), indent, depth);
+    typename json<NT, CT, AC, OC>::string_type stringify(const json<NT, CT, AC, OC> &j, const short &indent, const short &depth) {
+        return _json::Private::Trivial<json<NT, CT, AC, OC>>::pjc2str(j._pCore.get(), indent, depth);
     }
 }

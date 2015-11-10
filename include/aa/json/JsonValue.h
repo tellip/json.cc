@@ -7,15 +7,15 @@
 #include "Private.h"
 
 namespace aa {
-    namespace json {
+    namespace _json {
         template<typename JT>
         union Private::JsonValue {
             void *pNull;
             bool *pBoolean;
-            typename JT::Number *pNumber;
-            typename JT::String *pString;
-            typename JT::Array *pArray;
-            typename JT::Object *pObject;
+            typename JT::number_type *pNumber;
+            typename JT::string_type *pString;
+            typename JT::array_type *pArray;
+            typename JT::object_type *pObject;
         };
     }
 }
