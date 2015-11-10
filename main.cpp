@@ -6,14 +6,14 @@ using namespace aa;
 int main() {
     using json=json<>;
     /**
-     * template:json<   number_type,    char_type,  array_type,         object_type             >
-     * default: json<   double,         char,       std::deque,         std::map                >
-     * tested:  json<   short           char        std::list           std::map                >
-     *                  int             wchar_t     std::vector         std::multimap           >
-     *                  long                        std::deque          std::unordered_map      >
-     *                  unsigned                    std::forward_list   std::unordered_multimap >
-     *                  double
-     *                  long double
+     * template:json<   number_type,    char_type,  array_type,             object_type             >
+     * default:         double,         char,       std::deque,             std::map
+     * tested:          short           char        std::forward_list       std::map
+     *                  int             wchar_t     std::list               std::multimap
+     *                  long                        std::vector             std::unordered_map
+     *                  unsigned                    std::deque              std::unordered_multimap
+     *                  double                      std::set
+     *                  long double                 std::multiset
      *                  __int64
      */
 

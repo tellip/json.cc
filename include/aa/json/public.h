@@ -4,15 +4,24 @@
 
 #pragma once
 
-#include <string>
+//string
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include <deque>
-#include <list>
-#include <map>
+#include <string>
 #include <sstream>
 #include <iomanip>
+//array
+#include <forward_list>
+#include <list>
+#include <vector>
+#include <deque>
+#include <set>
+#include <unordered_set>
+//map
+#include <map>
+#include <unordered_map>
+//others
 #include <utility>
 #include <memory>
 #include <type_traits>
@@ -48,6 +57,30 @@ namespace aa {
             template<typename, typename...> class OC
     >
     typename json<NT, CT, AC, OC>::string_type stringify(const json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    bool operator<(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    bool operator>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    bool operator==(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
 }
 
 #include "Private.h"

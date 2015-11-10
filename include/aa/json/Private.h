@@ -12,8 +12,13 @@ namespace aa {
         ABSTRACT(Private)
 
         protected:
-            template<typename...>
             struct Special;
+
+            template<typename>
+            struct CharSpecial;
+
+            template<typename, typename>
+            struct ArraySpecial;
 
             enum JsonCategory {
                 JC_NULL,
@@ -26,9 +31,6 @@ namespace aa {
 
             template<typename>
             union JsonValue;
-
-            template<typename>
-            class Trivial;
 
             template<typename>
             class JsonCore;
@@ -55,6 +57,9 @@ namespace aa {
 
             template<typename>
             class JCObjectFactory;
+
+            template<typename>
+            class Trivial;
         };
         DESTRUCTOR_DEFAULT_IMPL(Private)
     }

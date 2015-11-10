@@ -17,18 +17,18 @@ namespace aa {
         class Private::JCoreFactory : public Factory {
         SINGLETON(JCoreFactory)
         private:
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type String;
-            typedef JsonCore <JT> JsonCore;
-            typedef JsonValue <JT> JsonValue;
-            typedef Trivial<JT> Trivial;
-            typedef JCNullFactory <JT> JCNullFactory;
-            typedef JCBooleanFactory <JT> JCBooleanFactory;
-            typedef JCNumberFactory <JT> JCNumberFactory;
-            typedef JCStringFactory <JT> JCStringFactory;
-            typedef JCArrayFactory <JT> JCArrayFactory;
-            typedef JCObjectFactory <JT> JCObjectFactory;
+            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::char_type>;
+            using String= typename JT::string_type;
+            using JsonCore= JsonCore<JT>;
+            using JsonValue= JsonValue<JT>;
+            using Trivial= Trivial<JT>;
+            using JCNullFactory= JCNullFactory<JT>;
+            using JCBooleanFactory= JCBooleanFactory<JT>;
+            using JCNumberFactory= JCNumberFactory<JT>;
+            using JCStringFactory= JCStringFactory<JT>;
+            using JCArrayFactory= JCArrayFactory<JT>;
+            using JCObjectFactory= JCObjectFactory<JT>;
         protected:
             void passThrough(StrIter &, const StrIter &) const;
 
@@ -52,10 +52,10 @@ namespace aa {
         class Private::JCNullFactory : public JCoreFactory<JT> {
         SINGLETON(JCNullFactory)
         private:
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
+            using CS= CharSpecial<typename JT::char_type>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -70,10 +70,10 @@ namespace aa {
         class Private::JCBooleanFactory : public JCoreFactory<JT> {
         SINGLETON(JCBooleanFactory)
         private:
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
+            using CS= CharSpecial<typename JT::char_type>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -89,12 +89,12 @@ namespace aa {
         class Private::JCNumberFactory : public JCoreFactory<JT> {
         SINGLETON(JCNumberFactory)
         private:
-            typedef typename JT::char_type Char;
-            typedef typename Special<Char>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
-            typedef typename JT::number_type Number;
+            using Char= typename JT::char_type;
+            using CS= CharSpecial<Char>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
+            using Number= typename JT::number_type;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -110,12 +110,12 @@ namespace aa {
         class Private::JCStringFactory : public JCoreFactory<JT> {
         SINGLETON(JCStringFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
-            typedef typename JT::string_type String;
+            using JCoreFactory= Private::JCoreFactory<JT>;
+            using CS= CharSpecial<typename JT::char_type>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
+            using String= typename JT::string_type;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -131,12 +131,13 @@ namespace aa {
         class Private::JCArrayFactory : public JCoreFactory<JT> {
         SINGLETON(JCArrayFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
-            typedef typename JT::array_type Array;
+            using JCoreFactory= Private::JCoreFactory<JT>;
+            using CS= CharSpecial<typename JT::char_type>;
+            using AS= ArraySpecial<typename JT::array_type, JT>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
+            using Array= typename JT::array_type;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -152,13 +153,13 @@ namespace aa {
         class Private::JCObjectFactory : public JCoreFactory<JT> {
         SINGLETON(JCObjectFactory)
         private:
-            typedef Private::JCoreFactory<JT> JCoreFactory;
-            typedef typename Special<typename JT::char_type>::_ CS;
-            typedef typename JT::string_type::const_iterator StrIter;
-            typedef Private::JsonCore<JT> JsonCore;
-            typedef Private::JsonValue<JT> JsonValue;
-            typedef typename JT::object_type Object;
-            typedef typename JT::string_type String;
+            using JCoreFactory= Private::JCoreFactory<JT>;
+            using CS= CharSpecial<typename JT::char_type>;
+            using StrIter= typename JT::string_type::const_iterator;
+            using JsonCore= Private::JsonCore<JT>;
+            using JsonValue= Private::JsonValue<JT>;
+            using Object= typename JT::object_type;
+            using String= typename JT::string_type;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 

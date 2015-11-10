@@ -68,7 +68,7 @@ namespace aa {
         Private::Trivial<JT>::arr2str(const Array &a, const short &indent, const short &depth) {
             String ws;
             ws += CS::arrLeft;
-            if (a.begin() != a.end()) {
+            if (!a.empty()) {
                 typename Array::const_iterator i = a.begin();
                 if (indent >= 0) {
                     ws += CS::lineBreak;
@@ -84,7 +84,7 @@ namespace aa {
                     ws += aa::stringify(*i, indent, depth + 1);
                 }
             }
-            if (indent >= 0 && a.begin() != a.end()) {
+            if (indent >= 0 && !a.empty()) {
                 ws += CS::lineBreak;
                 for (short si = 0; si < depth; si++) ws.append(indent, CS::blankSpace);
             }
@@ -97,7 +97,7 @@ namespace aa {
         Private::Trivial<JT>::obj2str(const Object &o, const short &indent, const short &depth) {
             String ws;
             ws += CS::objLeft;
-            if (o.size()) {
+            if (!o.empty()) {
                 typename Object::const_iterator i = o.begin();
                 if (indent >= 0) {
                     ws += CS::lineBreak;
@@ -117,7 +117,7 @@ namespace aa {
                     ws += aa::stringify(i->second, indent, depth + 1);
                 }
             }
-            if (indent >= 0 && o.size()) {
+            if (indent >= 0 && !o.empty()) {
                 ws += CS::lineBreak;
                 for (short si = 0; si < depth; si++) ws.append(indent, CS::blankSpace);
             }

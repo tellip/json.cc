@@ -16,24 +16,33 @@ namespace aa {
     class json : public _json::Private {
         friend class Private;
 
-    public:
-        typedef NT number_type;
-        typedef CT char_type;
-        typedef typename Special<CT>::_::String string_type;
-        typedef AC<json> array_type;
-        typedef OC<string_type, json> object_type;
+        friend bool operator<
+                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
 
-        friend string_type aa::stringify<NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const short &, const short &);
+        friend bool operator>
+                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+
+        friend bool operator==
+                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+
+    public:
+        using number_type= NT;
+        using char_type= CT;
+        using string_type= typename CharSpecial<CT>::String;
+        using array_type= AC<json>;
+        using object_type= OC<string_type, json>;
+
+        friend string_type aa::stringify<NT, CT, AC, OC>(const json &, const short &, const short &);
 
     private:
-        typedef JsonCore <json> JsonCore;
-        typedef JCoreFactory <json> JCoreFactory;
-        typedef JCNullFactory <json> JCNullFactory;
-        typedef JCBooleanFactory <json> JCBooleanFactory;
-        typedef JCNumberFactory <json> JCNumberFactory;
-        typedef JCStringFactory <json> JCStringFactory;
-        typedef JCArrayFactory <json> JCArrayFactory;
-        typedef JCObjectFactory <json> JCObjectFactory;
+        using JsonCore= JsonCore<json>;
+        using JCoreFactory= JCoreFactory<json>;
+        using JCNullFactory= JCNullFactory<json>;
+        using JCBooleanFactory= JCBooleanFactory<json>;
+        using JCNumberFactory= JCNumberFactory<json>;
+        using JCStringFactory= JCStringFactory<json>;
+        using JCArrayFactory= JCArrayFactory<json>;
+        using JCObjectFactory= JCObjectFactory<json>;
 
     private:
         static std::shared_ptr<bool> _pDefaultBoolean;
@@ -93,7 +102,7 @@ namespace aa {
 
         ~json();
 
-        //Special: deal with situation that type 'number_type' is 'int'.
+        //CharSpecial: deal with situation that type 'number_type' is 'int'.
         json(int &&);
 
         json(const int &);

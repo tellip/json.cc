@@ -216,13 +216,7 @@ namespace aa {
                     }
                 }
                 iNow++;
-                Array a(l.size());
-                typename std::list<JT>::iterator il;
-                typename Array::iterator ia;
-                for (il = l.begin(), ia = a.begin(); il != l.end(); il++, ia++) {
-                    ia->swap(*il);
-                }
-                return JsonCore::construct(JC_ARRAY, JsonValue{.pArray=new Array(move(a))});
+                return JsonCore::construct(JC_ARRAY, JsonValue{.pArray=new Array(AS::buildByList(std::move(l)))});
             } catch (...) {
                 iNow = iBegin;
                 return NULL;
@@ -259,7 +253,7 @@ namespace aa {
                         if (iNow == iEnd) throw NULL;
                         JsonCore *pjc = JCoreFactory::byParsing(iNow, iEnd);
                         if (!pjc) throw NULL;
-                        o.insert(std::pair<String,JT>(std::move(key), JT(pjc)));
+                        o.insert(std::pair<String, JT>(std::move(key), JT(pjc)));
                         if (iNow == iEnd) throw NULL;
                         if (*iNow == CS::sepSym) {
                             iNow++;

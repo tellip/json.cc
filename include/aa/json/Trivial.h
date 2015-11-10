@@ -13,13 +13,13 @@ namespace aa {
         STATIC(Trivial)
 
         private:
-            typedef typename JT::number_type Number;
-            typedef typename JT::char_type Char;
-            typedef typename JT::string_type String;
-            typedef typename JT::array_type Array;
-            typedef typename JT::object_type Object;
-            typedef JsonCore <JT> JsonCore;
-            typedef typename Special<Char>::_ CS;
+            using Number= typename JT::number_type;
+            using Char= typename JT::char_type;
+            using String= typename JT::string_type;
+            using Array= typename JT::array_type;
+            using Object= typename JT::object_type;
+            using JsonCore= JsonCore<JT>;
+            using CS= CharSpecial<Char>;
             static const unsigned short numPrec;
         public:
             static String bl2str(const bool &);

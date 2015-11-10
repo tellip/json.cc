@@ -11,7 +11,7 @@ namespace aa {
         template<typename JT>
         class Private::JsonCore : public Private {
         private:
-            typedef JsonValue <JT> JsonValue;
+            using JsonValue= JsonValue<JT>;
         public:
             const JsonCategory category;
             const JsonValue value;
