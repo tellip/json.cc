@@ -14,6 +14,7 @@ int main() {
      *                  unsigned                    std::forward_list   std::unordered_multimap >
      *                  double
      *                  long double
+     *                  __int64
      */
 
     //constructors
