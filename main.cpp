@@ -37,7 +37,7 @@ int main() {
     }
     if (j4.is_string()) {
         std::cout << "j4 is string." << std::endl;
-        j4.s() += " Use json<X,wchar_t,X,X> then array will be saved as std::wstring."; //std::string
+        j4.s() += ". Use json<X,wchar_t,X,X> then array will be saved as std::wstring."; //std::string
     }
     if (j5.is_array()) {
         std::cout << "j5 is array." << std::endl;

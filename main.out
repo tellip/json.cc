@@ -8,7 +8,7 @@ j6 is object.
     null,
     true,
     1233,
-    "hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",
+    "hello. Use json<X,wchar_t,X,X> then array will be saved as std::wstring.",
     [
         5,
         8,
@@ -35,5 +35,5 @@ j6 is object.
         }
     }
 ]//line comments filtered!
-[null,true,1233,"hello Use Json<X,wchar_t,X,X> then array will be saved as std::wstring.",[5,8,2,0,{"hello":"json"}],{"a
-rray":[5,8,2,0,{"hello":"json"}],"enjoy":"json","hello":"json","object":{"number":1234}}]
+[null,true,1233,"hello. Use json<X,wchar_t,X,X> then array will be saved as std::wstring.",[5,8,2,0,{"hello":"json"}],{"
+array":[5,8,2,0,{"hello":"json"}],"enjoy":"json","hello":"json","object":{"number":1234}}]
