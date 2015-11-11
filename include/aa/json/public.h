@@ -40,7 +40,15 @@ namespace aa {
             template<typename...> class=std::deque,
             template<typename, typename...> class=std::map
     >
-    class json;
+    class Json;
+
+    template<
+            typename NT=double,
+            typename CT=char,
+            template<typename...> class AC=std::deque,
+            template<typename, typename...> class OC=std::map
+    >
+    using json=Json<NT, CT, AC, OC>;
 
     template<
             typename NT,
@@ -48,7 +56,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    void swap(json<NT, CT, AC, OC> &, json<NT, CT, AC, OC> &);
+    void swap(Json<NT, CT, AC, OC> &, Json<NT, CT, AC, OC> &);
 
     template<
             typename NT,
@@ -56,7 +64,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename json<NT, CT, AC, OC>::string_type stringify(const json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
+    typename Json<NT, CT, AC, OC>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
+
 
     template<
             typename NT,
@@ -64,7 +73,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool operator<(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+    bool operator<(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
     template<
             typename NT,
@@ -72,7 +81,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool operator>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+    bool operator>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
     template<
             typename NT,
@@ -80,7 +89,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool operator==(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+    bool operator==(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 }
 
 #include "Private.h"
@@ -89,11 +98,11 @@ namespace aa {
 #include "JsonValue.h"
 #include "JsonCore.h"
 #include "Factory.h"
-#include "json.h"
+#include "Json.h"
 
 #include "Special.cpp"
 #include "Trivial.cpp"
 #include "JsonCore.cpp"
 #include "Factory.cpp"
-#include "json.cpp"
+#include "Json.cpp"
 #include "public.cpp"

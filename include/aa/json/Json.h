@@ -13,51 +13,70 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    class json : public _json::Private {
+    class Json : public _json::Private {
         friend class Private;
 
         friend bool operator<
-                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+                <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
         friend bool operator>
-                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+                <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
         friend bool operator==
-                <NT, CT, AC, OC>(const json<NT, CT, AC, OC> &, const json<NT, CT, AC, OC> &);
+                <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
     public:
-        using number_type= NT;
-        using char_type= CT;
-        using string_type= typename CharSpecial<CT>::String;
-        using array_type= AC<json>;
-        using object_type= OC<string_type, json>;
+        using Number= NT;
+        using Char= CT;
+        using String= typename CharSpecial<CT>::String;
+        using Array= AC<Json>;
+        using Object= OC<String, Json>;
 
-        friend string_type aa::stringify<NT, CT, AC, OC>(const json &, const short &, const short &);
+        using number_type=Number;
+        using char_type=Char;
+        using string_type=String;
+        using array_type=Array;
+        using object_type=Object;
+
+        friend String aa::stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
 
     private:
-        using JsonCore= JsonCore<json>;
-        using JCoreFactory= JCoreFactory<json>;
-        using JCNullFactory= JCNullFactory<json>;
-        using JCBooleanFactory= JCBooleanFactory<json>;
-        using JCNumberFactory= JCNumberFactory<json>;
-        using JCStringFactory= JCStringFactory<json>;
-        using JCArrayFactory= JCArrayFactory<json>;
-        using JCObjectFactory= JCObjectFactory<json>;
+        using JsonCore= JsonCore<Json>;
+        using JCoreFactory= JCoreFactory<Json>;
+        using JCNullFactory= JCNullFactory<Json>;
+        using JCBooleanFactory= JCBooleanFactory<Json>;
+        using JCNumberFactory= JCNumberFactory<Json>;
+        using JCStringFactory= JCStringFactory<Json>;
+        using JCArrayFactory= JCArrayFactory<Json>;
+        using JCObjectFactory= JCObjectFactory<Json>;
 
     private:
         static std::shared_ptr<bool> _pDefaultBoolean;
-        static std::shared_ptr<number_type> _pDefaultNumber;
-        static std::shared_ptr<string_type> _pDefaultString;
-        static std::shared_ptr<array_type> _pDefaultArray;
-        static std::shared_ptr<object_type> _pDefaultObject;
+        static std::shared_ptr<Number> _pDefaultNumber;
+        static std::shared_ptr<String> _pDefaultString;
+        static std::shared_ptr<Array> _pDefaultArray;
+        static std::shared_ptr<Object> _pDefaultObject;
 
     public:
-        static json parse(const string_type &);
+        static Json parse(const String &);
 
     private:
         std::shared_ptr<JsonCore> _pCore;
 
     public:
+        //checker
+        bool isNull() const;
+
+        bool isBoolean() const;
+
+        bool isNumber() const;
+
+        bool isString() const;
+
+        bool isArray() const;
+
+        bool isObject() const;
+
         bool is_null() const;
 
         bool is_boolean() const;
@@ -70,75 +89,76 @@ namespace aa {
 
         bool is_object() const;
 
+        //entiry referer
         bool &b() const;
 
-        number_type &n() const;
+        Number &n() const;
 
-        string_type &s() const;
+        String &s() const;
 
-        array_type &a() const;
+        Array &a() const;
 
-        object_type &o() const;
+        Object &o() const;
 
     public:
-        json();
+        Json();
 
-        json(json &&);
+        Json(Json &&);
 
-        json(const json &);
+        Json(const Json &);
 
-        json &operator=(json &&);
+        Json &operator=(Json &&);
 
-        json &operator=(const json &);
+        Json &operator=(const Json &);
 
     public:
         template<typename T>
-        json(T &&);
+        Json(T &&);
 
         template<typename T>
-        json &operator=(T &&);
+        Json &operator=(T &&);
 
-        void swap(json &);
+        void swap(Json &);
 
-        ~json();
+        ~Json();
 
-        //CharSpecial: deal with situation that type 'number_type' is 'int'.
-        json(int &&);
+        //CharSpecial: deal with situation that type 'Number' is 'int'.
+        Json(int &&);
 
-        json(const int &);
+        Json(const int &);
 
-        json &operator=(int &&);
+        Json &operator=(int &&);
 
-        json &operator=(const int &);
+        Json &operator=(const int &);
         ///
 
     private:
-        void _move(json &&);
+        void _move(Json &&);
 
-        void _copy(const json &);
+        void _copy(const Json &);
 
         template<typename T>
         void _auto(T &&, bool *const &p = NULL);
 
         template<typename T>
-        void _auto(T &&, number_type *const &p = NULL);
+        void _auto(T &&, Number *const &p = NULL);
 
         template<typename T>
-        void _auto(T &&, string_type *const &p = NULL);
+        void _auto(T &&, String *const &p = NULL);
 
         template<typename T>
-        void _auto(T &&, const char_type **const &p = NULL);
+        void _auto(T &&, const Char **const &p = NULL);
 
         template<typename T>
-        void _auto(T &&, array_type *const &p = NULL);
+        void _auto(T &&, Array *const &p = NULL);
 
         template<typename T>
-        void _auto(T &&, object_type *const &p = NULL);
+        void _auto(T &&, Object *const &p = NULL);
 
-        void _auto(json &&, json *const &p = NULL);
+        void _auto(Json &&, Json *const &p = NULL);
 
-        void _auto(const json &, json *const &p = NULL);
+        void _auto(const Json &, Json *const &p = NULL);
 
-        json(JsonCore *);
+        Json(JsonCore *);
     };
 }

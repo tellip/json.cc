@@ -26,7 +26,7 @@ namespace aa {
             using String= std::string;
             using Oss= std::ostringstream;
 
-            //json config
+            //Json config
             static const char objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
             static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;
             //, ldScnfFmt, dbScnfFmt;
@@ -47,7 +47,7 @@ namespace aa {
             using String= std::wstring;
             using Oss= std::wostringstream;
 
-            //json config
+            //Json config
             static const wchar_t objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
             static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;
             //, ldScnfFmt, dbScnfFmt;

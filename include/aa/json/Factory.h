@@ -17,9 +17,9 @@ namespace aa {
         class Private::JCoreFactory : public Factory {
         SINGLETON(JCoreFactory)
         private:
-            using StrIter= typename JT::string_type::const_iterator;
-            using CS= CharSpecial<typename JT::char_type>;
-            using String= typename JT::string_type;
+            using StrIter= typename JT::String::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using String= typename JT::String;
             using JsonCore= JsonCore<JT>;
             using JsonValue= JsonValue<JT>;
             using Trivial= Trivial<JT>;
@@ -38,7 +38,7 @@ namespace aa {
 
             void passBlockComment(StrIter &, const StrIter &) const;
 
-            bool is_string(StrIter &, const StrIter &, String &) const;
+            bool isString(StrIter &, const StrIter &, String &) const;
 
         public:
             virtual JsonCore *byParsing(StrIter &, const StrIter &) const;
@@ -52,8 +52,8 @@ namespace aa {
         class Private::JCNullFactory : public JCoreFactory<JT> {
         SINGLETON(JCNullFactory)
         private:
-            using CS= CharSpecial<typename JT::char_type>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
         public:
@@ -70,8 +70,8 @@ namespace aa {
         class Private::JCBooleanFactory : public JCoreFactory<JT> {
         SINGLETON(JCBooleanFactory)
         private:
-            using CS= CharSpecial<typename JT::char_type>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
         public:
@@ -89,12 +89,12 @@ namespace aa {
         class Private::JCNumberFactory : public JCoreFactory<JT> {
         SINGLETON(JCNumberFactory)
         private:
-            using Char= typename JT::char_type;
+            using Char= typename JT::Char;
             using CS= CharSpecial<Char>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
-            using Number= typename JT::number_type;
+            using Number= typename JT::Number;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -111,11 +111,11 @@ namespace aa {
         SINGLETON(JCStringFactory)
         private:
             using JCoreFactory= Private::JCoreFactory<JT>;
-            using CS= CharSpecial<typename JT::char_type>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
-            using String= typename JT::string_type;
+            using String= typename JT::String;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -132,12 +132,12 @@ namespace aa {
         SINGLETON(JCArrayFactory)
         private:
             using JCoreFactory= Private::JCoreFactory<JT>;
-            using CS= CharSpecial<typename JT::char_type>;
-            using AS= ArraySpecial<typename JT::array_type, JT>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using AS= ArraySpecial<typename JT::Array, JT>;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
-            using Array= typename JT::array_type;
+            using Array= typename JT::Array;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -154,12 +154,12 @@ namespace aa {
         SINGLETON(JCObjectFactory)
         private:
             using JCoreFactory= Private::JCoreFactory<JT>;
-            using CS= CharSpecial<typename JT::char_type>;
-            using StrIter= typename JT::string_type::const_iterator;
+            using CS= CharSpecial<typename JT::Char>;
+            using StrIter= typename JT::String::const_iterator;
             using JsonCore= Private::JsonCore<JT>;
             using JsonValue= Private::JsonValue<JT>;
-            using Object= typename JT::object_type;
-            using String= typename JT::string_type;
+            using Object= typename JT::Object;
+            using String= typename JT::String;
         public:
             JsonCore *byParsing(StrIter &, const StrIter &) const;
 

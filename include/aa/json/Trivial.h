@@ -13,11 +13,11 @@ namespace aa {
         STATIC(Trivial)
 
         private:
-            using Number= typename JT::number_type;
-            using Char= typename JT::char_type;
-            using String= typename JT::string_type;
-            using Array= typename JT::array_type;
-            using Object= typename JT::object_type;
+            using Number= typename JT::Number;
+            using Char= typename JT::Char;
+            using String= typename JT::String;
+            using Array= typename JT::Array;
+            using Object= typename JT::Object;
             using JsonCore= JsonCore<JT>;
             using CS= CharSpecial<Char>;
             static const unsigned short numPrec;
