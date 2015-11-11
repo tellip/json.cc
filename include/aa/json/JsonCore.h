@@ -4,26 +4,24 @@
 
 #pragma once
 
-#include "Private.h"
+#include "hub.h"
 
 namespace aa {
-    namespace _json {
-        template<typename JT>
-        class Private::JsonCore : public Private {
-        private:
-            using JsonValue= JsonValue<JT>;
-        public:
-            const JsonCategory category;
-            const JsonValue value;
-        private:
-            JsonCore(JsonCategory &&, JsonValue &&);
+    template<typename JT>
+    class _Json::JsonCore : public _Json {
+    private:
+        using JsonValue= JsonValue<JT>;
+    public:
+        const JsonCategory category;
+        const JsonValue value;
+    private:
+        JsonCore(JsonCategory &&, JsonValue &&);
 
-            ~JsonCore();
+        ~JsonCore();
 
-        public:
-            static JsonCore *construct(JsonCategory &&, JsonValue &&);
+    public:
+        static JsonCore *construct(JsonCategory &&, JsonValue &&);
 
-            static void destruct(JsonCore *const &);
-        };
-    }
+        static void destruct(JsonCore *const &);
+    };
 }

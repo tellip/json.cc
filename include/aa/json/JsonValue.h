@@ -4,18 +4,16 @@
 
 #pragma once
 
-#include "Private.h"
+#include "hub.h"
 
 namespace aa {
-    namespace _json {
-        template<typename JT>
-        union Private::JsonValue {
-            void *pNull;
-            bool *pBoolean;
-            typename JT::Number *pNumber;
-            typename JT::String *pString;
-            typename JT::Array *pArray;
-            typename JT::Object *pObject;
-        };
-    }
+    template<typename JT>
+    union _Json::JsonValue {
+        void *pNull;
+        bool *pBoolean;
+        typename JT::Number *pNumber;
+        typename JT::String *pString;
+        typename JT::Array *pArray;
+        typename JT::Object *pObject;
+    };
 }

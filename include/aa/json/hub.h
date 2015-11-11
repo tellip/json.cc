@@ -30,9 +30,59 @@
 #include "../common.h"
 
 namespace aa {
-    namespace _json {
-        class Private;
-    }
+    class _Json {
+    ABSTRACT(_Json)
+    protected:
+        struct Special;
+
+        template<typename>
+        struct CharSpecial;
+
+        template<typename, typename>
+        struct ArraySpecial;
+
+        enum JsonCategory {
+            JC_NULL,
+            JC_BOOLEAN,
+            JC_NUMBER,
+            JC_STRING,
+            JC_ARRAY,
+            JC_OBJECT
+        };
+
+        template<typename>
+        union JsonValue;
+
+        template<typename>
+        class JsonCore;
+
+        class Factory;
+
+        template<typename>
+        class JCoreFactory;
+
+        template<typename>
+        class JCNullFactory;
+
+        template<typename>
+        class JCBooleanFactory;
+
+        template<typename>
+        class JCNumberFactory;
+
+        template<typename>
+        class JCStringFactory;
+
+        template<typename>
+        class JCArrayFactory;
+
+        template<typename>
+        class JCObjectFactory;
+
+        template<typename>
+        class Trivial;
+    };
+    DESTRUCTOR_DEFAULT_IMPL(_Json)
 
     template<
             typename=double,
@@ -64,15 +114,6 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
-
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
     bool operator<(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
     template<
@@ -90,9 +131,16 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool operator==(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    typename _Json::CharSpecial<CT>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
 }
 
-#include "Private.h"
 #include "Special.h"
 #include "Trivial.h"
 #include "JsonValue.h"
@@ -105,4 +153,4 @@ namespace aa {
 #include "JsonCore.cpp"
 #include "Factory.cpp"
 #include "Json.cpp"
-#include "public.cpp"
+#include "hub.cpp"

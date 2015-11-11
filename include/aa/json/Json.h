@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "public.h"
+#include "hub.h"
 
 namespace aa {
     template<
@@ -13,8 +13,8 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    class Json : public _json::Private {
-        friend class Private;
+    class Json : public _Json {
+        friend class _Json;
 
         friend bool operator<
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
@@ -24,6 +24,8 @@ namespace aa {
 
         friend bool operator==
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
+
+        friend typename CharSpecial<CT>::String stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
 
     public:
         using Number= NT;
@@ -37,8 +39,6 @@ namespace aa {
         using string_type=String;
         using array_type=Array;
         using object_type=Object;
-
-        friend String aa::stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
 
     private:
         using JsonCore= JsonCore<Json>;
