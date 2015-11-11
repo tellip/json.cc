@@ -54,9 +54,8 @@ namespace aa {
     json<NT, CT, AC, OC> json<NT, CT, AC, OC>::parse(const string_type &s) {
         typename string_type::const_iterator iNow = s.begin();
         JsonCore *pjc = JCoreFactory::pi()->byParsing(iNow, s.end());
-        if (!pjc) return json();
         if (iNow != s.end()) {
-            JsonCore::destruct(pjc);
+            if (pjc) JsonCore::destruct(pjc);
             return json();
         }
         return json(pjc);
