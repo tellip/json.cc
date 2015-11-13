@@ -222,76 +222,35 @@ namespace aa {
 
     template<typename JT>
     std::forward_list<JT>
-    _Json::ArraySpecial<std::forward_list<JT>, JT
-    >
-    ::buildByList(std::list<JT>
-                  &&l) {
+    _Json::ArraySpecial<std::forward_list<JT>, JT>::buildByList(std::list<JT> &&l) {
         std::forward_list<JT> fl;
         typename std::list<JT>::iterator i;
-        for (
-                i = l.end(), i
-                        --; i != l.
-
-                begin();
-
-                i--)
-            fl.
-                    push_front(std::move(*i));
-        fl.
-                push_front(std::move(*i));
-        return
-                fl;
+        for (i = l.end(), i--; i != l.begin(); i--) fl.push_front(std::move(*i));
+        fl.push_front(std::move(*i));
+        return fl;
     }
 
     template<typename JT>
     std::list<JT>
-    _Json::ArraySpecial<std::list<JT>, JT
-    >
-    ::buildByList(std::list<JT>
-                  &&l) {
-        return
-                std::move(l);
+    _Json::ArraySpecial<std::list<JT>, JT>::buildByList(std::list<JT> &&l) {
+        return std::move(l);
     }
 
     template<typename JT>
     std::vector<JT>
-    _Json::ArraySpecial<std::vector<JT>, JT
-    >
-    ::buildByList(std::list<JT>
-                  &&l) {
+    _Json::ArraySpecial<std::vector<JT>, JT>::buildByList(std::list<JT> &&l) {
         std::vector<JT> v(l.size());
         typename std::vector<JT>::iterator i1 = v.begin();
-        for (
-                typename std::list<JT>::iterator i = l.begin();
-                i != l.
-
-                        end();
-
-                i++, i1++)
-            i1->
-                    swap(*i);
-        return
-                v;
+        for (typename std::list<JT>::iterator i = l.begin(); i != l.end(); i++, i1++) i1->swap(*i);
+        return v;
     }
 
     template<typename JT>
     std::set<JT>
-    _Json::ArraySpecial<std::set<JT>, JT
-    >
-    ::buildByList(std::list<JT>
-                  &&l) {
+    _Json::ArraySpecial<std::set<JT>, JT>::buildByList(std::list<JT> &&l) {
         std::set<JT> st;
-        for (
-                typename std::list<JT>::iterator i = l.begin();
-                i != l.
-
-                        end();
-
-                i++)
-            st.
-                    insert(std::move(*i));
-        return
-                st;
+        for (typename std::list<JT>::iterator i = l.begin(); i != l.end(); i++) st.insert(std::move(*i));
+        return st;
     }
 
     template<typename JT>
