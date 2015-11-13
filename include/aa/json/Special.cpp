@@ -5,6 +5,21 @@
 #include "Special.h"
 
 namespace aa {
+    //number special
+
+    int _Json::NumberSpecial<short>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(short) * 8 - 1);
+    int _Json::NumberSpecial<unsigned short>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(short) * 8);
+    int _Json::NumberSpecial<int>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(int) * 8 - 1);
+    int _Json::NumberSpecial<unsigned int>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(int) * 8);
+    int _Json::NumberSpecial<long>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(long) * 8 - 1);
+    int _Json::NumberSpecial<unsigned long>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(long) * 8);
+    int _Json::NumberSpecial<long long>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(long long) * 8 - 1);
+    int _Json::NumberSpecial<unsigned long long>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(long long) * 8);
+    int _Json::NumberSpecial<float>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(float) * 8);
+    int _Json::NumberSpecial<double>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(double) * 8);
+    int _Json::NumberSpecial<long double>::deciPrec = _Json::Trivial::precFromBinaToDeci(sizeof(long double) * 8);
+
+    //char special
     const char
             _Json::CharSpecial<char>::objLeft = '{',
             _Json::CharSpecial<char>::objRight = '}',
@@ -23,9 +38,6 @@ namespace aa {
             _Json::CharSpecial<char>::lnCmtHd = "//",
             _Json::CharSpecial<char>::bkCmtHd = "/*",
             _Json::CharSpecial<char>::bkCmtTl = "*/";
-    //,
-//                _Json::CharSpecial<char>::ldScnfFmt = "%LF%n",
-//                _Json::CharSpecial<char>::dbScnfFmt = "%lf%n";
     const std::map<const char, const char>
             _Json::CharSpecial<char>::escapeMap = {
             {'a',  '\a'},
@@ -54,11 +66,7 @@ namespace aa {
             {'\0', '0'}
     };
 
-    int (*const &_Json::CharSpecial<char>::StrNCmp)(const char *, const char *, size_t) = strncmp;
-
-    long double (*const &_Json::CharSpecial<char>::StrToLd)(const char *, char **) = strtold;
-
-//        int (*const &_Json::CharSpecial<char>::StrScanf)(const char *, const char *, ...) = sscanf;
+    int (*const &_Json::CharSpecial<char>::strNCmp)(const char *, const char *, size_t) = strncmp;
 
     const wchar_t
             _Json::CharSpecial<wchar_t>::objLeft = L'{',
@@ -78,9 +86,6 @@ namespace aa {
             _Json::CharSpecial<wchar_t>::lnCmtHd = L"//",
             _Json::CharSpecial<wchar_t>::bkCmtHd = L"/*",
             _Json::CharSpecial<wchar_t>::bkCmtTl = L"*/";
-    //,
-//                _Json::CharSpecial<wchar_t>::ldScnfFmt = L"%LF%n",
-//                _Json::CharSpecial<wchar_t>::dbScnfFmt = L"%lf%n";
     const std::map<const wchar_t, const wchar_t>
             _Json::CharSpecial<wchar_t>::escapeMap = {
             {L'a',  L'\a'},
@@ -109,12 +114,104 @@ namespace aa {
             {L'\0', L'0'}
     };
 
-    int (*const &_Json::CharSpecial<wchar_t>::StrNCmp)(const wchar_t *, const wchar_t *, size_t) = wcsncmp;
+    int (*const &_Json::CharSpecial<wchar_t>::strNCmp)(const wchar_t *, const wchar_t *, size_t) = wcsncmp;
 
-    long double (*const &_Json::CharSpecial<wchar_t>::StrToLd)(const wchar_t *, wchar_t **) = wcstold;
+    //char number special
+    //char
+    long _Json::CharNumberSpecial<char, long>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtol(ps, pcEnd, 10);
+    }
 
-//        int (*const &_Json::CharSpecial<wchar_t>::StrScanf)(const wchar_t *, const wchar_t *, ...) = swscanf;
+    int _Json::CharNumberSpecial<char, int>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return int(CharNumberSpecial<char, long>::strToNum(ps, pcEnd));
+    }
 
+    short _Json::CharNumberSpecial<char, short>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return short(CharNumberSpecial<char, long>::strToNum(ps, pcEnd));
+    }
+
+    unsigned long _Json::CharNumberSpecial<char, unsigned long>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtoul(ps, pcEnd, 10);
+    }
+
+    unsigned int _Json::CharNumberSpecial<char, unsigned int>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return (unsigned int) CharNumberSpecial<char, unsigned
+        long>::strToNum(ps, pcEnd);
+    }
+
+    unsigned short _Json::CharNumberSpecial<char, unsigned short>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return (unsigned short) CharNumberSpecial<char, unsigned
+        long>::strToNum(ps, pcEnd);
+    }
+
+    long long _Json::CharNumberSpecial<char, long long>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtoll(ps, pcEnd, 10);
+    }
+
+    unsigned long long _Json::CharNumberSpecial<char, unsigned long long>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtoull(ps, pcEnd, 10);
+    }
+
+    float _Json::CharNumberSpecial<char, float>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtof(ps, pcEnd);
+    }
+
+    double _Json::CharNumberSpecial<char, double>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtod(ps, pcEnd);
+    }
+
+    long double _Json::CharNumberSpecial<char, long double>::strToNum(const char *const &ps, char **const &pcEnd) {
+        return strtold(ps, pcEnd);
+    }
+
+    //wchar_t
+    long _Json::CharNumberSpecial<wchar_t, long>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstol(ps, pcEnd, 10);
+    }
+
+    int _Json::CharNumberSpecial<wchar_t, int>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return int(CharNumberSpecial<wchar_t, long>::strToNum(ps, pcEnd));
+    }
+
+    short _Json::CharNumberSpecial<wchar_t, short>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return short(CharNumberSpecial<wchar_t, long>::strToNum(ps, pcEnd));
+    }
+
+    unsigned long _Json::CharNumberSpecial<wchar_t, unsigned long>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstoul(ps, pcEnd, 10);
+    }
+
+    unsigned int _Json::CharNumberSpecial<wchar_t, unsigned int>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return (unsigned int) CharNumberSpecial<wchar_t, unsigned
+        long>::strToNum(ps, pcEnd);
+    }
+
+    unsigned short _Json::CharNumberSpecial<wchar_t, unsigned short>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return (unsigned short) CharNumberSpecial<wchar_t, unsigned
+        long>::strToNum(ps, pcEnd);
+    }
+
+    long long _Json::CharNumberSpecial<wchar_t, long long>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstoll(ps, pcEnd, 10);
+    }
+
+    unsigned long long _Json::CharNumberSpecial<wchar_t, unsigned long long>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstoull(ps, pcEnd, 10);
+    }
+
+    float _Json::CharNumberSpecial<wchar_t, float>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstof(ps, pcEnd);
+    }
+
+    double _Json::CharNumberSpecial<wchar_t, double>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstod(ps, pcEnd);
+    }
+
+    long double _Json::CharNumberSpecial<wchar_t, long double>::strToNum(const wchar_t *const &ps, wchar_t **const &pcEnd) {
+        return wcstold(ps, pcEnd);
+    }
+
+    //array special
     template<typename AT, typename JT>
     AT
     _Json::ArraySpecial<AT, JT>::buildByList(std::list<JT> &&l) {
@@ -125,35 +222,76 @@ namespace aa {
 
     template<typename JT>
     std::forward_list<JT>
-    _Json::ArraySpecial<std::forward_list<JT>, JT>::buildByList(std::list<JT> &&l) {
+    _Json::ArraySpecial<std::forward_list<JT>, JT
+    >
+    ::buildByList(std::list<JT>
+                  &&l) {
         std::forward_list<JT> fl;
         typename std::list<JT>::iterator i;
-        for (i = l.end(), i--; i != l.begin(); i--) fl.push_front(std::move(*i));
-        fl.push_front(std::move(*i));
-        return fl;
+        for (
+                i = l.end(), i
+                        --; i != l.
+
+                begin();
+
+                i--)
+            fl.
+                    push_front(std::move(*i));
+        fl.
+                push_front(std::move(*i));
+        return
+                fl;
     }
 
     template<typename JT>
     std::list<JT>
-    _Json::ArraySpecial<std::list<JT>, JT>::buildByList(std::list<JT> &&l) {
-        return std::move(l);
+    _Json::ArraySpecial<std::list<JT>, JT
+    >
+    ::buildByList(std::list<JT>
+                  &&l) {
+        return
+                std::move(l);
     }
 
     template<typename JT>
     std::vector<JT>
-    _Json::ArraySpecial<std::vector<JT>, JT>::buildByList(std::list<JT> &&l) {
+    _Json::ArraySpecial<std::vector<JT>, JT
+    >
+    ::buildByList(std::list<JT>
+                  &&l) {
         std::vector<JT> v(l.size());
         typename std::vector<JT>::iterator i1 = v.begin();
-        for (typename std::list<JT>::iterator i = l.begin(); i != l.end(); i++, i1++) i1->swap(*i);
-        return v;
+        for (
+                typename std::list<JT>::iterator i = l.begin();
+                i != l.
+
+                        end();
+
+                i++, i1++)
+            i1->
+                    swap(*i);
+        return
+                v;
     }
 
     template<typename JT>
     std::set<JT>
-    _Json::ArraySpecial<std::set<JT>, JT>::buildByList(std::list<JT> &&l) {
+    _Json::ArraySpecial<std::set<JT>, JT
+    >
+    ::buildByList(std::list<JT>
+                  &&l) {
         std::set<JT> st;
-        for (typename std::list<JT>::iterator i = l.begin(); i != l.end(); i++) st.insert(std::move(*i));
-        return st;
+        for (
+                typename std::list<JT>::iterator i = l.begin();
+                i != l.
+
+                        end();
+
+                i++)
+            st.
+                    insert(std::move(*i));
+        return
+                st;
     }
 
     template<typename JT>
@@ -163,4 +301,5 @@ namespace aa {
         for (typename std::list<JT>::iterator i = l.begin(); i != l.end(); i++) st.insert(std::move(*i));
         return st;
     }
+
 }

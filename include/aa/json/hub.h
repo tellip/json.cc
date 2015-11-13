@@ -25,6 +25,7 @@
 #include <utility>
 #include <memory>
 #include <type_traits>
+#include <cmath>
 
 #include "../class.h"
 #include "../common.h"
@@ -36,7 +37,13 @@ namespace aa {
         struct Special;
 
         template<typename>
+        struct NumberSpecial;
+
+        template<typename>
         struct CharSpecial;
+
+        template<typename, typename>
+        struct CharNumberSpecial;
 
         template<typename, typename>
         struct ArraySpecial;
@@ -79,7 +86,6 @@ namespace aa {
         template<typename>
         class JCObjectFactory;
 
-        template<typename>
         class Trivial;
     };
     DESTRUCTOR_DEFAULT_IMPL(_Json)

@@ -2,14 +2,62 @@
 // Created by kalo on 2015/11/7.
 //
 
+/**
+ * format
+ * (\w+)\n\s*(\w+)\) -> $1 $2)
+ * (\w+)\n\s*(\w+)\s(\w+)\) -> $1 $2 $3)
+ * (\w+)\n\s*(\w+)\n\s*(\w+)\) -> $1 $2 $3)
+ */
+
 #pragma once
 
 #include "hub.h"
 
 namespace aa {
-    struct _Json::Special {
+    struct _Json::Special : public _Json {
     STATIC(Special)
     };
+
+    //no default
+    template<typename>
+    struct _Json::NumberSpecial : public Special {
+    STATIC(NumberSpecial)
+
+    private:
+
+    };
+
+#define JSON_NUMBER_SPECIAL(NT)\
+    template<>\
+    struct _Json::NumberSpecial<NT> : public Special {\
+    STATIC(NumberSpecial)\
+    public:\
+        static int deciPrec;\
+    };
+
+    JSON_NUMBER_SPECIAL(short)
+
+    JSON_NUMBER_SPECIAL(unsigned short)
+
+    JSON_NUMBER_SPECIAL(int)
+
+    JSON_NUMBER_SPECIAL(unsigned int)
+
+    JSON_NUMBER_SPECIAL(long)
+
+    JSON_NUMBER_SPECIAL(unsigned long)
+
+    JSON_NUMBER_SPECIAL(long long)
+
+    JSON_NUMBER_SPECIAL(unsigned long long)
+
+    JSON_NUMBER_SPECIAL(float)
+
+    JSON_NUMBER_SPECIAL(double)
+
+    JSON_NUMBER_SPECIAL(long double)
+
+#undef JSON_NUMBER_SPECIAL
 
     //no default
     template<typename>
@@ -17,47 +65,84 @@ namespace aa {
     STATIC(CharSpecial)
     };
 
-    template<>
-    struct _Json::CharSpecial<char> : public Special {
-    STATIC(CharSpecial)
-
-    public:
-        using String= std::string;
-        using Oss= std::ostringstream;
-
-        //Json config
-        static const char objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
-        static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;
-        //, ldScnfFmt, dbScnfFmt;
-        static const std::map<const char, const char> escapeMap, unescaMap;
-
-        static int (*const &StrNCmp)(const char *, const char *, size_t);
-
-        static long double (*const &StrToLd)(const char *, char **);
-
-//            static int (*const &StrScanf)(const char *, const char *, ...);
+#define JSON_CHAR_SPECIAL(CT, ST, OSST)\
+    template<>\
+    struct _Json::CharSpecial<CT> : public Special {\
+    STATIC(CharSpecial)\
+    public:\
+        using String= ST;\
+        using Oss= OSST;\
+        static const CT objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;\
+        static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;\
+        static const std::map<const CT, const CT> escapeMap, unescaMap;\
+        static int (*const &strNCmp)(const CT *, const CT *, size_t);\
     };
 
-    template<>
-    struct _Json::CharSpecial<wchar_t> : public Special {
-    STATIC(CharSpecial)
+    JSON_CHAR_SPECIAL(char, std::string, std::ostringstream)
 
-    public:
-        using String= std::wstring;
-        using Oss= std::wostringstream;
+    JSON_CHAR_SPECIAL(wchar_t, std::wstring, std::wostringstream)
 
-        //Json config
-        static const wchar_t objLeft, objRight, arrLeft, arrRight, sepSym, strBound, referSym, escapeSym, lineBreak, blankSpace;
-        static const String boolTrue, boolFalse, nullSym, lnCmtHd, bkCmtHd, bkCmtTl;
-        //, ldScnfFmt, dbScnfFmt;
-        static const std::map<const wchar_t, const wchar_t> escapeMap, unescaMap;
+#undef JSON_CHAR_SPECIAL
 
-        static int (*const &StrNCmp)(const wchar_t *, const wchar_t *, size_t);
-
-        static long double (*const &StrToLd)(const wchar_t *, wchar_t **);
-
-//            static int (*const &StrScanf)(const wchar_t *, const wchar_t *, ...);
+    //no deafult
+    template<typename, typename>
+    struct _Json::CharNumberSpecial : public Special {
+    STATIC(CharNumberSpecial)
     };
+
+#define JSON_CHAR_NUMBER_SPECIAL(CT, NT)\
+    template<>\
+    struct _Json::CharNumberSpecial<CT, NT> : public Special {\
+    STATIC(CharNumberSpecial)\
+    public:\
+        static NT strToNum(const CT *const &, CT **const &);\
+    };
+
+    JSON_CHAR_NUMBER_SPECIAL(char, long)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, int)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, short)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, unsigned long)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, unsigned int)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, unsigned short)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, long long)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, unsigned long long)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, float)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, double)
+
+    JSON_CHAR_NUMBER_SPECIAL(char, long double)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, long)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, int)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, short)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, unsigned long)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, unsigned int)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, unsigned short)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, long long)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, unsigned long long)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, float)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, double)
+
+    JSON_CHAR_NUMBER_SPECIAL(wchar_t, long double)
+
+#undef JSON_CHAR_NUMBER_SPECIAL
 
     //default
     template<typename AT, typename JT>
@@ -68,44 +153,25 @@ namespace aa {
         static AT buildByList(std::list<JT> &&);
     };
 
-    template<typename JT>
-    struct _Json::ArraySpecial<std::forward_list<JT>, JT> : public Special {
-    STATIC(ArraySpecial)
-
-    public:
-        static std::forward_list<JT> buildByList(std::list<JT> &&);
+#define JSON_ARRAY_SPECIAL(AC)\
+    template<typename JT>\
+    struct _Json::ArraySpecial<AC<JT>, JT> : public Special {\
+    STATIC(ArraySpecial)\
+    public:\
+        static AC<JT> buildByList(std::list<JT> &&);\
     };
 
-    template<typename JT>
-    struct _Json::ArraySpecial<std::list<JT>, JT> : public Special {
-    STATIC(ArraySpecial)
+    JSON_ARRAY_SPECIAL(std::forward_list)
 
-    public:
-        static std::list<JT> buildByList(std::list<JT> &&);
-    };
+    JSON_ARRAY_SPECIAL(std::list)
 
-    template<typename JT>
-    struct _Json::ArraySpecial<std::vector<JT>, JT> : public Special {
-    STATIC(ArraySpecial)
+    JSON_ARRAY_SPECIAL(std::vector)
 
-    public:
-        static std::vector<JT> buildByList(std::list<JT> &&);
-    };
+    JSON_ARRAY_SPECIAL(std::set)
 
-    template<typename JT>
-    struct _Json::ArraySpecial<std::set<JT>, JT> : public Special {
-    STATIC(ArraySpecial)
+    JSON_ARRAY_SPECIAL(std::multiset)
 
-    public:
-        static std::set<JT> buildByList(std::list<JT> &&);
-    };
+#undef JSON_ARRAY_SPECIAL
 
-    template<typename JT>
-    struct _Json::ArraySpecial<std::multiset<JT>, JT> : public Special {
-    STATIC(ArraySpecial)
-
-    public:
-        static std::multiset<JT> buildByList(std::list<JT> &&);
-    };
 }
 

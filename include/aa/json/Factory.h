@@ -21,7 +21,6 @@ namespace aa {
         using String= typename JT::String;
         using JsonCore= JsonCore<JT>;
         using JsonValue= JsonValue<JT>;
-        using Trivial= Trivial<JT>;
         using JCNullFactory= JCNullFactory<JT>;
         using JCBooleanFactory= JCBooleanFactory<JT>;
         using JCNumberFactory= JCNumberFactory<JT>;
@@ -89,11 +88,13 @@ namespace aa {
     SINGLETON(JCNumberFactory)
     private:
         using Char= typename JT::Char;
+        using Number= typename JT::Number;
         using CS= CharSpecial<Char>;
+        using CNS=CharNumberSpecial<Char, Number>;
         using StrIter= typename JT::String::const_iterator;
         using JsonCore= _Json::JsonCore<JT>;
         using JsonValue= _Json::JsonValue<JT>;
-        using Number= typename JT::Number;
+
     public:
         JsonCore *byParsing(StrIter &, const StrIter &) const;
 

@@ -97,6 +97,9 @@ namespace aa {
             template<typename, typename...> class OC
     >
     typename _Json::CharSpecial<CT>::String stringify(const Json<NT, CT, AC, OC> &j, const short &indent, const short &depth) {
-        return _Json::Trivial<Json<NT, CT, AC, OC>>::pjc2str(j._pCore.get(), indent, depth);
+        using Json=Json<NT, CT, AC, OC>;
+        using AT=AC<Json>;
+        using OT=OC<typename _Json::CharSpecial<CT>::String, Json>;
+        return _Json::Trivial::pjc2str<CT, NT, AT, OT, _Json::JsonCore<Json>>(j._pCore.get(), indent, depth);
     }
 }

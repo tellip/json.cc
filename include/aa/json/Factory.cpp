@@ -23,7 +23,7 @@ namespace aa {
 
     template<typename JT>
     void _Json::JCoreFactory<JT>::passLineComment(StrIter &iNow, const StrIter &iEnd) const {
-        if (CS::StrNCmp(
+        if (CS::strNCmp(
                 &*iNow,
                 &*CS::lnCmtHd.begin(),
                 CS::lnCmtHd.size()
@@ -35,13 +35,13 @@ namespace aa {
 
     template<typename JT>
     void _Json::JCoreFactory<JT>::passBlockComment(StrIter &iNow, const StrIter &iEnd) const {
-        if (CS::StrNCmp(
+        if (CS::strNCmp(
                 &*iNow,
                 &*CS::bkCmtHd.begin(),
                 CS::bkCmtHd.size()
         ))
             return;
-        for (iNow += CS::bkCmtHd.size(); iNow != iEnd && CS::StrNCmp(
+        for (iNow += CS::bkCmtHd.size(); iNow != iEnd && CS::strNCmp(
                 &*iNow,
                 &*CS::bkCmtTl.begin(),
                 CS::bkCmtTl.size()
@@ -98,7 +98,7 @@ namespace aa {
     template<typename JT>
     typename _Json::JsonCore<JT> *
     _Json::JCNullFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
-        if (CS::StrNCmp(
+        if (CS::strNCmp(
                 &*iNow,
                 &*CS::nullSym.begin(),
                 CS::nullSym.size()
@@ -117,7 +117,7 @@ namespace aa {
     template<typename JT>
     typename _Json::JsonCore<JT> *
     _Json::JCBooleanFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
-        if (!CS::StrNCmp(
+        if (!CS::strNCmp(
                 &*iNow,
                 &*CS::boolTrue.begin(),
                 CS::boolTrue.size()
@@ -125,7 +125,7 @@ namespace aa {
             iNow += CS::boolTrue.size();
             return JsonCore::construct(JC_BOOLEAN, JsonValue{.pBoolean=new bool(true)});
         }
-        if (!CS::StrNCmp(
+        if (!CS::strNCmp(
                 &*iNow,
                 &*CS::boolFalse.begin(),
                 CS::boolFalse.size()
@@ -146,21 +146,11 @@ namespace aa {
     template<typename JT>
     typename _Json::JsonCore<JT> *
     _Json::JCNumberFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
-        long double ldBig;
-//            if (random(2)) {
         Char *pcEnd;
-        ldBig = CS::StrToLd(&*iNow, &pcEnd);
-////                if (*pcEnd) return NULL; //wrong: don't have to be end
+        Number n = CNS::strToNum(&*iNow, &pcEnd);
         if (pcEnd == &*iNow) return NULL;
         iNow += pcEnd - &*iNow;
-//            } else {
-//                int iPrec;
-//                CS::StrScanf(&*iNow, &*CS::ldScnfFmt.begin(), &ldBig, &iPrec);
-////                if (iPrec != iEnd - iNow) return NULL; //wrong: don't have to be end
-//                if(!iPrec) return NULL;
-//                iNow += iPrec;
-//            }
-        return JsonCore::construct(JC_NUMBER, JsonValue{.pNumber=new Number(std::move(ldBig))});
+        return JsonCore::construct(JC_NUMBER, JsonValue{.pNumber=new Number(std::move(n))});
     }
 
     template<typename JT>

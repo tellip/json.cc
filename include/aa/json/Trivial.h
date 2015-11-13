@@ -7,36 +7,43 @@
 #include "hub.h"
 
 namespace aa {
-    template<typename JT>
     class _Json::Trivial : public _Json {
     STATIC(Trivial)
 
     private:
-        using Number= typename JT::Number;
-        using Char= typename JT::Char;
-        using String= typename JT::String;
-        using Array= typename JT::Array;
-        using Object= typename JT::Object;
-        using JsonCore= JsonCore<JT>;
-        using CS= CharSpecial<Char>;
+        template<typename CT>
+        using CS=CharSpecial<CT>;
+        template<typename CT>
+        using String=typename CS<CT>::String;
         static const unsigned short numPrec;
     public:
-        static String bl2str(const bool &);
+        static int precFromBinaToDeci(const int &);
 
-        static String nmb2str(const Number &);
+        template<typename CT>
+        static String<CT> bl2str(const bool &);
 
-        static Char escape(const Char &);
+        template<typename CT, typename NT>
+        static String<CT> nmb2str(const NT &);
 
-        static String unesca(const Char &);
+        template<typename CT>
+        static CT escape(const CT &);
 
-        static String unesca(const String &);
+        template<typename CT>
+        static String<CT> unesca(const CT &);
 
-        static String unesca(const Char *const &);
+        template<typename CT>
+        static String<CT> unesca(const String<CT> &);
 
-        static String arr2str(const Array &, const short &indent = -1, const short &depth = 0);
+        template<typename CT>
+        static String<CT> unesca(const CT *const &);
 
-        static String obj2str(const Object &, const short &indent = -1, const short &depth = 0);
+        template<typename CT, typename AT>
+        static String<CT> arr2str(const AT &, const short &indent = -1, const short &depth = 0);
 
-        static String pjc2str(JsonCore *const &, const short &indent = -1, const short &depth = 0);
+        template<typename CT, typename OT>
+        static String<CT> obj2str(const OT &, const short &indent = -1, const short &depth = 0);
+
+        template<typename CT, typename NT, typename AT, typename OT, typename JCT>
+        static String<CT> pjc2str(JCT *const &, const short &indent = -1, const short &depth = 0);
     };
 }
