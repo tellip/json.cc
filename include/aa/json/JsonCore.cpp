@@ -9,14 +9,10 @@ namespace aa {
     _Json::JsonCore<JT>::JsonCore(JsonCategory &&jc, JsonValue &&jv) :
             category(std::move(jc)),
             value(std::move(jv)) {
-//            static int t = 0;
-//            std::cout << "c\t" << ++t << std::endl;
     }
 
     template<typename JT>
     _Json::JsonCore<JT>::~JsonCore() {
-//            static int t = 0;
-//            std::cout << "d\t" << ++t << std::endl;
         switch (category) {
             case JC_BOOLEAN:
                 delete value.pBoolean;
