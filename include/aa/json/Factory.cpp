@@ -165,7 +165,7 @@ namespace aa {
     _Json::JCStringFactory<JT>::byParsing(StrIter &iNow, const StrIter &iEnd) const {
         const StrIter iBegin = iNow;
         String s;
-        if (!JCoreFactory::isString(iNow, iEnd, s)) {
+        if (!isString(iNow, iEnd, s)) {
             iNow = iBegin;
             return NULL;
         }
@@ -189,7 +189,7 @@ namespace aa {
             if (iNow == iEnd) throw NULL;
             std::list<JT> l;
             while (true) {
-                JsonCore *pjc = JCoreFactory::byParsing(iNow, iEnd);
+                JsonCore *pjc = Base::byParsing(iNow, iEnd);
                 if (pjc) {
                     l.push_back(JT(pjc));
                     if (iNow == iEnd) throw NULL;
@@ -199,7 +199,7 @@ namespace aa {
                     } else if (*iNow != CS::arrRight) throw NULL;
                     else break;
                 } else {
-                    JCoreFactory::passThrough(iNow, iEnd);
+                    passThrough(iNow, iEnd);
                     if (iNow == iEnd || *iNow != CS::arrRight) throw NULL;
                     break;
                 }
@@ -230,17 +230,17 @@ namespace aa {
             if (iNow == iEnd) throw NULL;
             Object o;
             while (true) {
-                JCoreFactory::passThrough(iNow, iEnd);
+                passThrough(iNow, iEnd);
                 if (iNow == iEnd) throw NULL;
                 String key;
-                if (JCoreFactory::isString(iNow, iEnd, key)) {
+                if (isString(iNow, iEnd, key)) {
                     if (iNow == iEnd) throw NULL;
-                    JCoreFactory::passThrough(iNow, iEnd);
+                    passThrough(iNow, iEnd);
                     if (iNow == iEnd) throw NULL;
                     if (*iNow != CS::referSym) throw NULL;
                     iNow++;
                     if (iNow == iEnd) throw NULL;
-                    JsonCore *pjc = JCoreFactory::byParsing(iNow, iEnd);
+                    JsonCore *pjc = Base::byParsing(iNow, iEnd);
                     if (!pjc) throw NULL;
                     o.insert(std::pair<String, JT>(std::move(key), JT(pjc)));
                     if (iNow == iEnd) throw NULL;
@@ -250,7 +250,7 @@ namespace aa {
                     } else if (*iNow != CS::objRight) throw NULL;
                     else break;
                 } else {
-                    JCoreFactory::passThrough(iNow, iEnd);
+                    passThrough(iNow, iEnd);
                     if (iNow == iEnd || *iNow != CS::objRight) throw NULL;
                     break;
                 }

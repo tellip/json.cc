@@ -20,7 +20,6 @@ namespace aa {
         using CS= CharSpecial<typename JT::Char>;
         using String= typename JT::String;
         using JsonCore= JsonCore<JT>;
-        using JsonValue= JsonValue<JT>;
         using JCNullFactory= JCNullFactory<JT>;
         using JCBooleanFactory= JCBooleanFactory<JT>;
         using JCNumberFactory= JCNumberFactory<JT>;
@@ -110,12 +109,13 @@ namespace aa {
     class _Json::JCStringFactory : public JCoreFactory<JT> {
     SINGLETON(JCStringFactory)
     private:
-        using JCoreFactory= _Json::JCoreFactory<JT>;
         using CS= CharSpecial<typename JT::Char>;
         using StrIter= typename JT::String::const_iterator;
         using JsonCore= _Json::JsonCore<JT>;
         using JsonValue= _Json::JsonValue<JT>;
         using String= typename JT::String;
+
+        using JCoreFactory<JT>::isString;
     public:
         JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -131,13 +131,15 @@ namespace aa {
     class _Json::JCArrayFactory : public JCoreFactory<JT> {
     SINGLETON(JCArrayFactory)
     private:
-        using JCoreFactory= _Json::JCoreFactory<JT>;
+        using Base=JCoreFactory<JT>;
         using CS= CharSpecial<typename JT::Char>;
         using AS= ArraySpecial<typename JT::Array, JT>;
         using StrIter= typename JT::String::const_iterator;
         using JsonCore= _Json::JsonCore<JT>;
         using JsonValue= _Json::JsonValue<JT>;
         using Array= typename JT::Array;
+
+        using Base::passThrough;
     public:
         JsonCore *byParsing(StrIter &, const StrIter &) const;
 
@@ -153,13 +155,16 @@ namespace aa {
     class _Json::JCObjectFactory : public JCoreFactory<JT> {
     SINGLETON(JCObjectFactory)
     private:
-        using JCoreFactory= _Json::JCoreFactory<JT>;
+        using Base=JCoreFactory<JT>;
         using CS= CharSpecial<typename JT::Char>;
         using StrIter= typename JT::String::const_iterator;
         using JsonCore= _Json::JsonCore<JT>;
         using JsonValue= _Json::JsonValue<JT>;
         using Object= typename JT::Object;
         using String= typename JT::String;
+
+        using JCoreFactory<JT>::passThrough;
+        using JCoreFactory<JT>::isString;
     public:
         JsonCore *byParsing(StrIter &, const StrIter &) const;
 

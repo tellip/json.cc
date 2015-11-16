@@ -50,9 +50,14 @@
     private:\
         virtual ~C()=0;
 
-#define ABSTRACT(CLASS) \
+#define ABSTRACT(C) \
     public:\
-        virtual ~CLASS()=0;\
+        virtual ~C()=0;\
+    private:
+
+#define HUB(C)\
+    protected:\
+        virtual ~C() = 0;\
     private:
 
 #define SINGLETON(C)\

@@ -32,7 +32,8 @@
 
 namespace aa {
     class _Json {
-    ABSTRACT(_Json)
+    HUB(_Json)
+
     protected:
         struct Special;
 
