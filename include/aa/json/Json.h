@@ -13,8 +13,10 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    class Json : public _Json {
-        friend class _Json;
+    class Json {
+        friend class _json::JCArrayFactory<Json>;
+
+        friend class _json::JCObjectFactory<Json>;
 
         friend bool operator<
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
@@ -25,12 +27,12 @@ namespace aa {
         friend bool operator==
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
-        friend typename CharSpecial<CT>::String stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
+        friend typename _json::CharSpecial<CT>::String stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
 
     public:
         using Number= NT;
         using Char= CT;
-        using String= typename CharSpecial<CT>::String;
+        using String= typename _json::CharSpecial<CT>::String;
         using Array= AC<Json>;
         using Object= OC<String, Json>;
 
@@ -41,14 +43,14 @@ namespace aa {
         using object_type=Object;
 
     private:
-        using JsonCore= JsonCore<Json>;
-        using JCoreFactory= JCoreFactory<Json>;
-        using JCNullFactory= JCNullFactory<Json>;
-        using JCBooleanFactory= JCBooleanFactory<Json>;
-        using JCNumberFactory= JCNumberFactory<Json>;
-        using JCStringFactory= JCStringFactory<Json>;
-        using JCArrayFactory= JCArrayFactory<Json>;
-        using JCObjectFactory= JCObjectFactory<Json>;
+        using _JsonCore= _json::JsonCore<Json>;
+        using _JCoreFactory= _json::JCoreFactory<Json>;
+        using _JCNullFactory= _json::JCNullFactory<Json>;
+        using _JCBooleanFactory= _json::JCBooleanFactory<Json>;
+        using _JCNumberFactory= _json::JCNumberFactory<Json>;
+        using _JCStringFactory= _json::JCStringFactory<Json>;
+        using _JCArrayFactory= _json::JCArrayFactory<Json>;
+        using _JCObjectFactory= _json::JCObjectFactory<Json>;
 
     private:
         static std::shared_ptr<bool> _pDefaultBoolean;
@@ -61,7 +63,7 @@ namespace aa {
         static Json parse(const String &);
 
     private:
-        std::shared_ptr<JsonCore> _pCore;
+        std::shared_ptr<_JsonCore> _pCore;
 
     public:
         //checker
@@ -160,6 +162,6 @@ namespace aa {
         void _auto(const Json &, Json *const &p = NULL);
 
     private:
-        Json(JsonCore *&&);
+        Json(_JsonCore *&&);
     };
 }

@@ -7,21 +7,23 @@
 #include "hub.h"
 
 namespace aa {
-    template<typename JT>
-    class _Json::JsonCore : public _Json {
-    private:
-        using JsonValue= JsonValue<JT>;
-    public:
-        const JsonCategory category;
-        const JsonValue value;
-    private:
-        JsonCore(JsonCategory &&, JsonValue &&);
+    namespace _json {
+        template<typename JT>
+        class JsonCore {
+        private:
+            using _JsonValue= JsonValue<JT>;
+        public:
+            const JsonCategory category;
+            const _JsonValue value;
+        private:
+            JsonCore(JsonCategory &&, _JsonValue &&);
 
-        ~JsonCore();
+            ~JsonCore();
 
-    public:
-        static JsonCore *construct(JsonCategory &&, JsonValue &&);
+        public:
+            static JsonCore *construct(JsonCategory &&, _JsonValue &&);
 
-        static void destruct(JsonCore *const &);
-    };
+            static void destruct(JsonCore *const &);
+        };
+    }
 }

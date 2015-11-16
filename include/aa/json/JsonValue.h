@@ -7,13 +7,15 @@
 #include "hub.h"
 
 namespace aa {
-    template<typename JT>
-    union _Json::JsonValue {
-        void *pNull;
-        bool *pBoolean;
-        typename JT::Number *pNumber;
-        typename JT::String *pString;
-        typename JT::Array *pArray;
-        typename JT::Object *pObject;
-    };
+    namespace _json {
+        template<typename JT>
+        union JsonValue {
+            void *pNull;
+            bool *pBoolean;
+            typename JT::Number *pNumber;
+            typename JT::String *pString;
+            typename JT::Array *pArray;
+            typename JT::Object *pObject;
+        };
+    }
 }

@@ -31,10 +31,7 @@
 #include "../common.h"
 
 namespace aa {
-    class _Json {
-    HUB(_Json)
-
-    protected:
+    namespace _json {
         struct Special;
 
         template<typename>
@@ -88,8 +85,7 @@ namespace aa {
         class JCObjectFactory;
 
         class Trivial;
-    };
-    DESTRUCTOR_DEFAULT_IMPL(_Json)
+    }
 
     template<
             typename=double,
@@ -145,7 +141,7 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename _Json::CharSpecial<CT>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
+    typename _json::CharSpecial<CT>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
 }
 
 #include "Special.h"

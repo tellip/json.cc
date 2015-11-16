@@ -53,9 +53,9 @@ namespace aa {
     >
     Json<NT, CT, AC, OC> Json<NT, CT, AC, OC>::parse(const String &s) {
         typename String::const_iterator iNow = s.begin();
-        JsonCore *pjc = JCoreFactory::pi()->byParsing(iNow, s.end());
+        _JsonCore *pjc = _JCoreFactory::pi()->byParsing(iNow, s.end());
         if (iNow != s.end()) {
-            if (pjc) JsonCore::destruct(pjc);
+            if (pjc) _JsonCore::destruct(pjc);
             return Json();
         }
         return Json(std::move(pjc));
@@ -68,7 +68,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNull() const {
-        return _pCore->category == JC_NULL;
+        return _pCore->category == _json::JC_NULL;
     }
 
     template<
@@ -78,7 +78,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isBoolean() const {
-        return _pCore->category == JC_BOOLEAN;
+        return _pCore->category == _json::JC_BOOLEAN;
     }
 
     template<
@@ -88,7 +88,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNumber() const {
-        return _pCore->category == JC_NUMBER;
+        return _pCore->category == _json::JC_NUMBER;
     }
 
     template<
@@ -98,7 +98,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isString() const {
-        return _pCore->category == JC_STRING;
+        return _pCore->category == _json::JC_STRING;
     }
 
     template<
@@ -108,7 +108,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isArray() const {
-        return _pCore->category == JC_ARRAY;
+        return _pCore->category == _json::JC_ARRAY;
     }
 
     template<
@@ -118,7 +118,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isObject() const {
-        return _pCore->category == JC_OBJECT;
+        return _pCore->category == _json::JC_OBJECT;
     }
 
     template<
@@ -188,7 +188,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool &Json<NT, CT, AC, OC>::b() const {
-        if (_pCore->category == JC_BOOLEAN) return *_pCore->value.pBoolean;
+        if (_pCore->category == _json::JC_BOOLEAN) return *_pCore->value.pBoolean;
         _pDefaultBoolean.reset(new bool);
         return *_pDefaultBoolean;
     }
@@ -201,7 +201,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Number &
     Json<NT, CT, AC, OC>::n() const {
-        if (_pCore->category == JC_NUMBER) return *_pCore->value.pNumber;
+        if (_pCore->category == _json::JC_NUMBER) return *_pCore->value.pNumber;
         _pDefaultNumber.reset(new Number);
         return *_pDefaultNumber;
     }
@@ -214,7 +214,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::String &
     Json<NT, CT, AC, OC>::s() const {
-        if (_pCore->category == JC_STRING) return *_pCore->value.pString;
+        if (_pCore->category == _json::JC_STRING) return *_pCore->value.pString;
         _pDefaultString.reset(new String);
         return *_pDefaultString;
     }
@@ -227,7 +227,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Array &
     Json<NT, CT, AC, OC>::a() const {
-        if (_pCore->category == JC_ARRAY) return *_pCore->value.pArray;
+        if (_pCore->category == _json::JC_ARRAY) return *_pCore->value.pArray;
         _pDefaultArray.reset(new Array);
         return *_pDefaultArray;
     }
@@ -240,7 +240,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Object &
     Json<NT, CT, AC, OC>::o() const {
-        if (_pCore->category == JC_OBJECT) return *_pCore->value.pObject;
+        if (_pCore->category == _json::JC_OBJECT) return *_pCore->value.pObject;
         _pDefaultObject.reset(new Object);
         return *_pDefaultObject;
     }
@@ -252,8 +252,8 @@ namespace aa {
             template<typename, typename...> class OC
     >
     Json<NT, CT, AC, OC>::Json() : _pCore(
-            JCNullFactory::pi()->byEntity(),
-            JsonCore::destruct
+            _JCNullFactory::pi()->byEntity(),
+            _JsonCore::destruct
     ) {
     }
 
@@ -394,8 +394,8 @@ namespace aa {
     void Json<NT, CT, AC, OC>::_move(Json &&j) {
         if (_pCore != j._pCore) {
             _pCore.reset(
-                    JCNullFactory::pi()->byEntity(),
-                    JsonCore::destruct
+                    _JCNullFactory::pi()->byEntity(),
+                    _JsonCore::destruct
             );
             _pCore.swap(j._pCore);
 //            std::cout << "move" << std::endl;
@@ -412,27 +412,27 @@ namespace aa {
     >
     void Json<NT, CT, AC, OC>::_copy(const Json &j) {
         if (_pCore != j._pCore) {
-            JsonCore *pjc;
+            _JsonCore *pjc;
             switch (j._pCore->category) {
-                case JC_BOOLEAN:
-                    pjc = JCBooleanFactory::pi()->byEntity(*j._pCore->value.pBoolean);
+                case _json::JC_BOOLEAN:
+                    pjc = _JCBooleanFactory::pi()->byEntity(*j._pCore->value.pBoolean);
                     break;
-                case JC_NUMBER:
-                    pjc = JCNumberFactory::pi()->byEntity(*j._pCore->value.pNumber);
+                case _json::JC_NUMBER:
+                    pjc = _JCNumberFactory::pi()->byEntity(*j._pCore->value.pNumber);
                     break;
-                case JC_STRING:
-                    pjc = JCStringFactory::pi()->byEntity(*j._pCore->value.pString);
+                case _json::JC_STRING:
+                    pjc = _JCStringFactory::pi()->byEntity(*j._pCore->value.pString);
                     break;
-                case JC_ARRAY:
-                    pjc = JCArrayFactory::pi()->byEntity(*j._pCore->value.pArray);
+                case _json::JC_ARRAY:
+                    pjc = _JCArrayFactory::pi()->byEntity(*j._pCore->value.pArray);
                     break;
-                case JC_OBJECT:
-                    pjc = JCObjectFactory::pi()->byEntity(*j._pCore->value.pObject);
+                case _json::JC_OBJECT:
+                    pjc = _JCObjectFactory::pi()->byEntity(*j._pCore->value.pObject);
                     break;
                 default:
-                    pjc = JCNullFactory::pi()->byEntity();
+                    pjc = _JCNullFactory::pi()->byEntity();
             }
-            _pCore.reset(pjc, JsonCore::destruct);
+            _pCore.reset(pjc, _JsonCore::destruct);
 //            std::cout << "copy" << std::endl;
         } else {
 //            std::cout << "self copy" << std::endl;
@@ -448,8 +448,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, bool *const &) {
         _pCore.reset(
-                JCBooleanFactory::pi()->byEntity(std::forward<T>(t)),
-                JsonCore::destruct
+                _JCBooleanFactory::pi()->byEntity(std::forward<T>(t)),
+                _JsonCore::destruct
         );
     }
 
@@ -462,8 +462,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, Number *const &) {
         _pCore.reset(
-                JCNumberFactory::pi()->byEntity(std::forward<T>(t)),
-                JsonCore::destruct
+                _JCNumberFactory::pi()->byEntity(std::forward<T>(t)),
+                _JsonCore::destruct
         );
     }
 
@@ -476,8 +476,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, String *const &) {
         _pCore.reset(
-                JCStringFactory::pi()->byEntity(std::forward<T>(t)),
-                JsonCore::destruct
+                _JCStringFactory::pi()->byEntity(std::forward<T>(t)),
+                _JsonCore::destruct
         );
     }
 
@@ -490,8 +490,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, const Char **const &) {
         _pCore.reset(
-                JCStringFactory::pi()->byEntity(String(std::forward<T>(t))),
-                JsonCore::destruct
+                _JCStringFactory::pi()->byEntity(String(std::forward<T>(t))),
+                _JsonCore::destruct
         );
     }
 
@@ -504,8 +504,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, Array *const &) {
         _pCore.reset(
-                JCArrayFactory::pi()->byEntity(std::forward<T>(t)),
-                JsonCore::destruct
+                _JCArrayFactory::pi()->byEntity(std::forward<T>(t)),
+                _JsonCore::destruct
         );
     }
 
@@ -518,8 +518,8 @@ namespace aa {
     template<typename T>
     void Json<NT, CT, AC, OC>::_auto(T &&t, Object *const &) {
         _pCore.reset(
-                JCObjectFactory::pi()->byEntity(std::forward<T>(t)),
-                JsonCore::destruct
+                _JCObjectFactory::pi()->byEntity(std::forward<T>(t)),
+                _JsonCore::destruct
         );
     }
 
@@ -549,5 +549,5 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(JsonCore *&&pjc) : _pCore(std::move(pjc), JsonCore::destruct) { }
+    Json<NT, CT, AC, OC>::Json(_JsonCore *&&pjc) : _pCore(std::move(pjc), _JsonCore::destruct) { }
 }

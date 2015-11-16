@@ -7,174 +7,176 @@
 #include "hub.h"
 
 namespace aa {
-    class _Json::Factory : public _Json {
-    ABSTRACT(Factory)
-    };
-    DESTRUCTOR_DEFAULT_IMPL_SCOPE(Factory, _Json)
+    namespace _json {
+        class Factory {
+        ABSTRACT(Factory)
+        };
+        DESTRUCTOR_DEFAULT_IMPL(Factory)
 
-    template<typename JT>
-    class _Json::JCoreFactory : public Factory {
-    SINGLETON(JCoreFactory)
-    private:
-        using StrIter= typename JT::String::const_iterator;
-        using CS= CharSpecial<typename JT::Char>;
-        using String= typename JT::String;
-        using JsonCore= JsonCore<JT>;
-        using JCNullFactory= JCNullFactory<JT>;
-        using JCBooleanFactory= JCBooleanFactory<JT>;
-        using JCNumberFactory= JCNumberFactory<JT>;
-        using JCStringFactory= JCStringFactory<JT>;
-        using JCArrayFactory= JCArrayFactory<JT>;
-        using JCObjectFactory= JCObjectFactory<JT>;
-    protected:
-        void passThrough(StrIter &, const StrIter &) const;
+        template<typename JT>
+        class JCoreFactory : public Factory {
+        SINGLETON(JCoreFactory)
+        private:
+            using _StrIter= typename JT::String::const_iterator;
+            using _CS= CharSpecial<typename JT::Char>;
+            using _String= typename JT::String;
+            using _JsonCore= JsonCore<JT>;
+            using _JCNullFactory= JCNullFactory<JT>;
+            using _JCBooleanFactory= JCBooleanFactory<JT>;
+            using _JCNumberFactory= JCNumberFactory<JT>;
+            using _JCStringFactory= JCStringFactory<JT>;
+            using _JCArrayFactory= JCArrayFactory<JT>;
+            using _JCObjectFactory= JCObjectFactory<JT>;
+        protected:
+            void passThrough(_StrIter &, const _StrIter &) const;
 
-        void passSpace(StrIter &, const StrIter &) const;
+            void passSpace(_StrIter &, const _StrIter &) const;
 
-        void passLineComment(StrIter &, const StrIter &) const;
+            void passLineComment(_StrIter &, const _StrIter &) const;
 
-        void passBlockComment(StrIter &, const StrIter &) const;
+            void passBlockComment(_StrIter &, const _StrIter &) const;
 
-        bool isString(StrIter &, const StrIter &, String &) const;
+            bool isString(_StrIter &, const _StrIter &, _String &) const;
 
-    public:
-        virtual JsonCore *byParsing(StrIter &, const StrIter &) const;
-    };
+        public:
+            virtual _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCoreFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCoreFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCNullFactory : public JCoreFactory<JT> {
-    SINGLETON(JCNullFactory)
-    private:
-        using CS= CharSpecial<typename JT::Char>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+        template<typename JT>
+        class JCNullFactory : public JCoreFactory<JT> {
+        SINGLETON(JCNullFactory)
+        private:
+            using _CS= CharSpecial<typename JT::Char>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        JsonCore *byEntity() const;
-    };
+            _JsonCore *byEntity() const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCNullFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCNullFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCBooleanFactory : public JCoreFactory<JT> {
-    SINGLETON(JCBooleanFactory)
-    private:
-        using CS= CharSpecial<typename JT::Char>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+        template<typename JT>
+        class JCBooleanFactory : public JCoreFactory<JT> {
+        SINGLETON(JCBooleanFactory)
+        private:
+            using _CS= CharSpecial<typename JT::Char>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        template<typename T>
-        JsonCore *byEntity(T &&) const;
-    };
+            template<typename T>
+            _JsonCore *byEntity(T &&) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCBooleanFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCBooleanFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCNumberFactory : public JCoreFactory<JT> {
-    SINGLETON(JCNumberFactory)
-    private:
-        using Char= typename JT::Char;
-        using Number= typename JT::Number;
-        using CS= CharSpecial<Char>;
-        using CNS=CharNumberSpecial<Char, Number>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
+        template<typename JT>
+        class JCNumberFactory : public JCoreFactory<JT> {
+        SINGLETON(JCNumberFactory)
+        private:
+            using _Char= typename JT::Char;
+            using _Number= typename JT::Number;
+            using _CS= CharSpecial<_Char>;
+            using _CNS=CharNumberSpecial<_Char, _Number>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
 
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        template<typename T>
-        JsonCore *byEntity(T &&) const;
-    };
+            template<typename T>
+            _JsonCore *byEntity(T &&) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCNumberFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCNumberFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCStringFactory : public JCoreFactory<JT> {
-    SINGLETON(JCStringFactory)
-    private:
-        using CS= CharSpecial<typename JT::Char>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
-        using String= typename JT::String;
+        template<typename JT>
+        class JCStringFactory : public JCoreFactory<JT> {
+        SINGLETON(JCStringFactory)
+        private:
+            using _CS= CharSpecial<typename JT::Char>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
+            using _String= typename JT::String;
 
-        using JCoreFactory<JT>::isString;
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+            using JCoreFactory<JT>::isString;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        template<typename T>
-        JsonCore *byEntity(T &&) const;
-    };
+            template<typename T>
+            _JsonCore *byEntity(T &&) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCStringFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCStringFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCArrayFactory : public JCoreFactory<JT> {
-    SINGLETON(JCArrayFactory)
-    private:
-        using Base=JCoreFactory<JT>;
-        using CS= CharSpecial<typename JT::Char>;
-        using AS= ArraySpecial<typename JT::Array, JT>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
-        using Array= typename JT::Array;
+        template<typename JT>
+        class JCArrayFactory : public JCoreFactory<JT> {
+        SINGLETON(JCArrayFactory)
+        private:
+            using _Base=JCoreFactory<JT>;
+            using _CS= CharSpecial<typename JT::Char>;
+            using _AS= ArraySpecial<typename JT::Array, JT>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
+            using _Array= typename JT::Array;
 
-        using Base::passThrough;
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+            using _Base::passThrough;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        template<typename T>
-        JsonCore *byEntity(T &&) const;
-    };
+            template<typename T>
+            _JsonCore *byEntity(T &&) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCArrayFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCArrayFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
 
-    template<typename JT>
-    class _Json::JCObjectFactory : public JCoreFactory<JT> {
-    SINGLETON(JCObjectFactory)
-    private:
-        using Base=JCoreFactory<JT>;
-        using CS= CharSpecial<typename JT::Char>;
-        using StrIter= typename JT::String::const_iterator;
-        using JsonCore= _Json::JsonCore<JT>;
-        using JsonValue= _Json::JsonValue<JT>;
-        using Object= typename JT::Object;
-        using String= typename JT::String;
+        template<typename JT>
+        class JCObjectFactory : public JCoreFactory<JT> {
+        SINGLETON(JCObjectFactory)
+        private:
+            using _Base=JCoreFactory<JT>;
+            using _CS= CharSpecial<typename JT::Char>;
+            using _StrIter= typename JT::String::const_iterator;
+            using _JsonCore= JsonCore<JT>;
+            using _JsonValue= JsonValue<JT>;
+            using _Object= typename JT::Object;
+            using _String= typename JT::String;
 
-        using JCoreFactory<JT>::passThrough;
-        using JCoreFactory<JT>::isString;
-    public:
-        JsonCore *byParsing(StrIter &, const StrIter &) const;
+            using _Base::passThrough;
+            using _Base::isString;
+        public:
+            _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
 
-        template<typename T>
-        JsonCore *byEntity(T &&) const;
-    };
+            template<typename T>
+            _JsonCore *byEntity(T &&) const;
+        };
 
-    SINGLETON_IMPL_SCOPE_TEMPLATE(JCObjectFactory, _Json, <typename JT>, <JT>)
+        SINGLETON_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_SCOPE_TEMPLATE(JCObjectFactory, _Json, <typename JT>, <JT>)
+        CD_DEFAULT_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
+    }
 }
 
 
