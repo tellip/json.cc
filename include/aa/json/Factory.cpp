@@ -191,7 +191,7 @@ namespace aa {
             while (true) {
                 JsonCore *pjc = Base::byParsing(iNow, iEnd);
                 if (pjc) {
-                    l.push_back(JT(pjc));
+                    l.push_back(JT(std::move(pjc)));
                     if (iNow == iEnd) throw NULL;
                     if (*iNow == CS::sepSym) {
                         iNow++;
@@ -242,7 +242,7 @@ namespace aa {
                     if (iNow == iEnd) throw NULL;
                     JsonCore *pjc = Base::byParsing(iNow, iEnd);
                     if (!pjc) throw NULL;
-                    o.insert(std::pair<String, JT>(std::move(key), JT(pjc)));
+                    o.insert(std::pair<String, JT>(std::move(key), JT(std::move(pjc))));
                     if (iNow == iEnd) throw NULL;
                     if (*iNow == CS::sepSym) {
                         iNow++;

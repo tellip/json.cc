@@ -58,7 +58,7 @@ namespace aa {
             if (pjc) JsonCore::destruct(pjc);
             return Json();
         }
-        return Json(pjc);
+        return Json(std::move(pjc));
     }
 
     template<
@@ -549,5 +549,5 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(JsonCore *pjc) : _pCore(pjc, JsonCore::destruct) { }
+    Json<NT, CT, AC, OC>::Json(JsonCore *&&pjc) : _pCore(std::move(pjc), JsonCore::destruct) { }
 }

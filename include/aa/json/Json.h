@@ -89,7 +89,7 @@ namespace aa {
 
         bool is_object() const;
 
-        //entiry referer
+        //entity referer
         bool &b() const;
 
         Number &n() const;
@@ -159,6 +159,7 @@ namespace aa {
 
         void _auto(const Json &, Json *const &p = NULL);
 
-        Json(JsonCore *);
+    private:
+        Json(JsonCore *&&);
     };
 }
