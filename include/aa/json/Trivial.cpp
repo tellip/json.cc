@@ -53,8 +53,8 @@ namespace aa {
 
         template<typename CT>
         typename Trivial::String<CT>
-        Trivial::unesca(const String <CT> &s) {
-            String <CT> s1;
+        Trivial::unesca(const String<CT> &s) {
+            String<CT> s1;
             for (typename String<CT>::const_iterator i = s.begin(); i != s.end(); i++) {
                 s1 += unesca<CT>(*i);
             }
@@ -64,91 +64,97 @@ namespace aa {
         template<typename CT>
         typename Trivial::String<CT>
         Trivial::unesca(const CT *const &s) {
-            String <CT> s1;
+            String<CT> s1;
             for (const CT *p = s; *p; p++) {
                 s1 += unesca<CT>(*p);
             }
             return s1;
         }
 
-        template<typename CT, typename AT>
-        typename Trivial::String<CT>
-        Trivial::arr2str(const AT &a, const short &indent, const short &depth) {
-            String <CT> ws;
-            ws += CS<CT>::arrLeft;
+        template<typename JT>
+        typename JT::String Trivial::arr2str(const typename JT::Array &a, const short &indent, const short &depth) {
+            using Array=typename JT::Array;
+            using CS=CS<typename JT::Char>;
+
+            typename JT::String ws;
+            ws += CS::arrLeft;
             if (!a.empty()) {
-                typename AT::const_iterator i = a.begin();
+                typename Array::const_iterator i = a.begin();
                 if (indent >= 0) {
-                    ws += CS<CT>::lineBreak;
-                    for (short si = 0; si < depth + 1; si++) ws.append(indent, CS<CT>::blankSpace);
+                    ws += CS::lineBreak;
+                    for (short si = 0; si < depth + 1; si++) ws.append(indent, CS::blankSpace);
                 }
-                ws += stringify(*i, indent, depth + 1);
+                ws += JT::stringify(*i, indent, depth + 1);
                 for (i++; i != a.end(); i++) {
-                    ws += CS<CT>::sepSym;
+                    ws += CS::sepSym;
                     if (indent >= 0) {
-                        ws += CS<CT>::lineBreak;
-                        for (short si = 0; si < depth + 1; si++) ws.append(indent, CS<CT>::blankSpace);
+                        ws += CS::lineBreak;
+                        for (short si = 0; si < depth + 1; si++) ws.append(indent, CS::blankSpace);
                     }
-                    ws += aa::stringify(*i, indent, depth + 1);
+                    ws += JT::stringify(*i, indent, depth + 1);
                 }
             }
             if (indent >= 0 && !a.empty()) {
-                ws += CS<CT>::lineBreak;
-                for (short si = 0; si < depth; si++) ws.append(indent, CS<CT>::blankSpace);
+                ws += CS::lineBreak;
+                for (short si = 0; si < depth; si++) ws.append(indent, CS::blankSpace);
             }
-            ws += CS<CT>::arrRight;
+            ws += CS::arrRight;
             return ws;
         }
 
-        template<typename CT, typename OT>
-        typename Trivial::String<CT>
-        Trivial::obj2str(const OT &o, const short &indent, const short &depth) {
-            String <CT> ws;
-            ws += CS<CT>::objLeft;
+        template<typename JT>
+        typename JT::String Trivial::obj2str(const typename JT::Object &o, const short &indent, const short &depth) {
+            using Char=typename JT::Char;
+            using Object=typename JT::Object;
+            using CS=CS<Char>;
+
+            typename JT::String ws;
+            ws += CS::objLeft;
             if (!o.empty()) {
-                typename OT::const_iterator i = o.begin();
+                typename Object::const_iterator i = o.begin();
                 if (indent >= 0) {
-                    ws += CS<CT>::lineBreak;
-                    for (short si = 0; si < depth + 1; si++) ws.append(indent, CS<CT>::blankSpace);
+                    ws += CS::lineBreak;
+                    for (short si = 0; si < depth + 1; si++) ws.append(indent, CS::blankSpace);
                 }
-                ws += CS<CT>::strBound + unesca<CT>(i->first) + CS<CT>::strBound + CS<CT>::referSym;
-                if (indent >= 0) ws += CS<CT>::blankSpace;
-                ws += stringify(i->second, indent, depth + 1);
+                ws += CS::strBound + unesca<Char>(i->first) + CS::strBound + CS::referSym;
+                if (indent >= 0) ws += CS::blankSpace;
+                ws += JT::stringify(i->second, indent, depth + 1);
                 for (i++; i != o.end(); i++) {
-                    ws += CS<CT>::sepSym;
+                    ws += CS::sepSym;
                     if (indent >= 0) {
-                        ws += CS<CT>::lineBreak;
-                        for (short si = 0; si < depth + 1; si++) ws.append(indent, CS<CT>::blankSpace);
+                        ws += CS::lineBreak;
+                        for (short si = 0; si < depth + 1; si++) ws.append(indent, CS::blankSpace);
                     }
-                    ws += CS<CT>::strBound + unesca<CT>((String <CT> &) i->first) + CS<CT>::strBound + CS<CT>::referSym;
-                    if (indent >= 0) ws += CS<CT>::blankSpace;
-                    ws += aa::stringify(i->second, indent, depth + 1);
+                    ws += CS::strBound + unesca<Char>(i->first) + CS::strBound + CS::referSym;
+                    if (indent >= 0) ws += CS::blankSpace;
+                    ws += JT::stringify(i->second, indent, depth + 1);
                 }
             }
             if (indent >= 0 && !o.empty()) {
-                ws += CS<CT>::lineBreak;
-                for (short si = 0; si < depth; si++) ws.append(indent, CS<CT>::blankSpace);
+                ws += CS::lineBreak;
+                for (short si = 0; si < depth; si++) ws.append(indent, CS::blankSpace);
             }
-            ws += CS<CT>::objRight;
+            ws += CS::objRight;
             return ws;
         }
 
-        template<typename CT, typename NT, typename AT, typename OT, typename JCT>
-        typename Trivial::String<CT>
-        Trivial::pjc2str(JCT *const &pjc, const short &indent, const short &depth) {
+        template<typename JT>
+        typename JT::String Trivial::pjc2str(JsonCore<JT> *const &pjc, const short &indent, const short &depth) {
+            using Char=typename JT::Char;
+
             switch (pjc->category) {
                 case JC_NULL:
-                    return CS<CT>::nullSym;
+                    return CS<Char>::nullSym;
                 case JC_BOOLEAN:
-                    return bl2str<CT>(*pjc->value.pBoolean);
+                    return bl2str<Char>(*pjc->value.pBoolean);
                 case JC_NUMBER:
-                    return nmb2str<CT, NT>(*pjc->value.pNumber);
+                    return nmb2str<Char, typename JT::Number>(*pjc->value.pNumber);
                 case JC_STRING:
-                    return CS<CT>::strBound + unesca<CT>(*pjc->value.pString) + CS<CT>::strBound;
+                    return CS<Char>::strBound + unesca<Char>(*pjc->value.pString) + CS<Char>::strBound;
                 case JC_ARRAY:
-                    return arr2str<CT, AT>(*pjc->value.pArray, indent, depth);
+                    return arr2str<JT>(*pjc->value.pArray, indent, depth);
                 case JC_OBJECT:
-                    return obj2str<CT, OT>(*pjc->value.pObject, indent, depth);
+                    return obj2str<JT>(*pjc->value.pObject, indent, depth);
             }
         }
     }

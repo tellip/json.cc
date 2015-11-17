@@ -38,14 +38,14 @@ namespace aa {
             template<typename CT>
             static String<CT> unesca(const CT *const &);
 
-            template<typename CT, typename AT>
-            static String<CT> arr2str(const AT &, const short &indent = -1, const short &depth = 0);
+            template<typename JT>
+            static typename JT::String arr2str(const typename JT::Array &, const short &indent = -1, const short &depth = 0);
 
-            template<typename CT, typename OT>
-            static String<CT> obj2str(const OT &, const short &indent = -1, const short &depth = 0);
+            template<typename JT>
+            static typename JT::String obj2str(const typename JT::Object &, const short &indent = -1, const short &depth = 0);
 
-            template<typename CT, typename NT, typename AT, typename OT, typename JCT>
-            static String<CT> pjc2str(JCT *const &, const short &indent = -1, const short &depth = 0);
+            template<typename JT>
+            static typename JT::String pjc2str(JsonCore<JT> *const &, const short &indent = -1, const short &depth = 0);
         };
     }
 }

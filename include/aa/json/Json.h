@@ -27,8 +27,6 @@ namespace aa {
         friend bool operator==
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
-        friend typename _json::CharSpecial<CT>::String stringify<NT, CT, AC, OC>(const Json &, const short &, const short &);
-
     public:
         using Number= NT;
         using Char= CT;
@@ -36,11 +34,11 @@ namespace aa {
         using Array= AC<Json>;
         using Object= OC<String, Json>;
 
-        using number_type=Number;
-        using char_type=Char;
-        using string_type=String;
-        using array_type=Array;
-        using object_type=Object;
+        using boolean=bool;
+        using number=Number;
+        using string=String;
+        using array=Array;
+        using object=Object;
 
     private:
         using _JsonCore= _json::JsonCore<Json>;
@@ -61,6 +59,8 @@ namespace aa {
 
     public:
         static Json parse(const String &);
+
+        static String stringify(const Json &, const short &indent = -1, const short &depth = 0);
 
     private:
         std::shared_ptr<_JsonCore> _pCore;

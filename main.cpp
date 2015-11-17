@@ -1,11 +1,9 @@
 #include <iostream>
 #include "include/json.h"
 
-using namespace aa;
+using json=aa::json<>;
 
-int main() {
-    using json=json<>;
-    /**
+/**
      * template:json<   number_type,        char_type,  array_type,         object_type             >
      * default:         double,             char,       std::deque,         std::map
      * supported:       (unsigned)short     char        std::forward_list   std::map
@@ -16,6 +14,8 @@ int main() {
      *                  double                          std::multiset
      *                  long double
      */
+
+int main() {
 
     //constructors
     json
@@ -52,12 +52,12 @@ int main() {
         j6.o()["object"] = json::parse("{\"number\":1234}");
     }
 
-    std::string jstr = stringify(json(std::deque<json>{j1, j2, j3, j4, j5, j6}), 4); //4 is for 4 space indent
+    std::string jstr = json::stringify(json(std::deque<json>{j1, j2, j3, j4, j5, j6}), 4); //4 is for 4 space indent
     jstr = std::string() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
     std::cout << jstr << std::endl;
 
     json j7 = json::parse(jstr);
-    std::cout << stringify(j7) << std::endl;
+    std::cout << json::stringify(j7) << std::endl;
 
     return 0;
 }

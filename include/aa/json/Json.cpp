@@ -67,6 +67,16 @@ namespace aa {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
+    typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
+        return _json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
     bool Json<NT, CT, AC, OC>::isNull() const {
         return _pCore->category == _json::JC_NULL;
     }

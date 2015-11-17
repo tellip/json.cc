@@ -102,47 +102,39 @@ namespace aa {
             template<typename, typename...> class OC=std::map
     >
     using json=Json<NT, CT, AC, OC>;
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
-    void swap(Json<NT, CT, AC, OC> &, Json<NT, CT, AC, OC> &);
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
-    bool operator<(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
-    bool operator>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
-    bool operator==(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
-
-    template<
-            typename NT,
-            typename CT,
-            template<typename...> class AC,
-            template<typename, typename...> class OC
-    >
-    typename _json::CharSpecial<CT>::String stringify(const Json<NT, CT, AC, OC> &, const short &indent = -1, const short &depth = 0);
 }
+
+template<
+        typename NT,
+        typename CT,
+        template<typename...> class AC,
+        template<typename, typename...> class OC
+>
+void swap(aa::Json<NT, CT, AC, OC> &, aa::Json<NT, CT, AC, OC> &);
+
+template<
+        typename NT,
+        typename CT,
+        template<typename...> class AC,
+        template<typename, typename...> class OC
+>
+bool operator<(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
+
+template<
+        typename NT,
+        typename CT,
+        template<typename...> class AC,
+        template<typename, typename...> class OC
+>
+bool operator>(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
+
+template<
+        typename NT,
+        typename CT,
+        template<typename...> class AC,
+        template<typename, typename...> class OC
+>
+bool operator==(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
 
 #include "Special.h"
 #include "Trivial.h"
