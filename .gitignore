@@ -1,6 +1,2 @@
-# CLion
-.idea
-CMakeLists.txt
-
-#good sync
-_gsdata_
+.*
+cmake-build

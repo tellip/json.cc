@@ -53,10 +53,10 @@ namespace aa {
 
         template<typename CT>
         typename Trivial::String<CT>
-        Trivial::unesca(const String<CT> &s) {
-            String<CT> s1;
+        Trivial::unesca(const String <CT> &s) {
+            String <CT> s1;
             for (typename String<CT>::const_iterator i = s.begin(); i != s.end(); i++) {
-                s1 += unesca<CT>(*i);
+                s1 += unesca < CT > (*i);
             }
             return s1;
         }
@@ -64,9 +64,9 @@ namespace aa {
         template<typename CT>
         typename Trivial::String<CT>
         Trivial::unesca(const CT *const &s) {
-            String<CT> s1;
+            String <CT> s1;
             for (const CT *p = s; *p; p++) {
-                s1 += unesca<CT>(*p);
+                s1 += unesca < CT > (*p);
             }
             return s1;
         }
@@ -139,12 +139,10 @@ namespace aa {
         }
 
         template<typename JT>
-        typename JT::String Trivial::pjc2str(JsonCore<JT> *const &pjc, const short &indent, const short &depth) {
+        typename JT::String Trivial::pjc2str(JsonCore <JT> *const &pjc, const short &indent, const short &depth) {
             using Char=typename JT::Char;
 
             switch (pjc->category) {
-                case JC_NULL:
-                    return CS<Char>::nullSym;
                 case JC_BOOLEAN:
                     return bl2str<Char>(*pjc->value.pBoolean);
                 case JC_NUMBER:
@@ -155,6 +153,8 @@ namespace aa {
                     return arr2str<JT>(*pjc->value.pArray, indent, depth);
                 case JC_OBJECT:
                     return obj2str<JT>(*pjc->value.pObject, indent, depth);
+                default:
+                    return CS<Char>::nullSym;
             }
         }
     }
