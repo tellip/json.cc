@@ -6,7 +6,7 @@
 
 #include "hub.h"
 
-namespace aa {
+namespace jsoncpp {
     template<
             typename NT,
             typename CT,
@@ -14,9 +14,9 @@ namespace aa {
             template<typename, typename...> class OC
     >
     class Json {
-        friend class _json::JCArrayFactory<Json>;
+        friend class jsoncpp::JCArrayFactory<Json>;
 
-        friend class _json::JCObjectFactory<Json>;
+        friend class jsoncpp::JCObjectFactory<Json>;
 
         friend bool operator<
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
@@ -30,7 +30,7 @@ namespace aa {
     public:
         using Number= NT;
         using Char= CT;
-        using String= typename _json::CharSpecial<CT>::String;
+        using String= typename jsoncpp::CharSpecial<CT>::String;
         using Array= AC<Json>;
         using Object= OC<String, Json>;
 
@@ -41,14 +41,14 @@ namespace aa {
         using object=Object;
 
     private:
-        using _JsonCore= _json::JsonCore<Json>;
-        using _JCoreFactory= _json::JCoreFactory<Json>;
-        using _JCNullFactory= _json::JCNullFactory<Json>;
-        using _JCBooleanFactory= _json::JCBooleanFactory<Json>;
-        using _JCNumberFactory= _json::JCNumberFactory<Json>;
-        using _JCStringFactory= _json::JCStringFactory<Json>;
-        using _JCArrayFactory= _json::JCArrayFactory<Json>;
-        using _JCObjectFactory= _json::JCObjectFactory<Json>;
+        using _JsonCore= jsoncpp::JsonCore<Json>;
+        using _JCoreFactory= jsoncpp::JCoreFactory<Json>;
+        using _JCNullFactory= jsoncpp::JCNullFactory<Json>;
+        using _JCBooleanFactory= jsoncpp::JCBooleanFactory<Json>;
+        using _JCNumberFactory= jsoncpp::JCNumberFactory<Json>;
+        using _JCStringFactory= jsoncpp::JCStringFactory<Json>;
+        using _JCArrayFactory= jsoncpp::JCArrayFactory<Json>;
+        using _JCObjectFactory= jsoncpp::JCObjectFactory<Json>;
 
     private:
         static std::shared_ptr<bool> _pDefaultBoolean;

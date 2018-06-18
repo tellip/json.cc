@@ -27,65 +27,63 @@
 #include <type_traits>
 #include <cmath>
 
-#include "../class.h"
-#include "../common.h"
+#include "class.h"
+#include "common.h"
 
-namespace aa {
-    namespace _json {
-        struct Special;
+namespace jsoncpp {
+    struct Special;
 
-        template<typename>
-        struct NumberSpecial;
+    template<typename>
+    struct NumberSpecial;
 
-        template<typename>
-        struct CharSpecial;
+    template<typename>
+    struct CharSpecial;
 
-        template<typename, typename>
-        struct CharNumberSpecial;
+    template<typename, typename>
+    struct CharNumberSpecial;
 
-        template<typename, typename>
-        struct ArraySpecial;
+    template<typename, typename>
+    struct ArraySpecial;
 
-        enum JsonCategory {
-            JC_NULL,
-            JC_BOOLEAN,
-            JC_NUMBER,
-            JC_STRING,
-            JC_ARRAY,
-            JC_OBJECT
-        };
+    enum JsonCategory {
+        JC_NULL,
+        JC_BOOLEAN,
+        JC_NUMBER,
+        JC_STRING,
+        JC_ARRAY,
+        JC_OBJECT
+    };
 
-        template<typename>
-        union JsonValue;
+    template<typename>
+    union JsonValue;
 
-        template<typename>
-        class JsonCore;
+    template<typename>
+    class JsonCore;
 
-        class Factory;
+    class Factory;
 
-        template<typename>
-        class JCoreFactory;
+    template<typename>
+    class JCoreFactory;
 
-        template<typename>
-        class JCNullFactory;
+    template<typename>
+    class JCNullFactory;
 
-        template<typename>
-        class JCBooleanFactory;
+    template<typename>
+    class JCBooleanFactory;
 
-        template<typename>
-        class JCNumberFactory;
+    template<typename>
+    class JCNumberFactory;
 
-        template<typename>
-        class JCStringFactory;
+    template<typename>
+    class JCStringFactory;
 
-        template<typename>
-        class JCArrayFactory;
+    template<typename>
+    class JCArrayFactory;
 
-        template<typename>
-        class JCObjectFactory;
+    template<typename>
+    class JCObjectFactory;
 
-        class Trivial;
-    }
+    class Trivial;
 
     template<
             typename=double,
@@ -110,7 +108,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-void swap(aa::Json<NT, CT, AC, OC> &, aa::Json<NT, CT, AC, OC> &);
+void swap(jsoncpp::Json<NT, CT, AC, OC> &, jsoncpp::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -118,7 +116,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator<(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
+bool operator<(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -126,7 +124,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator>(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
+bool operator>(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -134,7 +132,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator==(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC> &);
+bool operator==(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
 
 #include "Special.h"
 #include "Trivial.h"
@@ -149,3 +147,6 @@ bool operator==(const aa::Json<NT, CT, AC, OC> &, const aa::Json<NT, CT, AC, OC>
 #include "Factory.cpp"
 #include "Json.cpp"
 #include "hub.cpp"
+
+#include "class.cpp"
+#include "common.cpp"

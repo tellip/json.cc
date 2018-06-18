@@ -4,7 +4,7 @@
 
 #include "Json.h"
 
-namespace aa {
+namespace jsoncpp {
     template<
             typename NT,
             typename CT,
@@ -68,7 +68,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
-        return _json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
+        return jsoncpp::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
     }
 
     template<
@@ -78,7 +78,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNull() const {
-        return _pCore->category == _json::JC_NULL;
+        return _pCore->category == jsoncpp::JC_NULL;
     }
 
     template<
@@ -88,7 +88,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isBoolean() const {
-        return _pCore->category == _json::JC_BOOLEAN;
+        return _pCore->category == jsoncpp::JC_BOOLEAN;
     }
 
     template<
@@ -98,7 +98,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isNumber() const {
-        return _pCore->category == _json::JC_NUMBER;
+        return _pCore->category == jsoncpp::JC_NUMBER;
     }
 
     template<
@@ -108,7 +108,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isString() const {
-        return _pCore->category == _json::JC_STRING;
+        return _pCore->category == jsoncpp::JC_STRING;
     }
 
     template<
@@ -118,7 +118,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isArray() const {
-        return _pCore->category == _json::JC_ARRAY;
+        return _pCore->category == jsoncpp::JC_ARRAY;
     }
 
     template<
@@ -128,7 +128,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool Json<NT, CT, AC, OC>::isObject() const {
-        return _pCore->category == _json::JC_OBJECT;
+        return _pCore->category == jsoncpp::JC_OBJECT;
     }
 
     template<
@@ -198,7 +198,7 @@ namespace aa {
             template<typename, typename...> class OC
     >
     bool &Json<NT, CT, AC, OC>::b() const {
-        if (_pCore->category == _json::JC_BOOLEAN) return *_pCore->value.pBoolean;
+        if (_pCore->category == jsoncpp::JC_BOOLEAN) return *_pCore->value.pBoolean;
         _pDefaultBoolean.reset(new bool);
         return *_pDefaultBoolean;
     }
@@ -211,7 +211,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Number &
     Json<NT, CT, AC, OC>::n() const {
-        if (_pCore->category == _json::JC_NUMBER) return *_pCore->value.pNumber;
+        if (_pCore->category == jsoncpp::JC_NUMBER) return *_pCore->value.pNumber;
         _pDefaultNumber.reset(new Number);
         return *_pDefaultNumber;
     }
@@ -224,7 +224,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::String &
     Json<NT, CT, AC, OC>::s() const {
-        if (_pCore->category == _json::JC_STRING) return *_pCore->value.pString;
+        if (_pCore->category == jsoncpp::JC_STRING) return *_pCore->value.pString;
         _pDefaultString.reset(new String);
         return *_pDefaultString;
     }
@@ -237,7 +237,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Array &
     Json<NT, CT, AC, OC>::a() const {
-        if (_pCore->category == _json::JC_ARRAY) return *_pCore->value.pArray;
+        if (_pCore->category == jsoncpp::JC_ARRAY) return *_pCore->value.pArray;
         _pDefaultArray.reset(new Array);
         return *_pDefaultArray;
     }
@@ -250,7 +250,7 @@ namespace aa {
     >
     typename Json<NT, CT, AC, OC>::Object &
     Json<NT, CT, AC, OC>::o() const {
-        if (_pCore->category == _json::JC_OBJECT) return *_pCore->value.pObject;
+        if (_pCore->category == jsoncpp::JC_OBJECT) return *_pCore->value.pObject;
         _pDefaultObject.reset(new Object);
         return *_pDefaultObject;
     }
@@ -424,19 +424,19 @@ namespace aa {
         if (_pCore != j._pCore) {
             _JsonCore *pjc;
             switch (j._pCore->category) {
-                case _json::JC_BOOLEAN:
+                case jsoncpp::JC_BOOLEAN:
                     pjc = _JCBooleanFactory::pi()->byEntity(*j._pCore->value.pBoolean);
                     break;
-                case _json::JC_NUMBER:
+                case jsoncpp::JC_NUMBER:
                     pjc = _JCNumberFactory::pi()->byEntity(*j._pCore->value.pNumber);
                     break;
-                case _json::JC_STRING:
+                case jsoncpp::JC_STRING:
                     pjc = _JCStringFactory::pi()->byEntity(*j._pCore->value.pString);
                     break;
-                case _json::JC_ARRAY:
+                case jsoncpp::JC_ARRAY:
                     pjc = _JCArrayFactory::pi()->byEntity(*j._pCore->value.pArray);
                     break;
-                case _json::JC_OBJECT:
+                case jsoncpp::JC_OBJECT:
                     pjc = _JCObjectFactory::pi()->byEntity(*j._pCore->value.pObject);
                     break;
                 default:

@@ -10,7 +10,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-void swap(aa::Json<NT, ST, AC, OC> &j1, aa::Json<NT, ST, AC, OC> &j2) {
+void swap(jsoncpp::Json<NT, ST, AC, OC> &j1, jsoncpp::Json<NT, ST, AC, OC> &j2) {
     j1.swap(j2);
 };
 
@@ -20,21 +20,21 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator<(const aa::Json<NT, CT, AC, OC> &j1, const aa::Json<NT, CT, AC, OC> &j2) {
-    aa::_json::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
+bool operator<(const jsoncpp::Json<NT, CT, AC, OC> &j1, const jsoncpp::Json<NT, CT, AC, OC> &j2) {
+    jsoncpp::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
     if (jct1 != jct2) return jct1 < jct2;
     switch (jct1) {
-        case aa::_json::JC_NULL:
+        case jsoncpp::JC_NULL:
             return false;
-        case aa::_json::JC_BOOLEAN:
+        case jsoncpp::JC_BOOLEAN:
             return j1.b() < j2.b();
-        case aa::_json::JC_NUMBER:
+        case jsoncpp::JC_NUMBER:
             return j1.n() < j2.n();
-        case aa::_json::JC_STRING:
+        case jsoncpp::JC_STRING:
             return j1.s() < j2.s();
-        case aa::_json::JC_ARRAY:
+        case jsoncpp::JC_ARRAY:
             return j1.a() < j2.a();
-        case aa::_json::JC_OBJECT:
+        case jsoncpp::JC_OBJECT:
             return j1.o() < j2.o();
     }
 }
@@ -45,21 +45,21 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator>(const aa::Json<NT, CT, AC, OC> &j1, const aa::Json<NT, CT, AC, OC> &j2) {
-    aa::_json::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
+bool operator>(const jsoncpp::Json<NT, CT, AC, OC> &j1, const jsoncpp::Json<NT, CT, AC, OC> &j2) {
+    jsoncpp::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
     if (jct1 != jct2) return jct1 > jct2;
     switch (jct1) {
-        case aa::_json::JC_NULL:
+        case jsoncpp::JC_NULL:
             return false;
-        case aa::_json::JC_BOOLEAN:
+        case jsoncpp::JC_BOOLEAN:
             return j1.b() > j2.b();
-        case aa::_json::JC_NUMBER:
+        case jsoncpp::JC_NUMBER:
             return j1.n() > j2.n();
-        case aa::_json::JC_STRING:
+        case jsoncpp::JC_STRING:
             return j1.s() > j2.s();
-        case aa::_json::JC_ARRAY:
+        case jsoncpp::JC_ARRAY:
             return j1.a() > j2.a();
-        case aa::_json::JC_OBJECT:
+        case jsoncpp::JC_OBJECT:
             return j1.o() > j2.o();
     }
 }
@@ -70,21 +70,21 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator==(const aa::Json<NT, CT, AC, OC> &j1, const aa::Json<NT, CT, AC, OC> &j2) {
-    aa::_json::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
+bool operator==(const jsoncpp::Json<NT, CT, AC, OC> &j1, const jsoncpp::Json<NT, CT, AC, OC> &j2) {
+    jsoncpp::JsonCategory jct1 = j1._pCore->category, jct2 = j2._pCore->category;
     if (jct1 != jct2) return false;
     switch (jct1) {
-        case aa::_json::JC_NULL:
+        case jsoncpp::JC_NULL:
             return true;
-        case aa::_json::JC_BOOLEAN:
+        case jsoncpp::JC_BOOLEAN:
             return j1.b() == j2.b();
-        case aa::_json::JC_NUMBER:
+        case jsoncpp::JC_NUMBER:
             return j1.n() == j2.n();
-        case aa::_json::JC_STRING:
+        case jsoncpp::JC_STRING:
             return j1.s() == j2.s();
-        case aa::_json::JC_ARRAY:
+        case jsoncpp::JC_ARRAY:
             return j1.a() == j2.a();
-        case aa::_json::JC_OBJECT:
+        case jsoncpp::JC_OBJECT:
             return j1.o() == j2.o();
     }
 }
