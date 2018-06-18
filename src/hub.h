@@ -88,16 +88,16 @@ namespace jsoncpp {
     template<
             typename=double,
             typename=char,
-            template<typename...> class=std::deque,
-            template<typename, typename...> class=std::map
+            template<typename...> class=std::list,
+            template<typename, typename...> class=std::unordered_map
     >
     class Json;
 
     template<
             typename NT=double,
             typename CT=char,
-            template<typename...> class AC=std::deque,
-            template<typename, typename...> class OC=std::map
+            template<typename...> class AC=std::list,
+            template<typename, typename...> class OC=std::unordered_map
     >
     using json=Json<NT, CT, AC, OC>;
 }
