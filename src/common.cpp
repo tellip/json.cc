@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-#undef COMMA
+#undef JSON_COMMA
 
-#undef DELETE
-#undef DELETE_S
+#undef JSON_DELETE
+#undef JSON_DELETE_S

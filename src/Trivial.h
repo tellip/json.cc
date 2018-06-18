@@ -8,7 +8,7 @@
 
 namespace jsoncpp {
     class Trivial {
-    STATIC(Trivial)
+    JSON_STATIC(Trivial)
 
     private:
         template<typename CT>

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#define COMMA ,
+#define JSON_COMMA ,
 
-#define DELETE(P) {if(P) delete P; P=NULL;}
-#define DELETE_S(P) {if(P) delete[] P; P=NULL;}
+#define JSON_DELETE(P) {if(P) delete P; P=NULL;}
+#define JSON_DELETE_S(P) {if(P) delete[] P; P=NULL;}

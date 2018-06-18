@@ -6,61 +6,61 @@
 
 #include "common.h"
 
-#define CONSTRUCTOR_DEFAULT_IMPL(C)\
+#define JSON_CONSTRUCTOR_DEFAULT_IMPL(C)\
     C::C(){}
-#define DESTRUCTOR_DEFAULT_IMPL(C)\
+#define JSON_DESTRUCTOR_DEFAULT_IMPL(C)\
     C::~C(){}
-#define CD_DEFAULT_IMPL(C)\
+#define JSON_CD_DEFAULT_IMPL(C)\
     C::C(){}\
     C::~C(){}
 
-#define CONSTRUCTOR_DEFAULT_IMPL_SCOPE(C, SCOPE)\
+#define JSON_CONSTRUCTOR_DEFAULT_IMPL_SCOPE(C, SCOPE)\
     SCOPE::C::C(){}
-#define DESTRUCTOR_DEFAULT_IMPL_SCOPE(C, SCOPE)\
+#define JSON_DESTRUCTOR_DEFAULT_IMPL_SCOPE(C, SCOPE)\
     SCOPE::C::~C(){}
-#define CD_DEFAULT_IMPL_SCOPE(C, SCOPE)\
+#define JSON_CD_DEFAULT_IMPL_SCOPE(C, SCOPE)\
     SCOPE::C::C(){}\
     SCOPE::C::~C(){}
 
-#define CONSTRUCTOR_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
+#define JSON_CONSTRUCTOR_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
     template TMPDEF\
     C TMPSPE::C(){}
-#define DESTRUCTOR_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
+#define JSON_DESTRUCTOR_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
     template TMPDEF\
     C TMPSPE::~C(){}
-#define CD_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
+#define JSON_CD_DEFAULT_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
     template TMPDEF\
     C TMPSPE::C(){}\
     template TMPDEF\
     C TMPSPE::~C(){}
 
-#define CONSTRUCTOR_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
+#define JSON_CONSTRUCTOR_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
     template TMPDEF\
     SCOPE::C TMPSPE::C(){}
-#define DESTRUCTOR_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
+#define JSON_DESTRUCTOR_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
     template TMPDEF\
     SCOPE::C TMPSPE::~C(){}
-#define CD_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
+#define JSON_CD_DEFAULT_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
     template TMPDEF\
     SCOPE::C TMPSPE::C(){}\
     template TMPDEF\
     SCOPE::C TMPSPE::~C(){}
 
-#define STATIC(C) \
+#define JSON_STATIC(C) \
     private:\
         virtual ~C()=0;
 
-#define ABSTRACT(C) \
+#define JSON_ABSTRACT(C) \
     public:\
         virtual ~C()=0;\
     private:
 
-#define HUB(C)\
+#define JSON_HUB(C)\
     protected:\
         virtual ~C() = 0;\
     private:
 
-#define SINGLETON(C)\
+#define JSON_SINGLETON(C)\
     private:\
         static std::shared_ptr<C> _pi;\
     public:\
@@ -71,7 +71,7 @@
     protected:\
         static void destruct(C *const &);\
     private:
-#define SINGLETON_IMPL(C)\
+#define JSON_SINGLETON_IMPL(C)\
     std::shared_ptr<C> C::_pi;\
     C *C::pi(){\
         if(!C::_pi) C::_pi.reset(new C,C::destruct);\
@@ -80,7 +80,7 @@
     void C::destruct(C *const &pc){\
         delete pc;\
     }
-#define SINGLETON_IMPL_SCOPE(C, SCOPE)\
+#define JSON_SINGLETON_IMPL_SCOPE(C, SCOPE)\
     std::shared_ptr<SCOPE::C> SCOPE::C::_pi;\
     SCOPE::C *SCOPE::C::pi(){\
         if(!C::_pi) C::_pi.reset(new C,C::destruct);\
@@ -89,7 +89,7 @@
     void SCOPE::C::destruct(C *const &pc){\
         delete pc;\
     }
-#define SINGLETON_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
+#define JSON_SINGLETON_IMPL_TEMPLATE(C, TMPDEF, TMPSPE)\
     template TMPDEF\
     std::shared_ptr<C TMPSPE> C TMPSPE::_pi;\
     template TMPDEF\
@@ -101,7 +101,7 @@
     void C TMPSPE::destruct(C *const &pc){\
         delete pc;\
     }
-#define SINGLETON_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
+#define JSON_SINGLETON_IMPL_SCOPE_TEMPLATE(C, SCOPE, TMPDEF, TMPSPE)\
     template TMPDEF\
     std::shared_ptr<SCOPE::C TMPSPE> SCOPE::C TMPSPE::_pi;\
     template TMPDEF\

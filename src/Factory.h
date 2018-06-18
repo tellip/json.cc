@@ -8,13 +8,13 @@
 
 namespace jsoncpp {
     class Factory {
-    ABSTRACT(Factory)
+    JSON_ABSTRACT(Factory)
     };
-    DESTRUCTOR_DEFAULT_IMPL(Factory)
+    JSON_DESTRUCTOR_DEFAULT_IMPL(Factory)
 
     template<typename JT>
     class JCoreFactory : public Factory {
-    SINGLETON(JCoreFactory)
+    JSON_SINGLETON(JCoreFactory)
     private:
         using _StrIter= typename JT::String::const_iterator;
         using _CS= CharSpecial<typename JT::Char>;
@@ -41,13 +41,13 @@ namespace jsoncpp {
         virtual _JsonCore *byParsing(_StrIter &, const _StrIter &) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCoreFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCNullFactory : public JCoreFactory<JT> {
-    SINGLETON(JCNullFactory)
+    JSON_SINGLETON(JCNullFactory)
     private:
         using _CS= CharSpecial<typename JT::Char>;
         using _StrIter= typename JT::String::const_iterator;
@@ -59,13 +59,13 @@ namespace jsoncpp {
         _JsonCore *byEntity() const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCNullFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCBooleanFactory : public JCoreFactory<JT> {
-    SINGLETON(JCBooleanFactory)
+    JSON_SINGLETON(JCBooleanFactory)
     private:
         using _CS= CharSpecial<typename JT::Char>;
         using _StrIter= typename JT::String::const_iterator;
@@ -78,13 +78,13 @@ namespace jsoncpp {
         _JsonCore *byEntity(T &&) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCBooleanFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCNumberFactory : public JCoreFactory<JT> {
-    SINGLETON(JCNumberFactory)
+    JSON_SINGLETON(JCNumberFactory)
     private:
         using _Char= typename JT::Char;
         using _Number= typename JT::Number;
@@ -101,13 +101,13 @@ namespace jsoncpp {
         _JsonCore *byEntity(T &&) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCNumberFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCStringFactory : public JCoreFactory<JT> {
-    SINGLETON(JCStringFactory)
+    JSON_SINGLETON(JCStringFactory)
     private:
         using _CS= CharSpecial<typename JT::Char>;
         using _StrIter= typename JT::String::const_iterator;
@@ -123,13 +123,13 @@ namespace jsoncpp {
         _JsonCore *byEntity(T &&) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCStringFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCArrayFactory : public JCoreFactory<JT> {
-    SINGLETON(JCArrayFactory)
+    JSON_SINGLETON(JCArrayFactory)
     private:
         using _Base=JCoreFactory<JT>;
         using _CS= CharSpecial<typename JT::Char>;
@@ -147,13 +147,13 @@ namespace jsoncpp {
         _JsonCore *byEntity(T &&) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCArrayFactory, <typename JT>, <JT>)
 
     template<typename JT>
     class JCObjectFactory : public JCoreFactory<JT> {
-    SINGLETON(JCObjectFactory)
+    JSON_SINGLETON(JCObjectFactory)
     private:
         using _Base=JCoreFactory<JT>;
         using _CS= CharSpecial<typename JT::Char>;
@@ -172,9 +172,9 @@ namespace jsoncpp {
         _JsonCore *byEntity(T &&) const;
     };
 
-    SINGLETON_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
+    JSON_SINGLETON_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
 
-    CD_DEFAULT_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
+    JSON_CD_DEFAULT_IMPL_TEMPLATE(JCObjectFactory, <typename JT>, <JT>)
 }
 
 

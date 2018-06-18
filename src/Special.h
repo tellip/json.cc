@@ -15,13 +15,13 @@
 
 namespace jsoncpp {
     struct Special {
-    STATIC(Special)
+    JSON_STATIC(Special)
     };
 
     //no default
     template<typename>
     struct NumberSpecial : public Special {
-    STATIC(NumberSpecial)
+    JSON_STATIC(NumberSpecial)
 
     private:
 
@@ -30,7 +30,7 @@ namespace jsoncpp {
 #define JSON_NUMBER_SPECIAL(NT)\
     template<>\
     struct NumberSpecial<NT> : public Special {\
-    STATIC(NumberSpecial)\
+    JSON_STATIC(NumberSpecial)\
     public:\
         static int deciPrec;\
     };
@@ -62,13 +62,13 @@ namespace jsoncpp {
     //no default
     template<typename>
     struct CharSpecial : public Special {
-    STATIC(CharSpecial)
+    JSON_STATIC(CharSpecial)
     };
 
 #define JSON_CHAR_SPECIAL(CT, ST, OSST)\
     template<>\
     struct CharSpecial<CT> : public Special {\
-    STATIC(CharSpecial)\
+    JSON_STATIC(CharSpecial)\
     public:\
         using String= ST;\
         using Oss= OSST;\
@@ -87,13 +87,13 @@ namespace jsoncpp {
     //no deafult
     template<typename, typename>
     struct CharNumberSpecial : public Special {
-    STATIC(CharNumberSpecial)
+    JSON_STATIC(CharNumberSpecial)
     };
 
 #define JSON_CHAR_NUMBER_SPECIAL(CT, NT)\
     template<>\
     struct CharNumberSpecial<CT, NT> : public Special {\
-    STATIC(CharNumberSpecial)\
+    JSON_STATIC(CharNumberSpecial)\
     public:\
         static NT strToNum(const CT *const &, CT **const &);\
     };
@@ -147,7 +147,7 @@ namespace jsoncpp {
     //default
     template<typename AT, typename JT>
     struct ArraySpecial : public Special {
-    STATIC(ArraySpecial)
+    JSON_STATIC(ArraySpecial)
 
     public:
         static AT buildByList(std::list<JT> &&);
@@ -156,7 +156,7 @@ namespace jsoncpp {
 #define JSON_ARRAY_SPECIAL(AC)\
     template<typename JT>\
     struct ArraySpecial<AC<JT>, JT> : public Special {\
-    STATIC(ArraySpecial)\
+    JSON_STATIC(ArraySpecial)\
     public:\
         static AC<JT> buildByList(std::list<JT> &&);\
     };
