@@ -5,14 +5,14 @@ using Json=json::Json<>;
 
 /**
      * template:json<   number_type,        char_type,  array_type,         object_type             >
-     * default:         double,             char,       std::list,          std::unordered_map
-     * supported:       (unsigned)short     char        std::forward_list   std::map
-     *                  (unsigned)int       wchar_t     std::deque          std::multimap
-     *                  (unsigned)long                  std::vector         std::unordered_multimap
-     *                  (unsigned)long long             std::deque
-     *                  float                           std::set
-     *                  double                          std::multiset
-     *                  long double
+     * default:         double              char        std::list           std::unordered_map
+     * supported:       (unsigned)short     char        std::list           std::map
+     *                  (unsigned)int       wchar_t     std::forward_list   std::unordered_map
+     *                  (unsigned)long                  std::deque          std::multimap
+     *                  (unsigned)long long             std::vector         std::unordered_multimap
+     *                  float                           std::deque
+     *                  double                          std::set
+     *                  long double                     std::multiset
      */
 
 int main() {
@@ -23,36 +23,36 @@ int main() {
             j2 = false,                                                     //boolean
             j3 = 1234,                                                      //number, here saved as double
             j4 = "hello",                                                   //string, here saved as std::string, will be std::wstring when char_type is wchar_t
-            j5 = std::list<Json>{5, 1, 0},                                  //array, here is std::list<json>
-            j6 = std::unordered_map<std::string,Json>{{"hello","json"}};    //object, here is std::unordered_map<const std::string,json>
+            j5 = Json::Array{5, 1, 0},                                  //array, here is std::list<json>
+            j6 = Json::Object{{"hello","json"}};    //object, here is std::unordered_map<const std::string,json>
 
-    if (j1.is_null()) std::cout << "j1 is null" << std::endl;
-    if (j2.is_boolean()) {
+    if (j1.isNull()) std::cout << "j1 is null" << std::endl;
+    if (j2.isBoolean()) {
         std::cout << "j2 is boolean." << std::endl;
-        j2.b() = !j2.b();
+        j2.asBoolean() = !j2.asBoolean();
     }
-    if (j3.is_number()) {
+    if (j3.isNumber()) {
         std::cout << "j3 is number." << std::endl;
-        j3.n()--; //double
+        j3.asNumber()--; //double
     }
-    if (j4.is_string()) {
+    if (j4.isString()) {
         std::cout << "j4 is string." << std::endl;
-        j4.s() += ". Use json<X,wchar_t,X,X> then array will be saved as std::wstring."; //std::string
+        j4.asString() += ". Use json<X,wchar_t,X,X> then array will be saved as std::wstring."; //std::string
     }
-    if (j5.is_array()) {
+    if (j5.isArray()) {
         std::cout << "j5 is array." << std::endl;
-        j5.a().front() = 2;
-        j5.a().insert(std::next(j5.a().begin()), 8); //here 8 is json(8)
-        j5.a().push_back(j6);
+        j5.asArray().front() = 2;
+        j5.asArray().insert(std::next(j5.asArray().begin()), 8); //here 8 is json(8)
+        j5.asArray().push_back(j6);
     }
-    if (j6.is_object()) {
+    if (j6.isObject()) {
         std::cout << "j6 is object." << std::endl;
-        j6.o()["enjoy"] = "json";
-        j6.o()["array"] = j5;
-        j6.o()["object"] = Json::parse("{\"number\":1234}");
+        j6.asObject()["enjoy"] = "json";
+        j6.asObject()["array"] = j5;
+        j6.asObject()["object"] = Json::parse("{\"number\":1234}");
     }
 
-    std::string jstr = Json::stringify(Json(std::list<Json>{j1, j2, j3, j4, j5, j6}), 4); //4 is for 4 space indent
+    std::string jstr = Json::stringify(Json::Array{j1, j2, j3, j4, j5, j6}, 4); //4 is for 4 space indent
     jstr = std::string() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
     std::cout << jstr << std::endl;
 

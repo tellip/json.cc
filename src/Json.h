@@ -79,28 +79,28 @@ namespace json {
 
         bool isObject() const;
 
-        bool is_null() const;
-
-        bool is_boolean() const;
-
-        bool is_number() const;
-
-        bool is_string() const;
-
-        bool is_array() const;
-
-        bool is_object() const;
+//        bool is_null() const;
+//
+//        bool is_boolean() const;
+//
+//        bool is_number() const;
+//
+//        bool is_string() const;
+//
+//        bool is_array() const;
+//
+//        bool is_object() const;
 
         //entity referer
-        bool &b() const;
+        bool &asBoolean() const;
 
-        Number &n() const;
+        Number &asNumber() const;
 
-        String &s() const;
+        String &asString() const;
 
-        Array &a() const;
+        Array &asArray() const;
 
-        Object &o() const;
+        Object &asObject() const;
 
     public:
         Json();
