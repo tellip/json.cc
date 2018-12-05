@@ -30,7 +30,7 @@
 #include "class.h"
 #include "common.h"
 
-namespace jsoncpp {
+namespace json {
     struct Special;
 
     template<typename>
@@ -93,13 +93,13 @@ namespace jsoncpp {
     >
     class Json;
 
-    template<
-            typename NT=double,
-            typename CT=char,
-            template<typename...> class AC=std::list,
-            template<typename, typename...> class OC=std::unordered_map
-    >
-    using json=Json<NT, CT, AC, OC>;
+//    template<
+//            typename NT=double,
+//            typename CT=char,
+//            template<typename...> class AC=std::list,
+//            template<typename, typename...> class OC=std::unordered_map
+//    >
+//    using json=Json<NT, CT, AC, OC>;
 }
 
 template<
@@ -108,7 +108,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-void swap(jsoncpp::Json<NT, CT, AC, OC> &, jsoncpp::Json<NT, CT, AC, OC> &);
+void swap(json::Json<NT, CT, AC, OC> &, json::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -116,7 +116,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator<(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
+bool operator<(const json::Json<NT, CT, AC, OC> &, const json::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -124,7 +124,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator>(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
+bool operator>(const json::Json<NT, CT, AC, OC> &, const json::Json<NT, CT, AC, OC> &);
 
 template<
         typename NT,
@@ -132,7 +132,7 @@ template<
         template<typename...> class AC,
         template<typename, typename...> class OC
 >
-bool operator==(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, CT, AC, OC> &);
+bool operator==(const json::Json<NT, CT, AC, OC> &, const json::Json<NT, CT, AC, OC> &);
 
 #include "Special.h"
 #include "Trivial.h"
@@ -140,13 +140,3 @@ bool operator==(const jsoncpp::Json<NT, CT, AC, OC> &, const jsoncpp::Json<NT, C
 #include "JsonCore.h"
 #include "Factory.h"
 #include "Json.h"
-
-#include "Special.cpp"
-#include "Trivial.cpp"
-#include "JsonCore.cpp"
-#include "Factory.cpp"
-#include "Json.cpp"
-#include "hub.cpp"
-
-#include "class.cpp"
-#include "common.cpp"

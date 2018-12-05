@@ -4,7 +4,7 @@
 
 #include "Trivial.h"
 
-namespace jsoncpp {
+namespace json {
     const unsigned short Trivial::numPrec = 17;
 
     int Trivial::precFromBinaToDeci(const int &iBinaPrec) {

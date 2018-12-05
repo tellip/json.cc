@@ -1,7 +1,7 @@
 #include <iostream>
-#include "src/hub.h"
+#include "json.hh"
 
-using json=jsoncpp::json<>;
+using Json=json::Json<>;
 
 /**
      * template:json<   number_type,        char_type,  array_type,         object_type             >
@@ -18,13 +18,13 @@ using json=jsoncpp::json<>;
 int main() {
 
     //constructors
-    json
+    Json
             j1,                                         //null
             j2 = false,                                   //boolean
             j3 = 1234,                                    //number, here saved as double
             j4 = "hello",                                 //string, here saved as std::string, will be std::wstring when char_type is wchar_t
-            j5 = json::parse("[5,1,0]"),                  //array, here is std::list<json>
-            j6 = json::parse("{\"hello\":\"json\"}");    //object, here is std::unordered_map<const std::string,json>
+            j5 = Json::parse("[5,1,0]"),                  //array, here is std::list<json>
+            j6 = Json::parse("{\"hello\":\"json\"}");    //object, here is std::unordered_map<const std::string,json>
 
     if (j1.is_null()) std::cout << "j1 is null" << std::endl;
     if (j2.is_boolean()) {
@@ -49,15 +49,15 @@ int main() {
         std::cout << "j6 is object." << std::endl;
         j6.o()["enjoy"] = "json";
         j6.o()["array"] = j5;
-        j6.o()["object"] = json::parse("{\"number\":1234}");
+        j6.o()["object"] = Json::parse("{\"number\":1234}");
     }
 
-    std::string jstr = json::stringify(json(std::list<json>{j1, j2, j3, j4, j5, j6}), 4); //4 is for 4 space indent
+    std::string jstr = Json::stringify(Json(std::list<Json>{j1, j2, j3, j4, j5, j6}), 4); //4 is for 4 space indent
     jstr = std::string() + "/* block comments filterd! */" + jstr + "//line comments filtered! ";
     std::cout << jstr << std::endl;
 
-    json j7 = json::parse(jstr);
-    std::cout << json::stringify(j7) << std::endl;
+    Json j7 = Json::parse(jstr);
+    std::cout << Json::stringify(j7) << std::endl;
 
     return 0;
 }

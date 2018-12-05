@@ -4,7 +4,7 @@
 
 #include "Factory.h"
 
-namespace jsoncpp {
+namespace json {
     template<typename JT>
     void JCoreFactory<JT>::passThrough(_StrIter &iNow, const _StrIter &iEnd) const {
         _StrIter iBegin;

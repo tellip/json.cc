@@ -6,7 +6,7 @@
 
 #include "hub.h"
 
-namespace jsoncpp {
+namespace json {
     template<typename JT>
     union JsonValue {
         void *pNull;

@@ -4,7 +4,7 @@
 
 #include "Special.h"
 
-namespace jsoncpp {
+namespace json {
     //number special
     int NumberSpecial<short>::deciPrec = Trivial::precFromBinaToDeci(sizeof(short) * 8 - 1);
     int NumberSpecial<unsigned short>::deciPrec = Trivial::precFromBinaToDeci(sizeof(short) * 8);

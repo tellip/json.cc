@@ -6,7 +6,7 @@
 
 #include "hub.h"
 
-namespace jsoncpp {
+namespace json {
     template<typename JT>
     class JsonCore {
     private:

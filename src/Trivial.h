@@ -6,7 +6,7 @@
 
 #include "hub.h"
 
-namespace jsoncpp {
+namespace json {
     class Trivial {
     JSON_STATIC(Trivial)
 

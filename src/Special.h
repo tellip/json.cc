@@ -13,7 +13,7 @@
 
 #include "hub.h"
 
-namespace jsoncpp {
+namespace json {
     struct Special {
     JSON_STATIC(Special)
     };

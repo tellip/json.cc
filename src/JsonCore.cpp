@@ -4,7 +4,7 @@
 
 #include "JsonCore.h"
 
-namespace jsoncpp {
+namespace json {
     template<typename JT>
     JsonCore<JT>::JsonCore(JsonCategory &&jc, _JsonValue &&jv) :
             category(std::move(jc)),
