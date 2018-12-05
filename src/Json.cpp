@@ -51,7 +51,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> Json<NT, CT, AC, OC>::parse(const String &s) {
+    Json <NT, CT, AC, OC> Json<NT, CT, AC, OC>::parse(const String &s) {
         typename String::const_iterator iNow = s.begin();
         _JsonCore *pjc = _JCoreFactory::pi()->byParsing(iNow, s.end());
         if (iNow != s.end()) {
@@ -67,7 +67,8 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
+    typename Json<NT, CT, AC, OC>::String
+    Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
         return json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
     }
 
@@ -293,7 +294,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(Json &&j) {
+    Json <NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(Json &&j) {
         _move(std::move(j));
         return *this;
     }
@@ -304,7 +305,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const Json &j) {
+    Json <NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const Json &j) {
         _copy(j);
         return *this;
     }
@@ -317,7 +318,7 @@ namespace json {
     >
     template<typename T>
     Json<NT, CT, AC, OC>::Json(T &&t) {
-        _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) NULL);
+        _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) nullptr);
     }
 
     template<
@@ -327,8 +328,8 @@ namespace json {
             template<typename, typename...> class OC
     >
     template<typename T>
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(T &&t) {
-        _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) NULL);
+    Json <NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(T &&t) {
+        _auto(std::forward<T>(t), (typename std::decay<T>::type *const &) nullptr);
         return *this;
     }
 
@@ -359,7 +360,7 @@ namespace json {
             template<typename, typename...> class OC
     >
     Json<NT, CT, AC, OC>::Json(int &&i) {
-        _auto(std::move(i), (Number *const &) NULL);
+        _auto(std::move(i), (Number *const &) nullptr);
     }
 
     template<
@@ -369,7 +370,7 @@ namespace json {
             template<typename, typename...> class OC
     >
     Json<NT, CT, AC, OC>::Json(const int &i) {
-        _auto(i, (Number *const &) NULL);
+        _auto(i, (Number *const &) nullptr);
     }
 
     template<
@@ -378,8 +379,8 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(int &&i) {
-        _auto(i, (Number *const &) NULL);
+    Json <NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(int &&i) {
+        _auto(i, (Number *const &) nullptr);
         return *this;
     }
 
@@ -389,11 +390,30 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const int &i) {
-        _auto(i, (Number *const &) NULL);
+    Json <NT, CT, AC, OC> &Json<NT, CT, AC, OC>::operator=(const int &i) {
+        _auto(i, (Number *const &) nullptr);
         return *this;
     }
 
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    Json<NT, CT, AC, OC>::Json(std::initializer_list<Json> &&il) {
+        _auto(Array(std::move(il)), (Array *const &) nullptr);
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    Json<NT, CT, AC, OC>::Json(const std::initializer_list<Json> &il) {
+        _auto(Array(il), (Array *const &) nullptr);
+    }
 
     template<
             typename NT,
@@ -559,5 +579,5 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    Json<NT, CT, AC, OC>::Json(_JsonCore *&&pjc) : _pCore(std::move(pjc), _JsonCore::destruct) { }
+    Json<NT, CT, AC, OC>::Json(_JsonCore *&&pjc) : _pCore(std::move(pjc), _JsonCore::destruct) {}
 }

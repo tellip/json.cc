@@ -105,9 +105,9 @@ namespace json {
     public:
         Json();
 
-        Json(Json &&);
+        explicit Json(Json &&);
 
-        Json(const Json &);
+        explicit Json(const Json &);
 
         Json &operator=(Json &&);
 
@@ -132,7 +132,11 @@ namespace json {
         Json &operator=(int &&);
 
         Json &operator=(const int &);
-        ///
+
+        //initializer_list
+        Json(std::initializer_list<Json> &&);
+
+        Json(const std::initializer_list<Json> &);
 
     private:
         void _move(Json &&);
@@ -140,26 +144,26 @@ namespace json {
         void _copy(const Json &);
 
         template<typename T>
-        void _auto(T &&, bool *const &p = NULL);
+        void _auto(T &&, bool *const &p = nullptr);
 
         template<typename T>
-        void _auto(T &&, Number *const &p = NULL);
+        void _auto(T &&, Number *const &p = nullptr);
 
         template<typename T>
-        void _auto(T &&, String *const &p = NULL);
+        void _auto(T &&, String *const &p = nullptr);
 
         template<typename T>
-        void _auto(T &&, const Char **const &p = NULL);
+        void _auto(T &&, const Char **const &p = nullptr);
 
         template<typename T>
-        void _auto(T &&, Array *const &p = NULL);
+        void _auto(T &&, Array *const &p = nullptr);
 
         template<typename T>
-        void _auto(T &&, Object *const &p = NULL);
+        void _auto(T &&, Object *const &p = nullptr);
 
-        void _auto(Json &&, Json *const &p = NULL);
+        void _auto(Json &&, Json *const &p = nullptr);
 
-        void _auto(const Json &, Json *const &p = NULL);
+        void _auto(const Json &, Json *const &p = nullptr);
 
     private:
         Json(_JsonCore *&&);

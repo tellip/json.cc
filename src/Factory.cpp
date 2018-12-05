@@ -75,7 +75,7 @@ namespace json {
         const _StrIter iBegin = iNow;
         try {
             passThrough(iNow, iEnd);
-            if (iNow == iEnd) throw NULL;
+            if (iNow == iEnd) throw nullptr;
             _JsonCore *pjc;
             while (true) {
                 if (pjc = _JCNullFactory::pi()->byParsing(iNow, iEnd)) break;
@@ -84,13 +84,13 @@ namespace json {
                 if (pjc = _JCStringFactory::pi()->byParsing(iNow, iEnd)) break;
                 if (pjc = _JCArrayFactory::pi()->byParsing(iNow, iEnd)) break;
                 if (pjc = _JCObjectFactory::pi()->byParsing(iNow, iEnd)) break;
-                throw NULL;
+                throw nullptr;
             }
             if (iNow != iEnd) passThrough(iNow, iEnd);
             return pjc;
         } catch (...) {
             iNow = iBegin;
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -101,14 +101,14 @@ namespace json {
                 &*_CS::nullSym.begin(),
                 _CS::nullSym.size()
         ))
-            return NULL;
+            return nullptr;
         iNow += _CS::nullSym.size();
-        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=NULL});
+        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=nullptr});
     }
 
     template<typename JT>
     JsonCore <JT> *JCNullFactory<JT>::byEntity() const {
-        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=NULL});
+        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=nullptr});
     }
 
     template<typename JT>
@@ -129,7 +129,7 @@ namespace json {
             iNow += _CS::boolFalse.size();
             return _JsonCore::construct(JC_BOOLEAN, _JsonValue{.pBoolean=new bool(false)});
         }
-        return NULL;
+        return nullptr;
     }
 
     template<typename JT>
@@ -142,7 +142,7 @@ namespace json {
     JsonCore <JT> *JCNumberFactory<JT>::byParsing(_StrIter &iNow, const _StrIter &iEnd) const {
         _Char *pcEnd;
         _Number n = _CNS::strToNum(&*iNow, &pcEnd);
-        if (pcEnd == &*iNow) return NULL;
+        if (pcEnd == &*iNow) return nullptr;
         iNow += pcEnd - &*iNow;
         return _JsonCore::construct(JC_NUMBER, _JsonValue{.pNumber=new _Number(std::move(n))});
     }
@@ -159,7 +159,7 @@ namespace json {
         _String s;
         if (!isString(iNow, iEnd, s)) {
             iNow = iBegin;
-            return NULL;
+            return nullptr;
         }
         return _JsonCore::construct(JC_STRING, _JsonValue{.pString=new _String(std::move(s))});
     }
@@ -174,23 +174,23 @@ namespace json {
     JsonCore <JT> *JCArrayFactory<JT>::byParsing(_StrIter &iNow, const _StrIter &iEnd) const {
         const _StrIter iBegin = iNow;
         try {
-            if (*iNow != _CS::arrLeft) throw NULL;
+            if (*iNow != _CS::arrLeft) throw nullptr;
             iNow++;
-            if (iNow == iEnd) throw NULL;
+            if (iNow == iEnd) throw nullptr;
             std::list<JT> l;
             while (true) {
                 _JsonCore *pjc = _Base::byParsing(iNow, iEnd);
                 if (pjc) {
                     l.push_back(JT(std::move(pjc)));
-                    if (iNow == iEnd) throw NULL;
+                    if (iNow == iEnd) throw nullptr;
                     if (*iNow == _CS::sepSym) {
                         iNow++;
-                        if (iNow == iEnd) throw NULL;
-                    } else if (*iNow != _CS::arrRight) throw NULL;
+                        if (iNow == iEnd) throw nullptr;
+                    } else if (*iNow != _CS::arrRight) throw nullptr;
                     else break;
                 } else {
                     passThrough(iNow, iEnd);
-                    if (iNow == iEnd || *iNow != _CS::arrRight) throw NULL;
+                    if (iNow == iEnd || *iNow != _CS::arrRight) throw nullptr;
                     break;
                 }
             }
@@ -198,7 +198,7 @@ namespace json {
             return _JsonCore::construct(JC_ARRAY, _JsonValue{.pArray=new _Array(_AS::buildByList(std::move(l)))});
         } catch (...) {
             iNow = iBegin;
-            return NULL;
+            return nullptr;
         }
 
     }
@@ -213,33 +213,33 @@ namespace json {
     JsonCore <JT> *JCObjectFactory<JT>::byParsing(_StrIter &iNow, const _StrIter &iEnd) const {
         const _StrIter iBegin = iNow;
         try {
-            if (*iNow != _CS::objLeft) throw NULL;
+            if (*iNow != _CS::objLeft) throw nullptr;
             iNow++;
-            if (iNow == iEnd) throw NULL;
+            if (iNow == iEnd) throw nullptr;
             _Object o;
             while (true) {
                 passThrough(iNow, iEnd);
-                if (iNow == iEnd) throw NULL;
+                if (iNow == iEnd) throw nullptr;
                 _String key;
                 if (isString(iNow, iEnd, key)) {
-                    if (iNow == iEnd) throw NULL;
+                    if (iNow == iEnd) throw nullptr;
                     passThrough(iNow, iEnd);
-                    if (iNow == iEnd) throw NULL;
-                    if (*iNow != _CS::referSym) throw NULL;
+                    if (iNow == iEnd) throw nullptr;
+                    if (*iNow != _CS::referSym) throw nullptr;
                     iNow++;
-                    if (iNow == iEnd) throw NULL;
+                    if (iNow == iEnd) throw nullptr;
                     _JsonCore *pjc = _Base::byParsing(iNow, iEnd);
-                    if (!pjc) throw NULL;
+                    if (!pjc) throw nullptr;
                     o.insert(std::pair<_String, JT>(std::move(key), JT(std::move(pjc))));
-                    if (iNow == iEnd) throw NULL;
+                    if (iNow == iEnd) throw nullptr;
                     if (*iNow == _CS::sepSym) {
                         iNow++;
-                        if (iNow == iEnd) throw NULL;
-                    } else if (*iNow != _CS::objRight) throw NULL;
+                        if (iNow == iEnd) throw nullptr;
+                    } else if (*iNow != _CS::objRight) throw nullptr;
                     else break;
                 } else {
                     passThrough(iNow, iEnd);
-                    if (iNow == iEnd || *iNow != _CS::objRight) throw NULL;
+                    if (iNow == iEnd || *iNow != _CS::objRight) throw nullptr;
                     break;
                 }
             }
@@ -247,7 +247,7 @@ namespace json {
             return _JsonCore::construct(JC_OBJECT, _JsonValue{.pObject=new _Object(move(o))});
         } catch (...) {
             iNow = iBegin;
-            return NULL;
+            return nullptr;
         }
     }
 
