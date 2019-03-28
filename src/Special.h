@@ -1,7 +1,3 @@
-//
-// Created by kalo on 2015/11/7.
-//
-
 /**
  * format
  * (\w+)\n\s*(\w+)\) -> $1 $2)

@@ -1,7 +1,3 @@
-//
-// Created by kalo on 2015/11/1.
-//
-
 #include "Factory.h"
 
 namespace json {

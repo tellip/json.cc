@@ -1,7 +1,3 @@
-//
-// Created by karthusluo on 2015/7/4.
-//
-
 #pragma once
 
 #include "common.h"

@@ -1,14 +1,10 @@
-//
-// Created by kalo on 2015/11/1.
-//
-
 #include "hub.h"
 
-#include "Special.cpp"
-#include "Trivial.cpp"
-#include "JsonCore.cpp"
-#include "Factory.cpp"
-#include "Json.cpp"
+#include "Special.cc"
+#include "Trivial.cc"
+#include "JsonCore.cc"
+#include "Factory.cc"
+#include "Json.cc"
 
 template<
         typename NT,
@@ -96,4 +92,4 @@ bool operator==(const json::Json<NT, CT, AC, OC> &j1, const json::Json<NT, CT, A
 }
 
 #include "class.cpp"
-#include "common.cpp"
+#include "common.cc"
