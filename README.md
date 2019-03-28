@@ -1,6 +1,3 @@
-## Examples
-All [example files](https://github.com/...) can be compiled and executed on their own (e.g., file [emplace.cc](https://github.com/...)).
-
 ### JSON as first-class data type
 
 Here are some examples to give you an idea how to use the class.
