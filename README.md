@@ -27,10 +27,12 @@ Assume you want to create the JSON object
 With this library, you could write:
 
 ```cpp
-// create an empty structure (null)
-json j;
+using Json=json::Json<>;
 
-// add a number that is stored as double (note the implicit conversion of j to an object)
+// create an object that is stored as std::unordered_map (note the storing types can be altered by the template type)
+auto j = Json::Object();
+
+// add a number that is stored as double
 j["pi"] = 3.141;
 
 // add a Boolean that is stored as bool
@@ -43,28 +45,32 @@ j["name"] = "Niels";
 j["nothing"] = nullptr;
 
 // add an object inside the object
-j["answer"]["everything"] = 42;
+j["answer"] = Json::Object();
+j["answer"].as_object()["everything"] = 42;
 
-// add an array that is stored as std::vector (using an initializer list)
-j["list"] = { 1, 0, 2 };
+// add an array that is stored as std::list
+j["list"] = {1, 0, 2};
 
-// add another object (using an initializer list of pairs)
-j["object"] = { {"currency", "USD"}, {"value", 42.99} };
+// add another object
+j["object"] = Json::Object{
+        {"currency", "USD"},
+        {"value",    42.99}
+};
 
 // instead, you could also write (which looks very similar to the JSON above)
-json j2 = {
-  {"pi", 3.141},
-  {"happy", true},
-  {"name", "Niels"},
-  {"nothing", nullptr},
-  {"answer", {
-    {"everything", 42}
-  }},
-  {"list", {1, 0, 2}},
-  {"object", {
-    {"currency", "USD"},
-    {"value", 42.99}
-  }}
+auto j2 = Json::Object{
+        {"pi",      3.141},
+        {"happy",   true},
+        {"name",    "Niels"},
+        {"nothing", nullptr},
+        {"answer",  Json::Object{
+                {"everything", 42}
+        }},
+        {"list",    {1, 0, 2}},
+        {"object",  Json::Object{
+                {"currency", "USD"},
+                {"value",    42.99}
+        }}
 };
 ```
 
