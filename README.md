@@ -1,3 +1,25 @@
+### The Json template
+
+Before using the features, you should add this first:
+
+```cpp
+#include<.../json.hh>
+...
+using Json=json::Json<>;
+
+/**
+     * template:json<   number_type,        char_type,  array_type,         object_type             >
+     * default:         double              char        std::list           std::unordered_map
+     * supported:       (unsigned)short     char        std::list           std::map
+     *                  (unsigned)int       wchar_t     std::forward_list   std::unordered_map
+     *                  (unsigned)long                  std::deque          std::multimap
+     *                  (unsigned)long long             std::vector         std::unordered_multimap
+     *                  float                           std::deque
+     *                  double                          std::set
+     *                  long double                     std::multiset
+     */
+```
+
 ### JSON as first-class data type
 
 Here are some examples to give you an idea how to use the class.
