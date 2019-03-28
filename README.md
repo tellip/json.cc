@@ -3,8 +3,8 @@
 Before using the features, you should add this first:
 
 ```cpp
-#include<.../json.hh>
-...
+#include"json.hh"
+// ...
 using Json=json::Json<>;
 
 /**
