@@ -63,8 +63,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String
-    Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
+    typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
         return json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
     }
 
@@ -74,7 +73,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isNull() const {
+    inline bool Json<NT, CT, AC, OC>::isNull() const {
         return _pCore->category == json::JC_NULL;
     }
 
@@ -84,7 +83,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isBoolean() const {
+    inline bool Json<NT, CT, AC, OC>::isBoolean() const {
         return _pCore->category == json::JC_BOOLEAN;
     }
 
@@ -94,7 +93,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isNumber() const {
+    inline bool Json<NT, CT, AC, OC>::isNumber() const {
         return _pCore->category == json::JC_NUMBER;
     }
 
@@ -104,7 +103,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isString() const {
+    inline bool Json<NT, CT, AC, OC>::isString() const {
         return _pCore->category == json::JC_STRING;
     }
 
@@ -114,7 +113,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isArray() const {
+    inline bool Json<NT, CT, AC, OC>::isArray() const {
         return _pCore->category == json::JC_ARRAY;
     }
 
@@ -124,69 +123,9 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool Json<NT, CT, AC, OC>::isObject() const {
+    inline bool Json<NT, CT, AC, OC>::isObject() const {
         return _pCore->category == json::JC_OBJECT;
     }
-
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_null() const {
-//        return isNull();
-//    }
-//
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_boolean() const {
-//        return isBoolean();
-//    }
-//
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_number() const {
-//        return isNumber();
-//    }
-//
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_string() const {
-//        return isString();
-//    }
-//
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_array() const {
-//        return isArray();
-//    }
-//
-//    template<
-//            typename NT,
-//            typename CT,
-//            template<typename...> class AC,
-//            template<typename, typename...> class OC
-//    >
-//    bool Json<NT, CT, AC, OC>::is_object() const {
-//        return isObject();
-//    }
 
     template<
             typename NT,
@@ -194,7 +133,79 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    bool &Json<NT, CT, AC, OC>::asBoolean() const {
+    inline bool Json<NT, CT, AC, OC>::is_null() const {
+        return isNull();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool Json<NT, CT, AC, OC>::is_boolean() const {
+        return isBoolean();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool Json<NT, CT, AC, OC>::is_number() const {
+        return isNumber();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool Json<NT, CT, AC, OC>::is_string() const {
+        return isString();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool Json<NT, CT, AC, OC>::is_array() const {
+        return isArray();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool Json<NT, CT, AC, OC>::is_object() const {
+        return isObject();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline nullptr_t &Json<NT, CT, AC, OC>::asNull() const {
+        if (_pCore->category == json::JC_NULL) return *_pCore->value.pNull;
+        _pDefaultNull.reset(new nullptr_t);
+        return *_pDefaultNull;
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool &Json<NT, CT, AC, OC>::asBoolean() const {
         if (_pCore->category == json::JC_BOOLEAN) return *_pCore->value.pBoolean;
         _pDefaultBoolean.reset(new bool);
         return *_pDefaultBoolean;
@@ -206,8 +217,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Number &
-    Json<NT, CT, AC, OC>::asNumber() const {
+    inline typename Json<NT, CT, AC, OC>::Number &Json<NT, CT, AC, OC>::asNumber() const {
         if (_pCore->category == json::JC_NUMBER) return *_pCore->value.pNumber;
         _pDefaultNumber.reset(new Number);
         return *_pDefaultNumber;
@@ -219,8 +229,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String &
-    Json<NT, CT, AC, OC>::asString() const {
+    inline typename Json<NT, CT, AC, OC>::String &Json<NT, CT, AC, OC>::asString() const {
         if (_pCore->category == json::JC_STRING) return *_pCore->value.pString;
         _pDefaultString.reset(new String);
         return *_pDefaultString;
@@ -232,8 +241,7 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Array &
-    Json<NT, CT, AC, OC>::asArray() const {
+    inline typename Json<NT, CT, AC, OC>::Array &Json<NT, CT, AC, OC>::asArray() const {
         if (_pCore->category == json::JC_ARRAY) return *_pCore->value.pArray;
         _pDefaultArray.reset(new Array);
         return *_pDefaultArray;
@@ -245,11 +253,70 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::Object &
-    Json<NT, CT, AC, OC>::asObject() const {
+    inline typename Json<NT, CT, AC, OC>::Object &Json<NT, CT, AC, OC>::asObject() const {
         if (_pCore->category == json::JC_OBJECT) return *_pCore->value.pObject;
         _pDefaultObject.reset(new Object);
         return *_pDefaultObject;
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline nullptr_t &Json<NT, CT, AC, OC>::as_null() const {
+        return asNull();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline bool &Json<NT, CT, AC, OC>::as_boolean() const {
+        return asBoolean();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline typename Json<NT, CT, AC, OC>::Number &Json<NT, CT, AC, OC>::as_number() const {
+        return asNumber();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline typename Json<NT, CT, AC, OC>::String &Json<NT, CT, AC, OC>::as_string() const {
+        return asString();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline typename Json<NT, CT, AC, OC>::Array &Json<NT, CT, AC, OC>::as_array() const {
+        return asArray();
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    inline typename Json<NT, CT, AC, OC>::Object &Json<NT, CT, AC, OC>::as_object() const {
+        return asObject();
     }
 
     template<

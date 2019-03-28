@@ -10,6 +10,9 @@ namespace json {
     template<typename JT>
     JsonCore<JT>::~JsonCore() {
         switch (category) {
+            case JC_NULL:
+                delete value.pNull;
+                break;
             case JC_BOOLEAN:
                 delete value.pBoolean;
                 break;

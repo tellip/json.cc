@@ -99,12 +99,12 @@ namespace json {
         ))
             return nullptr;
         iNow += _CS::nullSym.size();
-        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=nullptr});
+        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=new nullptr_t(nullptr)});
     }
 
     template<typename JT>
     JsonCore <JT> *JCNullFactory<JT>::byEntity() const {
-        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=nullptr});
+        return _JsonCore::construct(JC_NULL, _JsonValue{.pNull=new nullptr_t(nullptr)});
     }
 
     template<typename JT>

@@ -47,6 +47,7 @@ namespace json {
         using _JCObjectFactory= json::JCObjectFactory<Json>;
 
     private:
+        static std::shared_ptr<nullptr_t> _pDefaultNull;
         static std::shared_ptr<bool> _pDefaultBoolean;
         static std::shared_ptr<Number> _pDefaultNumber;
         static std::shared_ptr<String> _pDefaultString;
@@ -75,19 +76,21 @@ namespace json {
 
         bool isObject() const;
 
-//        bool is_null() const;
-//
-//        bool is_boolean() const;
-//
-//        bool is_number() const;
-//
-//        bool is_string() const;
-//
-//        bool is_array() const;
-//
-//        bool is_object() const;
+        bool is_null() const;
+
+        bool is_boolean() const;
+
+        bool is_number() const;
+
+        bool is_string() const;
+
+        bool is_array() const;
+
+        bool is_object() const;
 
         //entity referer
+        nullptr_t &asNull() const;
+
         bool &asBoolean() const;
 
         Number &asNumber() const;
@@ -97,6 +100,18 @@ namespace json {
         Array &asArray() const;
 
         Object &asObject() const;
+
+        nullptr_t &as_null() const;
+
+        bool &as_boolean() const;
+
+        Number &as_number() const;
+
+        String &as_string() const;
+
+        Array &as_array() const;
+
+        Object &as_object() const;
 
     public:
         Json();

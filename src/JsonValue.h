@@ -5,7 +5,7 @@
 namespace json {
     template<typename JT>
     union JsonValue {
-        void *pNull;
+        nullptr_t *pNull;
         bool *pBoolean;
         typename JT::Number *pNumber;
         typename JT::String *pString;
