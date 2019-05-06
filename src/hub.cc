@@ -6,6 +6,9 @@
 #include "Factory.cc"
 #include "Json.cc"
 
+#include "class.cc"
+#include "common.cc"
+
 template<
         typename NT,
         typename ST,
@@ -90,6 +93,3 @@ bool operator==(const json::Json<NT, CT, AC, OC> &j1, const json::Json<NT, CT, A
             return j1.o() == j2.o();
     }
 }
-
-#include "class.cpp"
-#include "common.cc"

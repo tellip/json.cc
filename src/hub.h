@@ -24,9 +24,6 @@
 #include <type_traits>
 #include <cmath>
 
-#include "class.h"
-#include "common.h"
-
 namespace json {
     struct Special;
 
@@ -130,6 +127,9 @@ template<
         template<typename, typename...> class OC
 >
 bool operator==(const json::Json<NT, CT, AC, OC> &, const json::Json<NT, CT, AC, OC> &);
+
+#include "class.h"
+#include "common.h"
 
 #include "Special.h"
 #include "Trivial.h"
