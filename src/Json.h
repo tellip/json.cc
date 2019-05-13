@@ -24,13 +24,16 @@ namespace json {
                 <NT, CT, AC, OC>(const Json<NT, CT, AC, OC> &, const Json<NT, CT, AC, OC> &);
 
     public:
+        using Null=nullptr_t;
+        using Boolean=bool;
         using Number= NT;
         using Char= CT;
         using String= typename json::CharSpecial<CT>::String;
         using Array= AC<Json>;
         using Object= OC<String, Json>;
 
-        using boolean=bool;
+        using null=Null;
+        using boolean=Boolean;
         using number=Number;
         using string=String;
         using array=Array;
@@ -57,7 +60,7 @@ namespace json {
     public:
         static Json parse(const String &);
 
-        static String stringify(const Json &, const short &indent = -1, const short &depth = 0);
+        static String stringify(const Json &, const Json & = Null());
 
     private:
         std::shared_ptr<_JsonCore> _pCore;
