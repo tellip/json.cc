@@ -60,7 +60,7 @@ namespace json {
     public:
         static Json parse(const String &);
 
-        static String stringify(const Json &, const Json & = Null());
+        static String stringify(const Json &, const short &indent = -1, const short &depth = 0);
 
     private:
         std::shared_ptr<_JsonCore> _pCore;
@@ -158,6 +158,9 @@ namespace json {
         void _copy(const Json &);
 
         template<typename T>
+        void _auto(T &&, nullptr_t *const &p = nullptr);
+
+        template<typename T>
         void _auto(T &&, bool *const &p = nullptr);
 
         template<typename T>
@@ -181,96 +184,5 @@ namespace json {
 
     private:
         Json(_JsonCore *&&);
-
-    public:
-        struct Indent {
-            struct _Indent {
-                virtual bool positive() const = 0;
-            };
-
-            struct _INegative : _Indent {
-                inline bool positive() const final { return false; }
-            };
-
-            struct _IPositive : _Indent {
-                const std::size_t value;
-
-                explicit _IPositive(const std::size_t &value) : value(value) {}
-
-                inline bool positive() const final { return true; }
-
-                virtual bool complex() const = 0;
-            };
-
-            struct _IPNaive : _IPositive {
-                explicit _IPNaive(const std::size_t &value) : _IPositive(value) {}
-
-                bool complex() const final { return false; }
-            };
-
-            struct _IPComplex : _IPositive {
-                explicit _IPComplex(const std::size_t &value) : _IPositive(value) {}
-
-                bool complex() const final { return true; }
-
-                enum IPCType {
-                    Negative, Naive, Array, Object
-                };
-
-                virtual IPCType complexType() const = 0;
-            };
-
-            struct _IPCNegative : _IPComplex {
-                _IPCNegative(const std::size_t &value) : _IPComplex(value) {}
-
-                inline typename _IPComplex::IPCType complexType() const final { return _IPComplex::IPCType::Negative; }
-            };
-
-            struct _IPCNaive : _IPComplex {
-                const std::size_t sub_value;
-
-                _IPCNaive(const std::size_t &value, const std::size_t &sub_value) : _IPComplex(value), sub_value(sub_value) {}
-
-                inline typename _IPComplex::IPCType complexType() const final { return _IPComplex::IPCType::Naive; }
-            };
-
-            struct _IPCArray : _IPComplex {
-                const std::list<Indent> array;
-                const Indent rest;
-
-                _IPCArray(const std::size_t &value, std::list<Indent> array, Indent rest) :
-                        _IPComplex(value),
-                        array(std::move(array)),
-                        rest(std::move(rest)) {}
-
-                inline typename _IPComplex::IPCType complexType() const final { return _IPComplex::IPCType::Array; }
-            };
-
-            struct _IPCObject : _IPComplex {
-                const std::unordered_map<String, Indent> object;
-                const Indent rest;
-
-                _IPCObject(const std::size_t &value, std::unordered_map<String, Indent> object, Indent rest) :
-                        _IPComplex(value),
-                        object(std::move(object)),
-                        rest(std::move(rest)) {}
-
-                inline typename _IPComplex::IPCType complexType() const final { return _IPComplex::IPCType::Object; }
-            };
-
-            const std::shared_ptr<_Indent> value;
-
-            Indent(const nullptr_t &) : value(std::make_shared<_INegative>()) {}
-
-            Indent(const std::size_t &value) : value(std::make_shared<_IPNaive>(value)) {}
-
-            Indent(const std::size_t &value, const Null &) : value(std::make_shared<_IPCNegative>(value)) {}
-
-            Indent(const std::size_t &value, const std::size_t &sub_value) : value(std::make_shared<_IPCNaive>(value, sub_value)) {}
-
-            Indent(const std::size_t &value, std::list<Indent> array, Indent rest = nullptr) : value(std::make_shared<_IPCArray>(value, std::move(array), std::move(rest))) {}
-
-            Indent(const std::size_t &value, std::unordered_map<String, Indent> object, Indent rest = nullptr) : value(std::make_shared<_IPCObject>(value, std::move(object), std::move(rest))) {}
-        };
     };
 }

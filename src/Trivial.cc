@@ -136,20 +136,15 @@ namespace json {
     template<typename JT>
     typename JT::String Trivial::pjc2str(JsonCore <JT> *const &pjc, const short &indent, const short &depth) {
         using Char=typename JT::Char;
-
-        switch (pjc->category) {
-            case JC_BOOLEAN:
-                return bl2str<Char>(*pjc->value.pBoolean);
-            case JC_NUMBER:
-                return nmb2str<Char, typename JT::Number>(*pjc->value.pNumber);
-            case JC_STRING:
-                return CS<Char>::strBound + unesca<Char>(*pjc->value.pString) + CS<Char>::strBound;
-            case JC_ARRAY:
-                return arr2str<JT>(*pjc->value.pArray, indent, depth);
-            case JC_OBJECT:
-                return obj2str<JT>(*pjc->value.pObject, indent, depth);
-            default:
-                return CS<Char>::nullSym;
-        }
+        using String=typename JT::String;
+        static const std::unordered_map<JsonCategory, std::function<String()>> SWITCH = {
+                {JC_NULL,    [&]() { return CS<Char>::nullSym; }},
+                {JC_BOOLEAN, [&]() { return bl2str<Char>(*pjc->value.pBoolean); }},
+                {JC_NUMBER,  [&]() { return nmb2str<Char, typename JT::Number>(*pjc->value.pNumber); }},
+                {JC_STRING,  [&]() { return CS<Char>::strBound + unesca<Char>(*pjc->value.pString) + CS<Char>::strBound; }},
+                {JC_ARRAY,   [&]() { return arr2str<JT>(*pjc->value.pArray, indent, depth); }},
+                {JC_OBJECT,  [&]() { return obj2str<JT>(*pjc->value.pObject, indent, depth); }}
+        };
+        return SWITCH.at(pjc->category)();
     }
 }

@@ -63,9 +63,8 @@ namespace json {
             template<typename...> class AC,
             template<typename, typename...> class OC
     >
-    typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const Json &indent) {
-//        return json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
-        return "";
+    typename Json<NT, CT, AC, OC>::String Json<NT, CT, AC, OC>::stringify(const Json &j, const short &indent, const short &depth) {
+        return json::Trivial::pjc2str<Json>(j._pCore.get(), indent, depth);
     }
 
     template<
@@ -531,6 +530,20 @@ namespace json {
         } else {
 //            std::cout << "self copy" << std::endl;
         }
+    }
+
+    template<
+            typename NT,
+            typename CT,
+            template<typename...> class AC,
+            template<typename, typename...> class OC
+    >
+    template<typename T>
+    void Json<NT, CT, AC, OC>::_auto(T &&t, nullptr_t *const &) {
+        _pCore.reset(
+                _JCNullFactory::pi()->byEntity(),
+                _JsonCore::destruct
+        );
     }
 
     template<
