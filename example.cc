@@ -57,7 +57,7 @@ int main() {
     std::cout << jstr << std::endl;
 
     Json j7 = Json::parse(jstr);
-    std::cout << Json::stringify(j7) << std::endl;
+//    std::cout << Json::stringify(j7) << std::endl;
 
     return 0;
 }
