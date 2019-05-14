@@ -15,20 +15,20 @@ namespace json {
 
     template<typename CT>
     typename Trivial::String<CT>
-    Trivial::bl2str(const bool &b) {
+    inline Trivial::bl2str(const bool &b) {
         return b ? CS<CT>::boolTrue : CS<CT>::boolFalse;
     }
 
     template<typename CT, typename NT>
     typename Trivial::String<CT>
-    Trivial::nmb2str(const NT &d) {
+    inline Trivial::nmb2str(const NT &d) {
         typename CS<CT>::Oss os;
         os << std::setprecision(NumberSpecial<NT>::deciPrec) << d;
         return os.str();
     }
 
     template<typename CT>
-    CT Trivial::escape(const CT &c) {
+    inline CT Trivial::escape(const CT &c) {
         try {
             return CS<CT>::escapeMap.at(c);
         } catch (...) {
@@ -38,7 +38,7 @@ namespace json {
 
     template<typename CT>
     typename Trivial::String<CT>
-    Trivial::unesca(const CT &c) {
+    inline Trivial::unesca(const CT &c) {
         try {
             return String<CT>() + CS<CT>::escapeSym + CS<CT>::unescaMap.at(c);
         } catch (...) {
@@ -48,7 +48,7 @@ namespace json {
 
     template<typename CT>
     typename Trivial::String<CT>
-    Trivial::unesca(const String <CT> &s) {
+    inline Trivial::unesca(const String <CT> &s) {
         String <CT> s1;
         for (typename String<CT>::const_iterator i = s.begin(); i != s.end(); i++) {
             s1 += unesca < CT > (*i);
@@ -58,7 +58,7 @@ namespace json {
 
     template<typename CT>
     typename Trivial::String<CT>
-    Trivial::unesca(const CT *const &s) {
+    inline Trivial::unesca(const CT *const &s) {
         String <CT> s1;
         for (const CT *p = s; *p; p++) {
             s1 += unesca < CT > (*p);
@@ -137,14 +137,14 @@ namespace json {
     typename JT::String Trivial::pjc2str(JsonCore <JT> *const &pjc, const short &indent, const short &depth) {
         using Char=typename JT::Char;
         using String=typename JT::String;
-        static const std::unordered_map<JsonCategory, std::function<String()>> SWITCH = {
-                {JC_NULL,    [&]() { return CS<Char>::nullSym; }},
-                {JC_BOOLEAN, [&]() { return bl2str<Char>(*pjc->value.pBoolean); }},
-                {JC_NUMBER,  [&]() { return nmb2str<Char, typename JT::Number>(*pjc->value.pNumber); }},
-                {JC_STRING,  [&]() { return CS<Char>::strBound + unesca<Char>(*pjc->value.pString) + CS<Char>::strBound; }},
-                {JC_ARRAY,   [&]() { return arr2str<JT>(*pjc->value.pArray, indent, depth); }},
-                {JC_OBJECT,  [&]() { return obj2str<JT>(*pjc->value.pObject, indent, depth); }}
+        static const std::unordered_map<JsonCategory, std::function<String(JsonCore<JT> *const &, const short &, const short &)>> SWITCH = {
+                {JC_NULL,    [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return CS<Char>::nullSym; }},
+                {JC_BOOLEAN, [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return bl2str<Char>(*pjc->value.pBoolean); }},
+                {JC_NUMBER,  [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return nmb2str<Char, typename JT::Number>(*pjc->value.pNumber); }},
+                {JC_STRING,  [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return CS<Char>::strBound + unesca<Char>(*pjc->value.pString) + CS<Char>::strBound; }},
+                {JC_ARRAY,   [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return arr2str<JT>(*pjc->value.pArray, indent, depth); }},
+                {JC_OBJECT,  [](JsonCore<JT> *const &pjc, const short &indent, const short &depth) { return obj2str<JT>(*pjc->value.pObject, indent, depth); }}
         };
-        return SWITCH.at(pjc->category)();
+        return SWITCH.at(pjc->category)(pjc, indent, depth);
     }
 }
