@@ -20,11 +20,11 @@ int main() {
     //constructors
     Json
             j1,                                     //null
-            j2 = false,                             //boolean
-            j3 = 1234,                              //number, here saved as double
-            j4 = "hello",                           //string, here saved as std::string, will be std::wstring when char_type is wchar_t
-            j5 = {5, 1, 0},                         //array, here is std::list<json>
-            j6 = Json::Object{{"hello", "json"}};   //object, here is std::unordered_map<const std::string,json>
+    j2 = false,                             //boolean
+    j3 = 1234,                              //number, here saved as double
+    j4 = "hello",                           //string, here saved as std::string, will be std::wstring when char_type is wchar_t
+    j5 = {5, 1, 0},                         //array, here is std::list<json>
+    j6 = Json::Object{{"hello", "json"}};   //object, here is std::unordered_map<const std::string,json>
 
     if (j1.is_null()) std::cout << "j1 is null" << std::endl;
     if (j2.is_boolean()) {
