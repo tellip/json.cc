@@ -1,14 +1,5 @@
 #include "json.h"
 
-#include "Special.cc"
-#include "Trivial.cc"
-#include "JsonCore.cc"
-#include "Factory.cc"
-#include "Json.cc"
-
-#include "class.cc"
-#include "common.cc"
-
 template<
         typename NT,
         typename ST,
