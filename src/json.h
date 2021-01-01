@@ -137,4 +137,4 @@ bool operator==(const json::Json<NT, CT, AC, OC> &, const json::Json<NT, CT, AC,
 #include "JsonValue.h"
 #include "JsonCore.h"
 #include "Factory.h"
-#include "Json.h"
+#include "Json_.h"
